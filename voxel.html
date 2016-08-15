@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<script type="text/javascript" charset="utf-8" src="js/LIBRARY.js"></script>
+	<style type="text/css">
+		
+		html, body
+		{
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.intro
+		{
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1000;
+			background-color: #30373B;
+		}
+	</style>
+	<script type="text/javascript">
+		
+		function start()
+		{
+			var voxel = new Voxel({width:320, height:200});
+			document.body.appendChild(voxel.holder);
+		}
+		
+		function Voxel(settings)
+		{
+			var self = this;
+			this.width = settings.width;
+			this.height = settings.height;
+			
+			this.FOV = 60;
+			this.DISTANCE = Math.round((320 / 2) / Math.tan((this.FOV / 2) * Math.PI / 180));
+			console.log(this.DISTANCE)
+			
+			this.X = 3.5;
+			this.Y = 3.5;
+			this.ANGLE = 0;
+			
+			this.MAP = [
+				1, 1, 1, 2, 1, 1, 1,
+				1, 0, 3, 0, 3, 0, 1,
+				1, 0, 0, 0, 0, 4, 1,
+				1, 0, 0, 0, 0, 0, 5,
+				1, 0, 0, 0, 0, 4, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 8, 7, 6, 7, 8, 1,
+			];
+			this.WIDTH = 7;
+			this.HEIGHT = 7;
+			
+			this.holder = document.createElement('canvas');
+			this.holder.width = this.width;
+			this.holder.height = this.height;
+			
+			this.context = this.holder.getContext('2d');
+			
+			this.src = new Image();
+			this.src.src = 'images/minecraft_tiles_big.png';
+			this.src.onload = function()
+			{
+				self.render();
+				self.timeLine.play();
+				//self.context.drawImage(this, 0, 0)
+			}
+			
+			
+			
+			this.timeLine = new TimeLine(Infinity, 33);
+			this.timeLine.addEventListener(Event.CHANGE, 'render', this);
+			
+			this.render();
+		}
+		Voxel.prototype.render = function()
+		{
+			this.ANGLE = (this.timeLine.position / 20) % 360;
+			
+			this.context.clearRect(0, 0, this.width, this.height);
+			for (var x = 0; x < this.width; x++)
+			{
+				//
+				var FOV_ANGLE = (this.FOV / 2 ) - this.FOV * x / this.width;
+				var angle =  FOV_ANGLE + this.ANGLE;
+				angle = angle * Math.PI / 180;
+				angle = (angle + 2 * Math.PI) % (2 * Math.PI);
+				//console.log('x', x, angle, tmpY, this.HEIGHT)
+				
+				// CHECK Y COLLISION
+				
+				
+				var collisionX = null;
+				if (angle < Math.PI)
+				{
+					var tmpY = Math.floor(this.Y);
+					while (tmpY > 0)
+					{
+						var col = Math.floor(this.X +  (this.Y - tmpY) / Math.tan(angle));
+						var row = tmpY - 1;
+						
+						
+						if ((row >= 0 && row < this.HEIGHT) && (col >= 0 && col < this.WIDTH))
+						{
+							if (this.MAP[col + row * this.WIDTH])
+							{
+								
+								collisionX = {col:col, row:row};
+								collisionX.y = this.Y - tmpY;
+								collisionX.x = (this.Y - tmpY) / Math.tan(angle);
+								collisionX.length = 64 * Math.sqrt(collisionX.x * collisionX.x + collisionX.y * collisionX.y);
+								collisionX.isHorizontal = true;
+								//console.log('x', collisionX)
+								
+								break;
+								
+							}
+						}
+						
+						tmpY--;
+					}
+				}
+				else
+				{
+					var tmpY = Math.ceil(this.Y);
+					
+					while (tmpY < this.HEIGHT)
+					{
+						var col = Math.floor(this.X +  (this.Y - tmpY) / Math.tan(angle));
+						var row = tmpY;
+						
+						
+						if ((row >= 0 && row < this.HEIGHT) && (col >= 0 && col < this.WIDTH))
+						{
+							if (this.MAP[col + row * this.WIDTH])
+							{
+								
+								collisionX = {col:col, row:row};
+								collisionX.y = this.Y - tmpY;
+								collisionX.x = (this.Y - tmpY) / Math.tan(angle);
+								collisionX.length = 64 * Math.sqrt(collisionX.x * collisionX.x + collisionX.y * collisionX.y);
+								collisionX.isHorizontal = true;
+								
+								break;
+								
+							}
+						}
+						
+						tmpY++;
+					}
+				}
+				var collisionY = null;
+				
+				
+				if (angle > Math.PI / 2 && angle < Math.PI * 3 / 2)
+				{
+					var tmpX = Math.floor(this.X);
+					while (tmpX > 0)
+					{
+						var row = Math.floor(this.Y - (tmpX - this.X) * Math.tan(angle));
+						var col = tmpX - 1;
+						
+						if (col >= 0 && col < this.WIDTH)
+						{
+							if (this.MAP[col + row * this.WIDTH])
+							{
+								collisionY = {col:col, row:row};
+								collisionY.x = this.X - tmpX;
+								collisionY.y = (tmpX - this.X) * Math.tan(angle);
+								collisionY.length = 64 * Math.sqrt(collisionY.x * collisionY.x + collisionY.y * collisionY.y);
+								collisionY.isHorizontal = false;
+								//console.log('y', collisionY);
+								//collisionY = null;
+								break;
+							}
+						}
+						
+						
+						tmpX--;
+					}
+				}
+				else
+				{
+					var tmpX = Math.ceil(this.X);
+					while (tmpX < this.WIDTH)
+					{
+						var row = Math.floor(this.Y - (tmpX - this.X) * Math.tan(angle));
+						var col = tmpX;
+						if (col >= 0 && col < this.WIDTH)
+						{
+							if (this.MAP[col + row * this.WIDTH])
+							{
+								collisionY = {col:col, row:row};
+								collisionY.x = this.X - tmpX;
+								collisionY.y = -(tmpX - this.X) * Math.tan(angle);
+								collisionY.length = 64 * Math.sqrt(collisionY.x * collisionY.x + collisionY.y * collisionY.y);
+								collisionY.isHorizontal = false;
+								//console.log('y', collisionY);
+								//collisionY = null;
+								break;
+							}
+						}
+						
+						
+						tmpX++;
+					}
+				}
+				
+				var collision = collisionX || collisionY;
+				//console.log(x, collision);
+				if (collisionX && collisionY)
+				{
+					collision =  (collisionX.length < collisionY.length) ? collisionX : collisionY;
+				}
+				
+				if (collision)
+				{
+					
+					collision.length = collision.length * Math.cos(FOV_ANGLE * Math.PI / 180);
+					collision.height = (64 / collision.length) * 255;
+					collision.block = this.MAP[collision.col + collision.row * this.WIDTH];
+
+					
+
+					var y = Math.floor((this.height - collision.height) / 2);
+					this.context.fillRect(x, y, 1, collision.height);
+					//console.log(collision);
+					collision.x = this.X + collision.x;
+					collision.y = this.Y + collision.y;
+					if (collision.isHorizontal)
+					{
+						var srcX = ((collision.x > 0) ? collision.x : -collision.x) % 1
+						//console.log(srcX)
+						this.context.drawImage(this.src, Math.floor(collision.block * 32 + srcX * 32), 2 * 32, 1, 32, x, y, 1, collision.height);
+					}
+					else
+					{
+						
+						var srcX = ((collision.y > 0) ? collision.y : -collision.y) % 1
+						//console.log(srcX, collision, srcX * 32)
+						this.context.drawImage(this.src, Math.floor(collision.block * 32 + srcX * 32), 2 * 32, 1, 32, x, y, 1, collision.height);
+					}
+					
+					
+				}
+				//console.log(x, angle.toFixed(2));
+			}
+		}
+		window.onload = start;
+	</script>
+</head>
+<body style="margin:0;" class="desktop" data-layout="layout">
+
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -69,16 +69,16 @@
 		{
 			// 247x49
 			var y = Math.floor((DIMS.height - 49) / 2);
-			y -= (y - 10) * (this.timeLine.getTime(3000, 400));
+			y -= (y - 10) * (this.timeLine.getTime(2000, 400));
 			y += 50 * (1 - this.timeLine.getTime(0, 500));
 			
-			this.logo.height = 49 - (49 - 30) * this.timeLine.getTime(2700, 300);
+			this.logo.height = 49 - (49 - 30) * this.timeLine.getTime(1700, 300);
 			
 			this.logo.style.top = y + 'px';
 			this.logo.style.left = Math.floor((DIMS.width - this.logo.width) / 2) + 'px';
 			this.logo.style.opacity = this.timeLine.getTime(0, 1500);
 			
-			this.holder.style.bottom = (DIMS.height - 50) * this.timeLine.getTime(3000, 400) + 'px';
+			this.holder.style.bottom = (DIMS.height - 50) * this.timeLine.getTime(2000, 400) + 'px';
 		}
 		Intro.prototype.resize = function()
 		{
