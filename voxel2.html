@@ -70,7 +70,7 @@
 			this.src.onload = function()
 			{
 				self.render();
-				//self.timeLine.play();
+				self.timeLine.play();
 				//self.context.drawImage(this, 0, 0)
 			}
 			
@@ -83,7 +83,7 @@
 		}
 		Voxel.prototype.render = function()
 		{
-			//this.ANGLE = (this.timeLine.position / 20) % 360;
+			this.ANGLE = (this.timeLine.position / 20) % 360;
 			
 			this.context.clearRect(0, 0, this.width, this.height);
 			for (var x = 0; x < this.width; x++)
@@ -95,7 +95,6 @@
 				angle = (angle + 2 * Math.PI) % (2 * Math.PI);
 				//console.log('x', x, angle, tmpY, this.HEIGHT)
 				
-				var tan_angle = Math.tan(angle)
 				// CHECK Y COLLISION
 				
 				
@@ -105,7 +104,7 @@
 					var tmpY = Math.floor(this.Y);
 					while (tmpY > 0)
 					{
-						var col = Math.floor(this.X +  (this.Y - tmpY) / tan_angle);
+						var col = Math.floor(this.X +  (this.Y - tmpY) / Math.tan(angle));
 						var row = tmpY - 1;
 						
 						
@@ -116,7 +115,7 @@
 								
 								collisionX = {col:col, row:row};
 								collisionX.y = this.Y - tmpY;
-								collisionX.x = (this.Y - tmpY) / tan_angle;
+								collisionX.x = (this.Y - tmpY) / Math.tan(angle);
 								collisionX.length = 64 * Math.sqrt(collisionX.x * collisionX.x + collisionX.y * collisionX.y);
 								collisionX.isHorizontal = true;
 								//console.log('x', collisionX)
@@ -135,7 +134,7 @@
 					
 					while (tmpY < this.HEIGHT)
 					{
-						var col = Math.floor(this.X +  (this.Y - tmpY) / tan_angle);
+						var col = Math.floor(this.X +  (this.Y - tmpY) / Math.tan(angle));
 						var row = tmpY;
 						
 						
@@ -146,7 +145,7 @@
 								
 								collisionX = {col:col, row:row};
 								collisionX.y = this.Y - tmpY;
-								collisionX.x = (this.Y - tmpY) / tan_angle;
+								collisionX.x = (this.Y - tmpY) / Math.tan(angle);
 								collisionX.length = 64 * Math.sqrt(collisionX.x * collisionX.x + collisionX.y * collisionX.y);
 								collisionX.isHorizontal = true;
 								
@@ -166,7 +165,7 @@
 					var tmpX = Math.floor(this.X);
 					while (tmpX > 0)
 					{
-						var row = Math.floor(this.Y - (tmpX - this.X) * tan_angle);
+						var row = Math.floor(this.Y - (tmpX - this.X) * Math.tan(angle));
 						var col = tmpX - 1;
 						
 						if (col >= 0 && col < this.WIDTH)
@@ -175,7 +174,7 @@
 							{
 								collisionY = {col:col, row:row};
 								collisionY.x = this.X - tmpX;
-								collisionY.y = (tmpX - this.X) * tan_angle;
+								collisionY.y = (tmpX - this.X) * Math.tan(angle);
 								collisionY.length = 64 * Math.sqrt(collisionY.x * collisionY.x + collisionY.y * collisionY.y);
 								collisionY.isHorizontal = false;
 								//console.log('y', collisionY);
@@ -193,7 +192,7 @@
 					var tmpX = Math.ceil(this.X);
 					while (tmpX < this.WIDTH)
 					{
-						var row = Math.floor(this.Y - (tmpX - this.X) * tan_angle);
+						var row = Math.floor(this.Y - (tmpX - this.X) * Math.tan(angle));
 						var col = tmpX;
 						if (col >= 0 && col < this.WIDTH)
 						{
@@ -201,7 +200,7 @@
 							{
 								collisionY = {col:col, row:row};
 								collisionY.x = this.X - tmpX;
-								collisionY.y = -(tmpX - this.X) * tan_angle;
+								collisionY.y = -(tmpX - this.X) * Math.tan(angle);
 								collisionY.length = 64 * Math.sqrt(collisionY.x * collisionY.x + collisionY.y * collisionY.y);
 								collisionY.isHorizontal = false;
 								//console.log('y', collisionY);
@@ -232,11 +231,10 @@
 					
 
 					var y = Math.floor((this.height - collision.height) / 2);
-					
+					this.context.fillRect(x, y, 1, collision.height);
+					//console.log(collision);
 					collision.x = this.X + collision.x;
 					collision.y = this.Y + collision.y;
-					
-					
 					if (collision.isHorizontal)
 					{
 						var srcX = ((collision.x > 0) ? collision.x : -collision.x) % 1
@@ -251,20 +249,6 @@
 						this.context.drawImage(this.src, Math.floor(collision.block * 32 + srcX * 32), 2 * 32, 1, 32, x, y, 1, collision.height);
 					}
 					
-					y += collision.height;
-					while(y < this.height)
-					{
-						var distance = 277 * 100 / (y - 100)
-						distance = distance / Math.cos(FOV_ANGLE * Math.PI / 180);
-						var xs = (Math.cos(angle) * distance) | 0;
-						var ys = (Math.sin(angle) * distance) | 0;
-						xs = xs & 63;
-						ys = ys & 63;
-						
-						this.context.drawImage(this.src, xs + 32, ys + 384, 1, 1, x, y, 1, 1);
-						
-						y++; 
-					}
 					
 				}
 				//console.log(x, angle.toFixed(2));
