@@ -136,7 +136,7 @@ function HSVtoRGB(h, s, v)
 			for (var x = 0; x < LIMIT; x++)
 			{
 				var cf = x + (650 - LIMIT);
-				var color = HSVtoRGB(0.48 + (650 - cf) / 1200, 0.7, 1);
+				var color = HSVtoRGB(0.48 + (650 - cf) / 1500, 0.7, 1);
 				this.context.fillStyle = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', 1)';
 				this.context.fillRect(x, 0, 1, 3);
 				
