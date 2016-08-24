@@ -26,7 +26,16 @@
 		}
 		body
 		{
-			padding-top: 50px;
+			
+		}
+		#root
+		{
+			position: fixed;
+			top: 50px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			overflow: auto;
 		}
 	</style>
 	<script type="text/javascript">
@@ -44,7 +53,7 @@
 				image.style.margin = '0 auto';
 				image.style.maxWidth = '100%';
 				image.src = data[iData];
-				document.body.appendChild(image);
+				document.getElementById('root').appendChild(image);
 			}
 		}
 		
@@ -157,6 +166,9 @@ function HSVtoRGB(h, s, v)
 </head>
 <body style="margin:0;" class="desktop" data-layout="layout">
 
+	<div id="root">
+		
+	</div>
 	
 </body>
 </html>
