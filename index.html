@@ -44,6 +44,20 @@
 			color: #1ECAEE;
 			text-decoration: none;
 		}
+		a.button
+		{
+			line-height: 40px;
+			font-size: 14px;
+			background-color: #30373B;
+			color: #CCCECD;
+			width: 100px;
+			margin: 0 auto;
+			text-align: center;
+			display: block;
+			border-radius: 3px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
 		p.sd-text
 		{
 			display: block;
@@ -97,9 +111,6 @@
 		
 		function start()
 		{
-			var intro = new Intro();
-			document.body.appendChild(intro.holder);
-			
 			for (var iData = 0; iData < data.length; iData++)
 			{
 				var image = new Image();
@@ -115,7 +126,8 @@
 		function Intro()
 		{
 			var self = this;
-			this.holder = document.createElement('div');
+			var intro = document.getElementsByClassName('intro');
+			this.holder = (intro.length > 0 ?  intro[0] : document.createElement('div'));
 			this.holder.className = 'intro';
 			
 			
@@ -227,21 +239,27 @@ function HSVtoRGB(h, s, v)
 </head>
 <body style="margin:0;" class="desktop" data-layout="layout">
 
+	<div class="intro"></div>
 	<div id="root">
 		<h1 class="sd-module-title">Playing with Javascript</h1>
 		<p class="sd-text">
 			Welcome, My name is Juan Carlos Arias and together we will found out what js (without any libraries) is capable of in a few lines of code. An experimental space not so experimental as real usable code will be shown here. In part is a tribute to sites like <a href="http://lab.andre-michelle.com/">http://lab.andre-michelle.com/</a> which experiments make me want to understand more about coding.</p>
 		<h1 class="sd-module-title">#JS-101</h1>
-		<p class="sd-text">What can we achieve with 101 lines of code? Well this is the place to find out. <a href="#">Start</a></p>
+		<p class="sd-text">What can we achieve with 101 lines of code? Well this is the place to find out.</p>
+		<a class="button" href="#">Read More</a>
 		
 		<h1 class="sd-module-title">#JS-201</h1>
-		<p class="sd-text">With more lines of code (201 lines) to play with what is posible?<a href="#">Start</a></p>
+		<p class="sd-text">With more lines of code (201 lines) to play with what is posible?</p>
+		<a class="button" href="#">Read More</a>
 		
 		
 		
 		<img id="img" src="https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13706892_274756949566029_1904094665_n.jpg" style="margin:0 auto; display:block;max-width:100%"/>
 		<script type="text/javascript">
 			console.log(document.getElementById('img').width)
+			var intro = new Intro();
+			document.body.appendChild(intro.holder);
+			
 		</script>
 	</div>
 	
