@@ -229,10 +229,23 @@
 				//image.style.opacity = ((rect.top < 50 && rect.bottom > 50) ? 0.8 : 1);
 				if (rect.top < 50 && rect.bottom > 50)
 				{
-					images[iImage].user.style.top = Math.min(-(rect.top - 50), rect.height - 51)+ 'px';
+					var offsetX = -(rect.top - 50);
+					if (offsetX < rect.height - 51)
+					{
+						offsetX = 50;
+						images[iImage].user.style.position = 'fixed';
+					}
+					else
+					{
+						offsetX = Math.min(-(rect.top - 50), rect.height - 51);
+						images[iImage].user.style.position = '';
+					}
+					
+					images[iImage].user.style.top = offsetX + 'px';
 				}
 				else
 				{
+					images[iImage].user.style.position = '';
 					images[iImage].user.style.top = '';
 				}
 				//rect.top - 50
