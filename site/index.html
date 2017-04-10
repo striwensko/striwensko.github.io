@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<script type="text/javascript" charset="utf-8" src="js/LIBRARY.js"></script>
+	<style type="text/css">
+		
+		html, body
+		{
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: Montserrat, Arial;
+			/*"ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+		}
+		
+		.intro
+		{
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1000;
+			background-color: #000;
+		}
+		body
+		{
+			
+		}
+		#root
+		{
+			position: fixed;
+			top: 50px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			overflow: auto;
+		}
+		a
+		{
+			color: #1ECAEE;
+			text-decoration: none;
+		}
+		a.button
+		{
+			line-height: 40px;
+			font-size: 14px;
+			background-color: #30373B;
+			color: #CCCECD;
+			width: 100px;
+			margin: 0 auto;
+			text-align: center;
+			display: block;
+			border-radius: 3px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		p.sd-text
+		{
+			display: block;
+			padding: 0 15px;
+		}
+		.sd-module-title
+{
+	font-size: 28px;
+	line-height: 34px;
+	display: block;
+	margin: 0;
+	padding: 10px 0;
+	text-align: center;
+	color:#2c3155;
+	margin-top: 50px;
+}
+		.sd-module-title:first-child
+		{
+			margin-top: 20px;
+		}
+
+@media only screen and (max-width: 480px)
+{
+	.sd-module-title
+	{
+		font-size: 22px;
+		padding:7px 0;
+	}
+}
+		
+		
+.sd-text
+{
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	line-height: 28px;
+	color: #30373b;
+}
+@media only screen and (max-width: 480px)
+{
+	.sd-text
+	{
+		font-size: 15px;
+		line-height: 24px;
+	}
+}
+		.chatButton
+		{
+			position: fixed;
+			border-radius: 30px;
+			width: 30px;
+			height: 30px;
+			background-color: #000;
+		}
+		.username_holder
+		{
+			height: 51px;
+			position: relative;
+			max-width: 640px;
+			margin: 0 auto;
+		}
+		.username
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			line-height: 50px;
+			border-bottom: 1px solid #ddd;
+			position: relative;
+			padding-left: 53px;
+			
+			box-sizing: border-box;
+			font-size: 14px;
+			font-weight: bold;
+			background-color: #fff;
+		}
+		.username img
+		{
+			position: absolute;
+			top: 7px;
+			left: 7px;
+			height: 36px;
+			width: 36px;
+			border-radius: 36px;
+		}
+	</style>
+	<script type="text/javascript">
+		var data = ["https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.45.1080.1080/13736138_1778366489044961_1994843506_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13704157_501578970031854_874241311_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13734316_282454248786360_1684590684_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13739594_991810624270785_1784165785_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13736932_1026707134065072_980410335_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13774904_550521698467624_457493147_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13731294_1329958113699375_1017260460_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.92.1080.1080/13767553_749556271853683_352805976_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.75.1080.1080/13732084_265291070518838_1246269880_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13736021_1213627205355301_1759019509_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13712237_1744039332504278_1905032290_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13722125_264754163907564_1067031323_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13743506_626063610890072_75181035_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13704154_1659447531041850_600325511_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13725539_222294864833506_874988760_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13743304_1090812867663030_1903586835_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13768202_899160950196105_2091228499_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13736922_1808339242720353_1124593877_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13774613_312580879087386_1008865445_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13743306_1738847229722379_2046561837_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13827280_232974260435949_2096700784_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13732130_1749152838657368_98435115_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13768125_279517775754805_1239335629_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13768268_309432789391734_236462367_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.115.935.935/13671292_1738115936427466_400383263_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13827458_163708737372085_1055695811_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13745152_2081272285431461_541422796_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13741349_1657908037784388_1775934765_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13745076_537326306457643_552219596_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13703199_1131146556924750_375964180_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13724477_310267545986998_1450061826_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13774842_1638267696486407_906944198_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13768102_679736565500956_2099203032_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13735941_1643350222573073_900343739_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13712229_153401261730782_977628312_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13694931_224144764646971_380037459_n.jpg", "https://scontent-dft4-2.cdninstagram.com/l/t51.2885-15/s640x640/sh0.08/e35/c0.116.1080.1080/13735832_1071849982903517_508006556_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13712586_1047100232033457_1592934027_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13724723_1430702333611814_760321959_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13774772_743655905776132_221968976_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13694348_1839663302936733_1178252028_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13712233_568773396657731_1994694883_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13722173_475667095966051_1381413675_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.100.799.799/13712191_507874616069602_663852172_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c6.0.1067.1067/13696631_769401766535559_1403054188_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.116.937.937/13706892_274756949566029_1904094665_n.jpg", "https://scontent-dft4-2.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/c0.134.1080.1080/13739607_733640280112293_482495351_n.jpg"];
+		
+		var imagesList, images, users;
+		
+		
+		users = [];
+		users.push({image:'https://scontent-dft4-2.cdninstagram.com/t51.2885-19/s320x320/10725197_850988934977713_1624493544_a.jpg', name:'abandonedearth'});
+		users.push({image:'https://scontent-dft4-2.cdninstagram.com/t51.2885-19/s320x320/13188167_1711074015832829_1958403895_a.jpg', name:'EarthOfficial'});
+		users.push({image:'https://scontent-dft4-2.cdninstagram.com/t51.2885-19/11820474_470302763143047_1553897503_a.jpg', name:'starbucks'});
+		
+		function start()
+		{
+			imagesList = document.createElement('div');
+			document.getElementById('root').appendChild(imagesList);
+			
+			images = new Array(data.length);
+			for (var iData = 0; iData < data.length; iData++)
+			{
+				var user_data = users[Math.floor(Math.random() * users.length)];
+				
+				var item = document.createElement('div');
+				imagesList.appendChild(item);
+				
+				var username_holder = document.createElement('div');
+				username_holder.className = 'username_holder';
+				item.appendChild(username_holder);
+				
+				var user = document.createElement('div');
+				user.className = 'username';
+				user.innerHTML = user_data.name;
+				
+				user.icon =  new Image();
+				user.icon.src = user_data.image;
+				user.appendChild(user.icon);
+				
+				username_holder.appendChild(user);
+				
+				var image = new Image();
+				image.style.display = 'block';
+				image.style.margin = '0 auto';
+				image.style.maxWidth = '100%';
+				image.src = data[iData];
+				item.appendChild(image);
+				
+				images[iData] = {user:user, image:image, item:item}
+			}
+			
+			document.getElementById('root').onscroll = scroll;
+			
+			var chatButton = document.createElement('div');
+			chatButton.className = 'chatButton';
+			document.body.appendChild(chatButton);
+			
+			var timeLine = new TimeLine(Infinity, 300);
+			timeLine.addEventListener(Event.CHANGE, 'refresh', timeLine);
+			timeLine.refresh = function()
+			{
+				chatButton.style.left = '10px';
+				var reltime = this.position % 2000;
+				if (reltime < 1000)
+				{
+					chatButton.style.top = (100 + 100 * this.getTime(Math.floor(this.position / 2000) * 2000, 1000)) + 'px';
+				}
+				else
+				{
+					chatButton.style.top = (100 + 100 * (1 -this.getTime(Math.floor(this.position / 2000) * 2000 + 1000, 1000))) + 'px';
+				}
+				scroll();
+				
+			}
+			timeLine.direction = 1;
+			timeLine.play();
+			
+		}
+		function scroll()
+		{
+			for (var iImage = 0; iImage < images.length; iImage++)
+			{
+				var image = images[iImage].item;
+				var rect = image.getBoundingClientRect();
+				//image.style.opacity = ((rect.top < 50 && rect.bottom > 50) ? 0.8 : 1);
+				if (rect.top < 50 && rect.bottom > 50)
+				{
+					var offsetX = -(rect.top - 50);
+					if (offsetX < rect.height - 51)
+					{
+						offsetX = 50;
+						images[iImage].user.style.position = 'fixed';
+					}
+					else
+					{
+						offsetX = Math.min(-(rect.top - 50), rect.height - 51);
+						images[iImage].user.style.position = '';
+					}
+					
+					images[iImage].user.style.top = offsetX + 'px';
+				}
+				else
+				{
+					images[iImage].user.style.position = '';
+					images[iImage].user.style.top = '';
+				}
+				//rect.top - 50
+			}
+		}
+		
+		function Intro()
+		{
+			var self = this;
+			var intro = document.getElementsByClassName('intro');
+			this.holder = (intro.length > 0 ?  intro[0] : document.createElement('div'));
+			this.holder.className = 'intro';
+			
+			
+			this.logo = new Image();
+			this.logo.src = 'images/logo.png';
+			this.logo.style.position = 'absolute';
+			this.logo.onload = function()
+			{
+				self.timeLine.play();
+			}
+			this.holder.appendChild(this.logo);
+			
+			
+			this.canvas = document.createElement('canvas');
+			this.canvas.width = 650;
+			this.canvas.height = 3;
+			this.canvas.style.width = '100%'
+			this.canvas.style.height = '3px';
+			this.canvas.style.position = 'absolute';
+			this.canvas.style.top = '0';
+			this.canvas.style.left = '0';
+			this.holder.appendChild(this.canvas);
+			
+			this.context = this.canvas.getContext('2d');
+			
+			
+			
+			
+			this.timeLine = new TimeLine(6000, 33);
+			this.timeLine.addEventListener(Event.CHANGE, 'update', this);
+			
+			readSize();
+			
+			this.update();
+			
+			this.resizeFN = function()
+			{
+				self.resize();
+			}
+			addEvent(window, 'resize', this.resizeFN);
+		}
+function HSVtoRGB(h, s, v)
+{
+    var r, g, b, i, f, p, q, t;
+    if (arguments.length === 1)
+	{
+        s = h.s, v = h.v, h = h.h;
+    }
+    i = Math.floor(h * 6);
+    f = h * 6 - i;
+    p = v * (1 - s);
+    q = v * (1 - f * s);
+    t = v * (1 - (1 - f) * s);
+    switch (i % 6)
+	{
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+    }
+    return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255)
+    };
+}
+		Intro.prototype.update = function()
+		{
+			var LIMIT = 650 * this.timeLine.getTime(250, 1000)
+			this.context.clearRect(0, 0, 650, 10);
+			for (var x = 0; x < LIMIT; x++)
+			{
+				var cf = x + (650 - LIMIT);
+				var color = HSVtoRGB(0.48 + (650 - cf) / 1500, 0.7, 1);
+				this.context.fillStyle = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', 1)';
+				this.context.fillRect(x, 0, 1, 3);
+				
+				this.context.fill();
+			}
+			this.canvas.style.top = (-3 * this.timeLine.getTime(1700, 300)) + 'px';
+			// 247x49
+			var y = Math.floor((DIMS.height - 49) / 2);
+			y -= (y - 10) * (this.timeLine.getTime(2000, 400));
+			y += 50 * (1 - this.timeLine.getTime(0, 500));
+			
+			this.logo.height = 49 - (49 - 30) * this.timeLine.getTime(1700, 300);
+			
+			this.logo.style.top = y + 'px';
+			this.logo.style.left = Math.floor((DIMS.width - this.logo.width) / 2) + 'px';
+			this.logo.style.opacity = this.timeLine.getTime(0, 1500);
+			
+			this.holder.style.height = (50 + (DIMS.height - 50) * (1 - this.timeLine.getTime(2000, 400))) + 'px';
+			
+			
+			var r = (parseInt('30', 16) * this.timeLine.getTime(200, 900)) | 0;
+			var g = (parseInt('37', 16) * this.timeLine.getTime(200, 900)) | 0;
+			var b = (parseInt('3B', 16) * this.timeLine.getTime(200, 900)) | 0;
+			this.holder.style.backgroundColor = 'rgba(' + r + ', ' + g + ', ' + b + ',1)';
+		}
+		Intro.prototype.resize = function()
+		{
+			readSize();
+			this.update();
+		}
+		window.onload = start;
+		//window.onscroll = scroll;
+	</script>
+</head>
+<body style="margin:0;" class="desktop" data-layout="layout">
+
+	<div class="intro"></div>
+	<div id="root">
+		<h1 class="sd-module-title">Playing with Javascript</h1>
+		<p class="sd-text">
+			Welcome, My name is Juan Carlos Arias and together we will found out what js (without any libraries) is capable of in a few lines of code. An experimental space not so experimental as real usable code will be shown here. In part is a tribute to sites like <a href="http://lab.andre-michelle.com/">http://lab.andre-michelle.com/</a> which experiments make me want to understand more about coding.</p>
+		<h1 class="sd-module-title">#JS-101</h1>
+		<p class="sd-text">What can we achieve with 101 lines of code? Well this is the place to find out.</p>
+		<a class="button" href="#">Read More</a>
+		
+		<h1 class="sd-module-title">#JS-201</h1>
+		<p class="sd-text">With more lines of code (201 lines) to play with what is posible?</p>
+		<a class="button" href="#">Read More...</a>
+		
+		
+		
+		
+		<script type="text/javascript">
+			
+			var intro = new Intro();
+			document.body.appendChild(intro.holder);
+			
+		</script>
+	</div>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
