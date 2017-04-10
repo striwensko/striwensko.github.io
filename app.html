@@ -47,7 +47,7 @@
 			var intro = new Intro();
 			document.body.appendChild(intro.holder);
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/js/service-worker.js').then(function() { console.log('Service Worker Registered'); });
+                navigator.serviceWorker.register('/js/service-worker.js?t=300').then(function() { console.log('Service Worker Registered'); });
             }
 
 		}
