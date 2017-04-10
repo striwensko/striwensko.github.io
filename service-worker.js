@@ -17,7 +17,7 @@ var cacheName = 'weatherPWA-final-1';
 var filesToCache = [
   '/',
   '/index.html',
-  '/scripts/app.js',
+  '/scripts/app.js?t=300',
   '/styles/inline.css',
   '/images/clear.png',
   '/images/cloudy-scattered-showers.png',
