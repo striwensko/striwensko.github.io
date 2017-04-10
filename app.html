@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	<script type="text/javascript" charset="utf-8" src="js/LIBRARY.js"></script>
+	<style type="text/css">
+		
+		html, body
+		{
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: Montserrat, Arial;
+			/*"ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+		}
+		
+		.intro
+		{
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1000;
+			background-color: #000;
+		}
+		body
+		{
+			
+		}
+		#root
+		{
+			position: fixed;
+			top: 50px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			overflow: auto;
+		}
+	</style>
+	<script type="text/javascript">
+		
+		function start()
+		{
+			var intro = new Intro();
+			document.body.appendChild(intro.holder);
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js').then(function() { console.log('Service Worker Registered'); });
+            }
+
+		}
+		document.addEventListener( "DOMContentLoaded", start );
+		function Intro()
+		{
+			var self = this;
+			var intro = document.getElementsByClassName('intro');
+			this.holder = (intro.length > 0 ?  intro[0] : document.createElement('div'));
+			this.holder.className = 'intro';
+			
+			
+			this.logo = new Image();
+			this.logo.src = 'images/logo.png';
+			this.logo.style.position = 'absolute';
+			this.logo.onload = function()
+			{
+				self.timeLine.play();
+			}
+			this.holder.appendChild(this.logo);
+			
+			
+			this.canvas = document.createElement('canvas');
+			this.canvas.width = 650;
+			this.canvas.height = 3;
+			this.canvas.style.width = '100%'
+			this.canvas.style.height = '3px';
+			this.canvas.style.position = 'absolute';
+			this.canvas.style.top = '0';
+			this.canvas.style.left = '0';
+			this.holder.appendChild(this.canvas);
+			
+			this.context = this.canvas.getContext('2d');
+			
+			
+			
+			
+			this.timeLine = new TimeLine(6000, 33);
+			this.timeLine.addEventListener(Event.CHANGE, 'update', this);
+			
+			readSize();
+			
+			this.update();
+			
+			this.resizeFN = function()
+			{
+				self.resize();
+			}
+			addEvent(window, 'resize', this.resizeFN);
+		}
+function HSVtoRGB(h, s, v)
+{
+    var r, g, b, i, f, p, q, t;
+    if (arguments.length === 1)
+	{
+        s = h.s, v = h.v, h = h.h;
+    }
+    i = Math.floor(h * 6);
+    f = h * 6 - i;
+    p = v * (1 - s);
+    q = v * (1 - f * s);
+    t = v * (1 - (1 - f) * s);
+    switch (i % 6)
+	{
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+    }
+    return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255)
+    };
+}
+		Intro.prototype.update = function()
+		{
+			var LIMIT = 650 * this.timeLine.getTime(250, 1000)
+			this.context.clearRect(0, 0, 650, 10);
+			for (var x = 0; x < LIMIT; x++)
+			{
+				var cf = x + (650 - LIMIT);
+				var color = HSVtoRGB(0.48 + (650 - cf) / 1500, 0.7, 1);
+				this.context.fillStyle = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', 1)';
+				this.context.fillRect(x, 0, 1, 3);
+				
+				this.context.fill();
+			}
+			this.canvas.style.top = (-3 * this.timeLine.getTime(1700, 300)) + 'px';
+			// 247x49
+			var y = Math.floor((DIMS.height - 49) / 2);
+			y -= (y - 10) * (this.timeLine.getTime(2000, 400));
+			y += 50 * (1 - this.timeLine.getTime(0, 500));
+			
+			this.logo.height = 49 - (49 - 30) * this.timeLine.getTime(1700, 300);
+			
+			this.logo.style.top = y + 'px';
+			this.logo.style.left = Math.floor((DIMS.width - this.logo.width) / 2) + 'px';
+			this.logo.style.opacity = this.timeLine.getTime(0, 1500);
+			
+			this.holder.style.height = (50 + (DIMS.height - 50) * (1 - this.timeLine.getTime(2000, 400))) + 'px';
+			
+			
+			var r = (parseInt('30', 16) * this.timeLine.getTime(200, 900)) | 0;
+			var g = (parseInt('37', 16) * this.timeLine.getTime(200, 900)) | 0;
+			var b = (parseInt('3B', 16) * this.timeLine.getTime(200, 900)) | 0;
+			this.holder.style.backgroundColor = 'rgba(' + r + ', ' + g + ', ' + b + ',1)';
+		}
+		Intro.prototype.resize = function()
+		{
+			readSize();
+			this.update();
+		}
+		//window.onload = start;
+		//window.onscroll = scroll;
+	</script>
+</head>
+<body style="margin:0;" class="desktop" data-layout="layout">
+
+	<div class="intro"></div>
+	<div id="root">
+		<h1 class="sd-module-title">Playing with Javascript</h1>
+		<p class="sd-text">
+			Welcome, My name is Juan Carlos Arias and together we will found out what js (without any libraries) is capable of in a few lines of code. An experimental space not so experimental as real usable code will be shown here. In part is a tribute to sites like <a href="http://lab.andre-michelle.com/">http://lab.andre-michelle.com/</a> which experiments make me want to understand more about coding.</p>
+		<h1 class="sd-module-title">#JS-101</h1>
+		<p class="sd-text">What can we achieve with 101 lines of code? Well this is the place to find out.</p>
+		<a class="button" href="#">Read More</a>
+		
+		<h1 class="sd-module-title">#JS-201</h1>
+		<p class="sd-text">With more lines of code (201 lines) to play with what is posible?</p>
+		<a class="button" href="#">Read More...</a>
+		
+		
+		
+		
+		<script type="text/javascript">
+			
+			
+			
+		</script>
+	</div>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
