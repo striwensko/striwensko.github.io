@@ -35,7 +35,8 @@ var filesToCache = [
 ];
 console.log("v1")
 self.addEventListener('install', function(e) {
-  console.log('[ServiceWorker] Install');if (false)
+  console.log('[ServiceWorker] Install');
+    if (false)
   {
       e.waitUntil(
         caches.open(cacheName).then(function(cache) {
