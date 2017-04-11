@@ -33,7 +33,7 @@ var filesToCache = [
   '/images/thunderstorm.png',
   '/images/wind.png'
 ];
-
+console.log("v1")
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
   e.waitUntil(
