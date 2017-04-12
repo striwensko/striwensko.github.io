@@ -36,22 +36,18 @@ var filesToCache = [
 console.log("v1")
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
-    if (false)
-  {
-      e.waitUntil(
-        caches.open(cacheName).then(function(cache) {
-          console.log('[ServiceWorker] Caching app shell');
-          return cache.addAll(filesToCache);
-        })
-      );
-  }
+  e.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      console.log('[ServiceWorker] Caching app shell');
+      return cache.addAll(filesToCache);
+    })
+  );
+  
   
 });
 
 self.addEventListener('activate', function(e) {
   console.log('[ServiceWorker] Activate');
-    if (false)
-    {
   e.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
@@ -72,15 +68,13 @@ self.addEventListener('activate', function(e) {
    * service worker is not yet activated. The code below essentially lets
    * you activate the service worker faster.
    */
-  return self.clients.claim();      
-    }
-  
+  return self.clients.claim();
 });
 
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
   var dataUrl = 'https://query.yahooapis.com/v1/public/yql';
-  if (false && e.request.url.indexOf(dataUrl) > -1) {
+  if (e.request.url.indexOf(dataUrl) > -1) {
     /*
      * When the request URL contains dataUrl, the app is asking for fresh
      * weather data. In this case, the service worker always goes to the
@@ -96,7 +90,7 @@ self.addEventListener('fetch', function(e) {
         });
       })
     );
-  } else if (false) {
+  } else {
     /*
      * The app is asking for app shell files. In this scenario the app uses the
      * "Cache, falling back to the network" offline strategy:
