@@ -8,5 +8,6 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   // Close the notification when it is clicked
+    console.log(event)
   event.notification.close();
 });
