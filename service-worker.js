@@ -70,7 +70,11 @@ self.addEventListener('activate', function(e) {
    */
   return self.clients.claim();
 });
-
+self.addEventListener('notificationclick', function(event) {
+  // Close the notification when it is clicked
+    console.log(event)
+    event.notification.close();
+});
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
   var dataUrl = 'https://query.yahooapis.com/v1/public/yql';

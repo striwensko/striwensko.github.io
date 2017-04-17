@@ -368,3 +368,25 @@
              .then(function() { console.log('Service Worker Registered'); });
   }
 })();
+
+function showNotifications() {
+  Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('requireInteraction: true', {
+          body: 'Requires interaction',
+          icon: '../images/touch/chrome-touch-icon-192x192.png',
+          requireInteraction: true,
+          tag: 'require-interaction'
+        });
+
+        registration.showNotification('requireInteraction: false', {
+          body: 'Does not require interaction',
+          icon: '../images/touch/chrome-touch-icon-192x192.png',
+          requireInteraction: false,
+          tag: 'no-require-interaction'
+        });
+      });
+    }
+  });
+}
