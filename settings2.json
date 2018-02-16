@@ -8,11 +8,5 @@
         "key": "showTokyButton",
         "value": "true",
         "type": "boolean"
-    },
-    {
-        "key": "alignTokyButton",
-        "value": "true",
-        "type": "boolean"
     }
-    
 ]
