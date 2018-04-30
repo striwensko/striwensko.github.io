@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="google-site-verification" content="O8fo7FuVpgpaNoF51nQvUff2hayYOjiFGXsF23D4lVg" />
+    <script type="text/javascript" charset="utf-8" src="js/LIBRARY.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/TIMER.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Tajawal" rel="stylesheet"> 
+    <script type="text/javascript">
+        window.onload = function()
+        {
+            var replay = document.getElementById('replay-button');
+            var light_bulb = document.getElementById('light_bulb');
+            var cogA = document.getElementById('cogA');
+            var cogARotate = document.getElementById('cogARotate');
+            var rocket = document.getElementById('rocket');
+            var cloudA = document.getElementById('cloudA');
+            var cloudB = document.getElementById('cloudB');
+            var cloudC = document.getElementById('cloudC');
+            var cloudD = document.getElementById('cloudD');
+            var cloudE = document.getElementById('cloudE');
+            var cloudF = document.getElementById('cloudF');
+            var cloudG = document.getElementById('cloudG');
+            var cloudH = document.getElementById('cloudH');
+            var cloudI = document.getElementById('cloudI');
+
+            replay.style.display = 'block';
+            replay.onclick = function()
+            {
+                effect.timer.position = 0;
+                effect.timer.play();
+            }
+            light_bulb.style.display = '';
+            cogA.style.display = '';
+            rocket.style.display = '';
+            cloudA.style.display = '';
+            cloudB.style.display = '';
+            cloudC.style.display = '';
+            cloudD.style.display = '';
+            cloudE.style.display = '';
+            cloudF.style.display = '';
+            cloudG.style.display = '';
+            cloudH.style.display = '';
+            cloudI.style.display = '';
+
+            cloudA.style.left = (300 * Math.random())+ 'px';
+            cloudB.style.left = (300 * Math.random())+ 'px';
+            cloudC.style.left = (300 * Math.random())+ 'px';
+            cloudD.style.left = (300 * Math.random())+ 'px';
+            cloudE.style.left = (300 * Math.random())+ 'px';
+            cloudF.style.left = (300 * Math.random())+ 'px';
+            cloudG.style.left = (300 * Math.random())+ 'px';
+            cloudH.style.left = (300 * Math.random())+ 'px';
+            cloudI.style.left = (300 * Math.random())+ 'px';
+            var svgEffects = {
+                light_bulb: [
+                    {
+                        time: {start: 2800, duration:300},
+                        value: {start: 200, end: -50},
+				        ease: TimeLine.easeOutBack,
+                        property: 'y',
+                    },
+                    {
+                        time: {start: 4000, duration:300},
+                        value: {start: 1, end: 0},
+				        ease: TimeLine.easeOutBack,
+                        property: 'opacity',
+                    }
+                ],
+                replay: [
+                    {
+                        time: {start: 10600, duration:400},
+                        value: {start: 100, end: 0},
+                        ease: TimeLine.easeOutBack,
+                        property: 'y',
+                    },
+                    {
+                        time: {start: 10600, duration:400},
+                        value: {start: 0, end: 1},
+                        property: 'opacity',
+                    },
+                ],
+                rocket: [
+                    {
+                        time: {start: 6500, duration:700},
+                        value: {start: 200, end: -50},
+                        property: 'y',
+                    },
+                    {
+                        time: {start: 7300, duration:700},
+                        value: {start: -50, end: -300},
+                        property: 'y',
+                    },
+                ],
+                cloud:[
+                    {
+                        time: function(index)
+                        {
+                            return {start:6700 + index * 150, duration: 300}
+                        },
+                        value: {start: -100, end: 229},
+                        property: 'y',
+                    }
+                ]
+            };
+            var effect = new TypographyAnimation();
+            effect.timer.setEffects(svgEffects);
+            effect.holder.appendChild(light_bulb);
+            effect.holder.appendChild(cogA);
+            effect.holder.appendChild(cloudA);
+            effect.holder.appendChild(cloudB);
+            effect.holder.appendChild(cloudC);
+            effect.holder.appendChild(cloudD);
+            effect.holder.appendChild(cloudE);
+            effect.holder.appendChild(cloudF);
+            effect.holder.appendChild(cloudG);
+            effect.holder.appendChild(cloudH);
+            effect.holder.appendChild(cloudI);
+            effect.holder.appendChild(rocket);
+            effect.holder.appendChild(replay);
+            effect.render = function()
+            {
+                TimeLine.applyMatrix(replay, this.timer.getEffect('replay'));
+                TimeLine.applyMatrix(rocket, this.timer.getEffect('rocket'));
+                TimeLine.applyMatrix(cloudA, this.timer.getEffect('cloud', 0));
+                TimeLine.applyMatrix(cloudB, this.timer.getEffect('cloud', 1));
+                TimeLine.applyMatrix(cloudC, this.timer.getEffect('cloud', 2));
+                TimeLine.applyMatrix(cloudD, this.timer.getEffect('cloud', 3));
+                TimeLine.applyMatrix(cloudE, this.timer.getEffect('cloud', 4));
+                TimeLine.applyMatrix(cloudF, this.timer.getEffect('cloud', 5));
+                TimeLine.applyMatrix(cloudG, this.timer.getEffect('cloud', 6));
+                TimeLine.applyMatrix(cloudH, this.timer.getEffect('cloud', 7));
+                TimeLine.applyMatrix(cloudI, this.timer.getEffect('cloud', 8));
+
+                TimeLine.applyMatrix(rocket, this.timer.getEffect('rocket'));
+                TimeLine.applyMatrix(light_bulb, this.timer.getEffect('light_bulb'));
+                if (this.timer.position  < 5000) {
+                    TimeLine.applyMatrix(cogA, {
+                        y: 100  - 100 * this.timer.getTime(4500, 250)
+                    })
+                } else {
+                    TimeLine.applyMatrix(cogA, {
+                        y: 100 * this.timer.getTime(6500, 250)
+                    })
+                }
+                
+                TimeLine.applyMatrix(cogARotate, {
+                    rotation: 360 * (this.timer.position % 1500) / 1500
+                })
+                
+            }
+            document.getElementById('imac').appendChild(effect.holder);
+            effect.addEffect({
+                offset: 400,
+                type: 'Effect-A',
+                text: [
+                    {name: 'DO YOU', duration:300},
+                    {name: 'HAVE', duration:300},
+                    {name: 'AN IDEA?', duration:1300}
+                ]
+            });
+            effect.addEffect({
+                offset: 1800,
+                type: 'Effect-B',
+                text: [
+                    {name: "LET'S", duration:700},
+                    {name: 'BUILD IT', duration:700},
+                    {name: 'TOGETHER', duration:700}
+                ]
+            });
+            effect.addEffect({
+                offset: 2000,
+                type: 'Effect-A',
+                text: [
+                    {name: "LET ME", duration:300},
+                    {name: 'BE PART', duration:300},
+                    {name: 'OF YOUR JOURNEY', duration:1300}
+                ]
+            });
+        }
+        function TypographyAnimation()
+        {
+            this.holder = document.createElement('div');
+            this.holder.className = 'typography-animation';
+            
+            this.timer = new TimeLine(11000, 33);
+            this.timer.addEventListener(Event.CHANGE, 'onUpdate', this);
+            this.timer.play();
+
+            this.effects = [];
+            this.time = 0;
+        }
+        TypographyAnimation.prototype.addEffect = function(data)
+        {
+            var effect = null;
+            data.offset = this.time + (data.offset || 0);
+            console.log('offset', data.offset)
+            if (data.type == 'Effect-A')
+            {
+                effect = new TypographyAnimation.EffectA(data, this.holder);
+            }
+            else if (data.type == 'Effect-B')
+            {
+                effect = new TypographyAnimation.EffectB(data, this.holder);
+            }
+            this.effects.push(effect);
+
+            this.time = effect.duration;
+            console.log(this.time)
+        }
+        TypographyAnimation.prototype.onUpdate = function()
+        {
+            for (var iEffect = 0; iEffect < this.effects.length; iEffect++)
+            {
+                this.effects[iEffect].render(this.timer);
+            }
+            this.render && this.render();
+        }
+        TypographyAnimation.EffectA = function(settings, holder)
+        {
+            var time = settings.offset || 0;
+            var height = 0;
+            this.labels = [];
+            this.duration = 0;
+            for (var iText = 0; iText < settings.text.length; iText++)
+            {
+                var fontSize = 12;
+                var label = document.createElement('span');
+                label.innerHTML = settings.text[iText].name;
+                label.data = settings.text[iText];
+                label.data.time = time;
+                label.data.end = time + settings.text[iText].duration;
+                this.duration = label.data.end;
+                //console.log(label.data);
+
+                label.style.fontSize = fontSize + 'px';
+                label.style.padding = '0 90px';
+                label.style.position = 'absolute';
+                label.style.whiteSpace = 'nowrap'
+                label.style.left = '0';
+                this.labels.push(label);
+                holder.appendChild(label);
+
+                
+                while (label.getBoundingClientRect().width < 400)
+                {
+                    fontSize++;
+                    label.style.fontSize = fontSize + 'px';
+                }
+                
+                label.data.height = label.getBoundingClientRect().height;
+                height += label.data.height;
+                time += settings.text[iText].duration;
+            }
+            
+            var offsetY = (229 - height) / 2;
+            for (var iLabel = 0; iLabel < this.labels.length; iLabel++)
+            {
+                var label = this.labels[iLabel];
+                label.style.top = offsetY + 'px';
+                offsetY += label.data.height;
+            }
+        }
+        
+        TypographyAnimation.EffectA.prototype.render = function(timeLine)
+        {
+            var time;
+
+            if (timeLine.position > this.duration)
+            {
+                time = this.duration;
+                TimeLine.applyMatrix(this.labels[0], {x: -200 * (timeLine.getTime(time, 300)), opacity: 1 - timeLine.getTime(time, 300)});
+                TimeLine.applyMatrix(this.labels[1], {scale: (1 - timeLine.getTime(time, 300)), opacity: 1 - timeLine.getTime(time, 300)});
+                TimeLine.applyMatrix(this.labels[2], {x: 200 * (timeLine.getTime(time, 300)), opacity:1 - timeLine.getTime(time, 300)});
+                return false;
+            }
+
+            time = this.labels[0].data.time;
+            TimeLine.applyMatrix(this.labels[0], {x: -200 * (1 - timeLine.getTime(time, 300)), opacity:timeLine.getTime(time, 300)});
+
+            time = this.labels[1].data.time;
+            TimeLine.applyMatrix(this.labels[1], {scale: timeLine.getTime(time, 300), opacity:timeLine.getTime(time, 300)});
+            
+            time = this.labels[2].data.time;
+            TimeLine.applyMatrix(this.labels[2], {x: 200 * (1 - timeLine.getTime(time, 300)), opacity:timeLine.getTime(time, 300)});
+
+            
+        }
+
+
+        TypographyAnimation.EffectB = function(settings, holder)
+        {
+            var time = settings.offset || 0;
+            this.labels = []
+            this.duration = 0;
+            for (var iText = 0; iText < settings.text.length; iText++)
+            {
+                var fontSize = 12;
+                var label = document.createElement('span');
+                label.innerHTML = '<span class="centerVertical">' + settings.text[iText].name + '</span>';
+                label.data = settings.text[iText];
+                label.data.time = time;
+                label.data.end = time + settings.text[iText].duration;
+                this.duration = label.data.end;
+                //console.log(label.data);
+
+                label.style.fontSize = fontSize + 'px';
+                label.style.padding = '0 40px';
+                label.style.position = 'absolute';
+                label.style.top = '50%';
+                label.style.left = '0%';
+                this.labels.push(label);
+                holder.appendChild(label);
+
+                
+                while (label.getBoundingClientRect().width < 390)
+                {
+                    fontSize++;
+                    label.style.fontSize = fontSize + 'px';
+                }
+                //console.log(label.getBoundingClientRect());
+
+                time += settings.text[iText].duration;
+            }
+        }
+        TypographyAnimation.EffectB.prototype.render = function(timeLine)
+        {
+            for (var iLabel = 0; iLabel < this.labels.length; iLabel++)
+            {
+                var label = this.labels[iLabel];
+                var x = 400 * (1 - timeLine.getTime(label.data.time, 600));
+                if (timeLine.position > label.data.end)
+                {
+                    x = -400 * timeLine.getTime(label.data.end, 600)
+                }
+                //console.log(iLabel, x, label.time)
+                TimeLine.applyMatrix(label, {x:x});
+            }
+        }
+    </script>
+    <style type="text/css">
+        html, body
+        {
+            font-family: 'Tajawal', sans-serif;
+        }
+        #imac
+        {
+            position: relative;
+            margin: 0 auto;
+        }
+        #imac > span
+        {
+            display: block;
+            bottom: 20px;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+        #imac  #replay-button
+        {
+            display: none;
+            top: 100px;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 50px;
+            cursor: pointer;
+            z-index: 10;
+            left: 0;
+        }
+        .typography-animation
+		{
+            font-family: 'Tajawal', sans-serif;
+            width: 400px;
+            height: 229px;
+            background-color: transparent;
+            color: #fff;
+            text-align: center;
+            font-size: 90px;
+            line-height: 1;
+            position: absolute;
+            overflow: hidden;
+            top: 60px;
+            left: 18px;
+		}
+        .centerVertical
+        {
+            transform: translateY(-50%);
+            display: block;
+        }
+        h1{
+            font-family: 'Tajawal', sans-serif;
+        }
+        #light_bulb
+        {
+            width: 90px;
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            margin-left: -45px;
+        }
+        #cogA
+        {
+            width: 100px;
+            position: absolute;
+            bottom: -50px;
+            right: -20px;
+        }
+        #cloudA,#cloudB,#cloudC,#cloudD,#cloudE,#cloudF,#cloudG,#cloudH,#cloudI
+        {
+            position: absolute;
+            top: 0;
+
+        }
+        #rocket
+        {
+            width: 100px;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            margin-left: -50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Typographic Animation</h1>
+
+
+<div id="imac" style="max-width: 436px; position: relative;">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+        <g>
+            <path style="fill:#E2E5E7;" d="M512.001,391.792c0,7.145-5.79,12.936-12.937,12.936H12.937C5.791,404.728,0,398.937,0,391.793
+                V64.937c0-7.143,5.791-12.938,12.937-12.938h486.127c7.146,0,12.937,5.795,12.937,12.938L512.001,391.792L512.001,391.792z"/>
+            <path style="fill:#D1D5D5;" d="M314.069,404.728h-58.068h-58.069c0,0-2.353,38.809-7.057,47.041h65.126h65.125
+                C316.421,443.536,314.069,404.728,314.069,404.728z"/>
+            <path style="fill:#C6CBCB;" d="M332.002,455.004c-7.057-0.883-10.877-3.234-10.877-3.234H256h-65.126c0,0-3.82,2.352-10.877,3.234
+                c-7.055,0.883-11.76,1.469-11.76,4.998H256h87.762C343.762,456.473,339.058,455.886,332.002,455.004z"/>
+            <path style="fill:#2D404E;" d="M499.064,51.999H12.937C5.791,51.999,0,57.794,0,64.937v293.535h512V64.937
+                C512.001,57.794,506.21,51.999,499.064,51.999z M490.811,340.087H233.865H21.19V70.388h377.583h92.038V340.087z"/>
+            <polygon style="fill:#DF584C;" points="21.19,70.388 21.19,340.087 233.865,340.087 490.811,340.087 490.811,70.388 
+                398.773,70.388 	"/>
+            <path style="fill:#C6CBCB;" d="M314.069,404.728h-58.068h-58.069c0,0-0.351,5.773-1.05,13.33h118.237
+                C314.419,410.501,314.069,404.728,314.069,404.728z"/>
+            <circle style="fill:#2D404E;" cx="256.067" cy="382.687" r="8.412"/>
+        
+        
+            <path style="opacity:0.16;fill:#E2E5E7;enable-background:new;" d="M499.064,51.999h-89.058L222.628,358.472H512V64.937
+            C512.001,57.794,506.21,51.999,499.064,51.999z"/>
+        </g>
+    </svg>
+    
+    <div id="light_bulb" style="width:90px; display: none;">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 512.008 512.008" style="enable-background:new 0 0 512.008 512.008;" xml:space="preserve">
+        <g>
+            <g>
+                <path style="fill:#868491;" d="M280.01,464.008h-48c-4.422,0-8,3.578-8,8v8c0,17.648,14.352,32,32,32s32-14.352,32-32v-8
+                    C288.01,467.586,284.432,464.008,280.01,464.008z"/>
+            </g>
+            <g>
+                <path style="fill:#5C546A;" d="M256.002,464.008H232.01c-4.422,0-8,3.578-8,8v8c0,17.646,14.347,31.995,31.992,31.999
+                    L256.002,464.008L256.002,464.008z"/>
+            </g>
+            <g>
+                <path style="fill:#FFCD00;" d="M381.983,49.895c-37.391-35.141-86.367-52.742-137.734-49.52
+                    C150.639,6.2,75.014,84.286,72.092,178.149c-2.156,69.547,34.375,133.578,95.344,167.117c15.156,8.344,24.57,24.367,24.57,41.828
+                    v60.914c0,17.648,14.352,32,32,32h64c17.648,0,32-14.352,32-32v-60.914c0-17.445,9.484-33.508,24.766-41.93
+                    c58.742-32.406,95.234-94.156,95.234-161.156C440.006,133.43,418.858,84.547,381.983,49.895z"/>
+            </g>
+            <g>
+                <circle style="fill:#FFE671;" cx="256.002" cy="184.008" r="128"/>
+            </g>
+            <g>
+                <g>
+                    <path style="fill:#FFFFFF;" d="M283.986,232.008c-10.633,0-16.07-6.203-20.031-10.727c-3.492-3.984-4.883-5.273-8-5.273
+                        c-3.102,0-4.484,1.289-7.961,5.266c-3.734,4.273-9.383,10.734-20.016,10.734c-10.625,0-16.273-6.461-20.008-10.734
+                        c-3.477-3.977-4.859-5.266-7.961-5.266c-4.422,0-8-3.578-8-8s3.578-8,8-8c10.625,0,16.273,6.461,20.008,10.734
+                        c3.477,3.977,4.859,5.266,7.961,5.266s4.492-1.289,7.969-5.266c3.734-4.273,9.383-10.734,20.008-10.734
+                        c10.633,0,16.07,6.203,20.031,10.727c3.492,3.984,4.883,5.273,8,5.273c3.109,0,4.5-1.289,7.992-5.266
+                        c3.742-4.273,9.391-10.734,20.031-10.734c4.422,0,8,3.578,8,8s-3.578,8-8,8c-3.117,0-4.508,1.289-8,5.273
+                        C300.267,225.555,294.619,232.008,283.986,232.008z"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path style="fill:#5C546A;" d="M232.002,384.008c-3.68,0-6.992-2.555-7.813-6.297l-40-184c-0.938-4.32,1.805-8.578,6.117-9.523
+                        c4.344-0.953,8.578,1.805,9.523,6.117l40,184c0.938,4.32-1.805,8.578-6.117,9.523
+                        C233.135,383.954,232.564,384.008,232.002,384.008z"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path style="fill:#5C546A;" d="M280.017,384.008c-0.563,0-1.133-0.055-1.711-0.18c-4.313-0.945-7.055-5.203-6.117-9.523l40-184
+                        c0.945-4.313,5.164-7.063,9.523-6.117c4.313,0.945,7.055,5.203,6.117,9.523l-40,184
+                        C287.01,381.454,283.697,384.008,280.017,384.008z"/>
+                </g>
+            </g>
+            <g>
+                <path style="fill:#B4B6BC;" d="M190.633,376.008c0.851,3.593,1.374,7.293,1.374,11.086v60.914c0,17.648,14.352,32,32,32h64
+                    c17.648,0,32-14.352,32-32v-60.914c0-3.79,0.527-7.491,1.384-11.086H190.633z"/>
+            </g>
+            <g>
+                <path style="fill:#868491;" d="M256.002,376.008h-65.369c0.851,3.593,1.374,7.293,1.374,11.086v60.914c0,17.648,14.352,32,32,32
+                    h31.995V376.008z"/>
+            </g>
+            <g>
+                <g>
+                    <rect x="256.002" y="400.008" style="fill:#868491;" width="64" height="16"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <rect x="256.006" y="432.008" style="fill:#868491;" width="64" height="16"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <rect x="192.002" y="400.008" style="fill:#5C546A;" width="64" height="16"/>
+                </g>
+            </g>
+            <g>
+                <g>
+                    <rect x="192.002" y="432.008" style="fill:#5C546A;" width="64" height="16"/>
+                </g>
+            </g>
+        </g>
+    
+        </svg>
+    </div>
+    <div id="cogA" style="width:100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+            <g style="transform: translate(256px, 256px)"><g id="cogARotate"><g style="transform: translate(-256px, -256px)">
+                <path style="fill:#B9B9B9;" d="M512, 297.793v-83.585l-52.337-5.233c-5.266-22.911-14.302-44.37-26.41-63.713l33.319-40.724 l-59.111-59.111l-40.724,33.319c-19.343-12.108-40.802-21.144-63.713-26.41L297.793,0h-83.585l-5.233,52.337 c-22.911,5.266-44.37,14.302-63.713,26.41l-40.724-33.319l-59.111,59.111l33.319,40.724c-12.108,19.343-21.144,40.802-26.41,63.713 L0,214.207v83.585l52.337,5.233c5.266,22.911,14.302,44.37,26.41,63.713l-33.319,40.724l59.111,59.111l40.724-33.319 c19.343,12.108,40.802,21.144,63.713,26.41L214.207,512h83.585l5.233-52.337c22.911-5.266,44.37-14.302,63.713-26.41l40.724,33.319 l59.111-59.111l-33.319-40.724c12.108-19.343,21.144-40.802,26.41-63.713L512,297.793z M257.834,431.532 c-0.608,0.011-1.227,0.011-1.834,0.011c-96.942,0-175.543-78.589-175.543-175.543S159.058,80.457,256,80.457 c0.608,0,1.227,0,1.834,0.011C335.298,81.684,397.785,159.8,397.785,256S335.298,430.316,257.834,431.532z"/>
+            </g></g></g>
+            <path style="fill:#737373;" d="M257.866,80.47v82.743c50.408,0.997,90.972,42.142,90.972,92.788s-40.564,91.791-90.972,92.788 v82.743c96.095-0.996,173.677-79.196,173.677-175.531S353.961,81.465,257.866,80.47z"/>
+            <path style="fill:#969696;" d="M257.834,80.468c-0.608-0.011-1.227-0.011-1.834-0.011c-96.942,0-175.543,78.589-175.543,175.543 S159.058,431.543,256,431.543c0.608,0,1.227,0,1.834-0.011c77.464-1.215,139.95-79.332,139.95-175.532 S335.298,81.684,257.834,80.468z M256.002,348.835c-51.271,0-92.835-41.564-92.835-92.835s41.564-92.835,92.835-92.835 s92.835,41.564,92.835,92.835S307.273,348.835,256.002,348.835z"/>
+            <path style="fill:#B9B9B9;" d="M256,143.473l-10.165,17.554l10.167,16.204c43.503,0,78.769,35.266,78.769,78.769 s-35.266,78.769-78.769,78.769l-10.517,16.159L256,368.527c62.149,0,112.527-50.379,112.527-112.527S318.149,143.473,256,143.473z" />
+            <path style="fill:#DCDCDC;" d="M177.233,256c0-43.502,35.265-78.768,78.767-78.769v-33.758 c-62.149,0-112.527,50.379-112.527,112.527S193.851,368.527,256,368.527v-33.758C212.498,334.768,177.233,299.502,177.233,256z"/>
+       </svg>
+    </div>
+    <div id="cloudA" style="width: 100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;" xml:space="preserve">
+
+<path style="fill:#BEEAFC;" d="M373.536,162.958c-20.468-21.893-49.607-35.578-81.941-35.578c-53.408,0-98.066,37.345-109.362,87.34
+	c-6.704-2.236-13.865-3.466-21.318-3.466c-22.947,0-43.196,11.49-55.341,29.022c-6.779-1.751-13.888-2.692-21.216-2.692
+	C37.768,237.584,0,275.352,0,321.942c0,46.588,37.768,84.361,84.358,84.361h93.011c0.196-28.675,23.489-51.858,52.206-51.858
+	c5.446,0,10.697,0.835,15.633,2.382c-0.023-0.79-0.059-1.582-0.059-2.382c0-38.787,31.442-70.23,70.228-70.23
+	c33.443,0,61.41,23.387,68.483,54.691c4.197-1.401,8.678-2.17,13.346-2.17c14.368,0,27.051,7.194,34.655,18.175
+	c4.245-1.098,8.696-1.688,13.284-1.688c19.231,0,36.057,10.279,45.295,25.637c13.396-14.793,21.557-34.414,21.557-55.94
+	c0-46.056-37.332-83.384-83.384-83.384c-8.696,0-17.08,1.333-24.963,3.803c0.041-1.263,0.096-2.529,0.096-3.803
+	c0-18.832-4.641-36.579-12.845-52.163"/>
+<path style="fill:#AEE4FF;" d="M89.442,237.74c-1.682-0.102-3.376-0.157-5.084-0.157C37.768,237.582,0,275.351,0,321.941
+	c0,46.588,37.768,84.361,84.358,84.361h93.011c0.061-8.998,2.4-17.454,6.464-24.823C137.844,346.086,103.961,295.755,89.442,237.74z
+	"/>
+
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudB" style="width: 60px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;" xml:space="preserve">
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudC" style="width: 100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;transform: scale(-1, 1)" xml:space="preserve" >
+
+<path style="fill:#BEEAFC;" d="M373.536,162.958c-20.468-21.893-49.607-35.578-81.941-35.578c-53.408,0-98.066,37.345-109.362,87.34
+	c-6.704-2.236-13.865-3.466-21.318-3.466c-22.947,0-43.196,11.49-55.341,29.022c-6.779-1.751-13.888-2.692-21.216-2.692
+	C37.768,237.584,0,275.352,0,321.942c0,46.588,37.768,84.361,84.358,84.361h93.011c0.196-28.675,23.489-51.858,52.206-51.858
+	c5.446,0,10.697,0.835,15.633,2.382c-0.023-0.79-0.059-1.582-0.059-2.382c0-38.787,31.442-70.23,70.228-70.23
+	c33.443,0,61.41,23.387,68.483,54.691c4.197-1.401,8.678-2.17,13.346-2.17c14.368,0,27.051,7.194,34.655,18.175
+	c4.245-1.098,8.696-1.688,13.284-1.688c19.231,0,36.057,10.279,45.295,25.637c13.396-14.793,21.557-34.414,21.557-55.94
+	c0-46.056-37.332-83.384-83.384-83.384c-8.696,0-17.08,1.333-24.963,3.803c0.041-1.263,0.096-2.529,0.096-3.803
+	c0-18.832-4.641-36.579-12.845-52.163"/>
+<path style="fill:#AEE4FF;" d="M89.442,237.74c-1.682-0.102-3.376-0.157-5.084-0.157C37.768,237.582,0,275.351,0,321.941
+	c0,46.588,37.768,84.361,84.358,84.361h93.011c0.061-8.998,2.4-17.454,6.464-24.823C137.844,346.086,103.961,295.755,89.442,237.74z
+	"/>
+
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudD" style="width: 100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;" xml:space="preserve">
+
+<path style="fill:#BEEAFC;" d="M373.536,162.958c-20.468-21.893-49.607-35.578-81.941-35.578c-53.408,0-98.066,37.345-109.362,87.34
+	c-6.704-2.236-13.865-3.466-21.318-3.466c-22.947,0-43.196,11.49-55.341,29.022c-6.779-1.751-13.888-2.692-21.216-2.692
+	C37.768,237.584,0,275.352,0,321.942c0,46.588,37.768,84.361,84.358,84.361h93.011c0.196-28.675,23.489-51.858,52.206-51.858
+	c5.446,0,10.697,0.835,15.633,2.382c-0.023-0.79-0.059-1.582-0.059-2.382c0-38.787,31.442-70.23,70.228-70.23
+	c33.443,0,61.41,23.387,68.483,54.691c4.197-1.401,8.678-2.17,13.346-2.17c14.368,0,27.051,7.194,34.655,18.175
+	c4.245-1.098,8.696-1.688,13.284-1.688c19.231,0,36.057,10.279,45.295,25.637c13.396-14.793,21.557-34.414,21.557-55.94
+	c0-46.056-37.332-83.384-83.384-83.384c-8.696,0-17.08,1.333-24.963,3.803c0.041-1.263,0.096-2.529,0.096-3.803
+	c0-18.832-4.641-36.579-12.845-52.163"/>
+<path style="fill:#AEE4FF;" d="M89.442,237.74c-1.682-0.102-3.376-0.157-5.084-0.157C37.768,237.582,0,275.351,0,321.941
+	c0,46.588,37.768,84.361,84.358,84.361h93.011c0.061-8.998,2.4-17.454,6.464-24.823C137.844,346.086,103.961,295.755,89.442,237.74z
+	"/>
+
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudE" style="width: 60px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;" xml:space="preserve">
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudF" style="width: 100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;transform: scale(-1, 1)" xml:space="preserve" >
+
+<path style="fill:#BEEAFC;" d="M373.536,162.958c-20.468-21.893-49.607-35.578-81.941-35.578c-53.408,0-98.066,37.345-109.362,87.34
+	c-6.704-2.236-13.865-3.466-21.318-3.466c-22.947,0-43.196,11.49-55.341,29.022c-6.779-1.751-13.888-2.692-21.216-2.692
+	C37.768,237.584,0,275.352,0,321.942c0,46.588,37.768,84.361,84.358,84.361h93.011c0.196-28.675,23.489-51.858,52.206-51.858
+	c5.446,0,10.697,0.835,15.633,2.382c-0.023-0.79-0.059-1.582-0.059-2.382c0-38.787,31.442-70.23,70.228-70.23
+	c33.443,0,61.41,23.387,68.483,54.691c4.197-1.401,8.678-2.17,13.346-2.17c14.368,0,27.051,7.194,34.655,18.175
+	c4.245-1.098,8.696-1.688,13.284-1.688c19.231,0,36.057,10.279,45.295,25.637c13.396-14.793,21.557-34.414,21.557-55.94
+	c0-46.056-37.332-83.384-83.384-83.384c-8.696,0-17.08,1.333-24.963,3.803c0.041-1.263,0.096-2.529,0.096-3.803
+	c0-18.832-4.641-36.579-12.845-52.163"/>
+<path style="fill:#AEE4FF;" d="M89.442,237.74c-1.682-0.102-3.376-0.157-5.084-0.157C37.768,237.582,0,275.351,0,321.941
+	c0,46.588,37.768,84.361,84.358,84.361h93.011c0.061-8.998,2.4-17.454,6.464-24.823C137.844,346.086,103.961,295.755,89.442,237.74z
+	"/>
+
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+
+    <div id="cloudG" style="width: 100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;" xml:space="preserve">
+
+<path style="fill:#BEEAFC;" d="M373.536,162.958c-20.468-21.893-49.607-35.578-81.941-35.578c-53.408,0-98.066,37.345-109.362,87.34
+	c-6.704-2.236-13.865-3.466-21.318-3.466c-22.947,0-43.196,11.49-55.341,29.022c-6.779-1.751-13.888-2.692-21.216-2.692
+	C37.768,237.584,0,275.352,0,321.942c0,46.588,37.768,84.361,84.358,84.361h93.011c0.196-28.675,23.489-51.858,52.206-51.858
+	c5.446,0,10.697,0.835,15.633,2.382c-0.023-0.79-0.059-1.582-0.059-2.382c0-38.787,31.442-70.23,70.228-70.23
+	c33.443,0,61.41,23.387,68.483,54.691c4.197-1.401,8.678-2.17,13.346-2.17c14.368,0,27.051,7.194,34.655,18.175
+	c4.245-1.098,8.696-1.688,13.284-1.688c19.231,0,36.057,10.279,45.295,25.637c13.396-14.793,21.557-34.414,21.557-55.94
+	c0-46.056-37.332-83.384-83.384-83.384c-8.696,0-17.08,1.333-24.963,3.803c0.041-1.263,0.096-2.529,0.096-3.803
+	c0-18.832-4.641-36.579-12.845-52.163"/>
+<path style="fill:#AEE4FF;" d="M89.442,237.74c-1.682-0.102-3.376-0.157-5.084-0.157C37.768,237.582,0,275.351,0,321.941
+	c0,46.588,37.768,84.361,84.358,84.361h93.011c0.061-8.998,2.4-17.454,6.464-24.823C137.844,346.086,103.961,295.755,89.442,237.74z
+	"/>
+
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudH" style="width: 60px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;" xml:space="preserve">
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+    <div id="cloudI" style="width: 100px; display: none;">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 511.998 511.998" style="enable-background:new 0 0 511.998 511.998;transform: scale(-1, 1)" xml:space="preserve" >
+
+<path style="fill:#BEEAFC;" d="M373.536,162.958c-20.468-21.893-49.607-35.578-81.941-35.578c-53.408,0-98.066,37.345-109.362,87.34
+	c-6.704-2.236-13.865-3.466-21.318-3.466c-22.947,0-43.196,11.49-55.341,29.022c-6.779-1.751-13.888-2.692-21.216-2.692
+	C37.768,237.584,0,275.352,0,321.942c0,46.588,37.768,84.361,84.358,84.361h93.011c0.196-28.675,23.489-51.858,52.206-51.858
+	c5.446,0,10.697,0.835,15.633,2.382c-0.023-0.79-0.059-1.582-0.059-2.382c0-38.787,31.442-70.23,70.228-70.23
+	c33.443,0,61.41,23.387,68.483,54.691c4.197-1.401,8.678-2.17,13.346-2.17c14.368,0,27.051,7.194,34.655,18.175
+	c4.245-1.098,8.696-1.688,13.284-1.688c19.231,0,36.057,10.279,45.295,25.637c13.396-14.793,21.557-34.414,21.557-55.94
+	c0-46.056-37.332-83.384-83.384-83.384c-8.696,0-17.08,1.333-24.963,3.803c0.041-1.263,0.096-2.529,0.096-3.803
+	c0-18.832-4.641-36.579-12.845-52.163"/>
+<path style="fill:#AEE4FF;" d="M89.442,237.74c-1.682-0.102-3.376-0.157-5.084-0.157C37.768,237.582,0,275.351,0,321.941
+	c0,46.588,37.768,84.361,84.358,84.361h93.011c0.061-8.998,2.4-17.454,6.464-24.823C137.844,346.086,103.961,295.755,89.442,237.74z
+	"/>
+
+<path style="fill:#E4F2F9;" d="M445.146,350.991c-4.588,0-9.041,0.588-13.284,1.688c-7.604-10.982-20.287-18.175-34.655-18.175
+	c-4.668,0-9.149,0.769-13.346,2.17c-7.074-31.305-35.04-54.691-68.483-54.691c-38.786,0-70.228,31.443-70.228,70.23
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h156.329h29.013h30.23c29.175,0,52.827-23.651,52.827-52.824
+	C497.973,374.64,474.321,350.991,445.146,350.991z"/>
+<path style="fill:#D7EDF9;" d="M285.258,337.525c0-18.847,4-36.758,11.185-52.941c-29.585,8.267-51.295,35.403-51.295,67.627
+	c0,0.8,0.035,1.592,0.059,2.382c-4.936-1.547-10.187-2.382-15.633-2.382c-28.835,0-52.212,23.373-52.212,52.216
+	c0,28.835,23.378,52.21,52.212,52.21h132.677C316.86,436.184,285.258,390.545,285.258,337.525z"/>
+</svg>
+    </div>
+
+
+    <div id="rocket" style="width:100px; display: none;">
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+            <path style="fill:#004578;" d="M153.972,325.771l-54.837,49.485c-0.041,0.038-15.368,14.616-9.505,36.641l0,0
+            c0.004,0.016,22.208,83.432,22.213,83.448c7.497,28.17,14.374,8.974,16.376,2.144c6.877-25.752,22.112-59.059,46.055-73.507
+            C164.666,395.134,157.779,361.613,153.972,325.771z"/>
+            <path style="fill:#2b88d8;" d="M161.08,373.152c3.447,41.095-26.425,75.636-62.544,72.206c0.004,0.016,13.301,49.971,13.306,49.987
+            c7.497,28.17,14.374,8.974,16.376,2.144c6.877-25.752,22.112-59.059,46.055-73.507C169.05,408.297,164.637,391.222,161.08,373.152z"
+            />
+            <path style="fill:#004578;" d="M358.028,325.771l54.837,49.485c0.041,0.038,15.368,14.616,9.505,36.641l0,0
+            c-0.004,0.016-22.208,83.432-22.213,83.448c-7.497,28.17-14.374,8.974-16.376,2.144c-6.877-25.752-22.112-59.059-46.055-73.507
+            C347.333,395.134,354.221,361.613,358.028,325.771z"/>
+            <path style="fill:#2b88d8;" d="M350.92,373.152c-3.447,41.09,26.419,75.635,62.544,72.206c-0.004,0.016-13.301,49.971-13.306,49.987
+            c-7.497,28.17-14.374,8.974-16.376,2.144c-6.877-25.752-22.112-59.059-46.055-73.507C342.95,408.297,347.362,391.222,350.92,373.152
+            z"/>
+            <path style="fill:#E5E5E5;" d="M280.949,434.812h-10.923c-26.137,0-45.464,0-67.888,0v26.132c0,7.435,6.027,13.466,13.466,13.466
+            c33.373,0,20.986,0,54.422,0h10.923h15.447c7.436,0,13.466-6.031,13.466-13.466v-26.132H280.949z"/>
+            <path style="fill:#D1CFCF;" d="M222.738,460.944v-26.132c-7.441,0-12.815,0-20.6,0v26.132c0,7.435,6.027,13.466,13.466,13.466h20.6
+            C228.765,474.41,222.738,468.379,222.738,460.944z"/>
+            <path style="fill:#E5E5E5;" d="M178.08,78.984c-19.103,48.375-29.623,112.513-29.623,180.601c0,33.964,2.667,67.19,7.735,97.97
+            h199.614c14.532-88.277,9.252-199.717-21.886-278.571C292.379-26.224,219.704-26.433,178.08,78.984z"/>
+            <path style="fill:#D1CFCF;" d="M178.08,78.984c-31.366,79.428-36.3,191.043-21.888,278.571h20.6
+            C150.916,200.403,191.838,17.324,266.301,1.253C223.916-7.886,194.006,38.651,178.08,78.984z"/>
+            <circle style="fill:#49B5CE;" cx="255.997" cy="159.595" r="52.041"/>
+            <path style="fill:#34A4B7;" d="M232.002,159.599c0-23.88,16.09-43.99,38.018-50.113c-4.462-1.246-9.16-1.927-14.019-1.927
+            c-28.741,0-52.038,23.302-52.038,52.04s23.298,52.036,52.038,52.036c4.86,0,9.557-0.68,14.019-1.926
+            C248.092,203.586,232.002,183.478,232.002,159.599z"/>
+            <path style="fill:#2571A0;" d="M280.949,159.599c0,13.778-11.17,24.949-24.95,24.949c-13.779,0-24.95-11.171-24.95-24.949
+            c0-13.782,11.17-24.953,24.95-24.953C269.779,134.646,280.949,145.816,280.949,159.599z"/>
+            <path style="fill:#1A6287;" d="M256,159.599c0-9.235,5.019-17.292,12.475-21.607c-3.671-2.124-7.928-3.346-12.475-3.346
+            c-13.78,0-24.95,11.171-24.95,24.953c0,13.778,11.17,24.949,24.95,24.949c4.546,0,8.804-1.222,12.475-3.346
+            C261.019,176.887,256,168.831,256,159.599z"/>
+            <path style="fill:#414356;" d="M155.863,355.518c4.434,27.592,10.782,53.263,18.873,75.784c1.201,3.341,4.37,5.57,7.921,5.57h59.317
+            h28.053c7.106,0,52.349,0,59.319,0c3.55,0,6.72-2.229,7.921-5.57c8.09-22.521,14.438-48.193,18.871-75.784
+            C346.803,355.518,163.093,355.518,155.863,355.518z"/>
+            <path style="fill:#2D313F;" d="M195.336,431.302c-8.09-22.52-14.44-48.192-18.873-75.784h-20.6
+            c3.443,19.747,8.293,46.313,18.873,75.784c1.201,3.341,4.37,5.57,7.921,5.57h20.6C199.706,436.872,196.537,434.643,195.336,431.302z
+            "/>
+            <path style="fill:#004578;" d="M256,512c-7.747,0-14.026-6.28-14.026-14.025v-170.51c0-7.749,6.279-14.027,14.026-14.027
+            c7.746,0,14.026,6.278,14.026,14.027v170.51C270.026,505.72,263.746,512,256,512z"/>
+            <path style="fill:#2b88d8;" d="M256,497.975v-170.51c0-5.19,2.824-9.71,7.013-12.136c-2.064-1.195-4.455-1.891-7.013-1.891
+            c-7.747,0-14.026,6.278-14.026,14.027v170.51c0,7.745,6.279,14.025,14.026,14.025c2.558,0,4.948-0.696,7.013-1.892
+            C258.824,507.682,256,503.163,256,497.975z"/>
+       
+       </svg>
+    </div>
+    <span id="replay-button">REPLAY</span>
+    <span>Animation created using only javascript</span>
+</div>
+
+
+</body>
+
+</html>
