@@ -1,0 +1,16 @@
+//<!--
+// \include\lib\_global\features\my_ebay\sh_common.js 
+
+function v3MsgPositionChange(){var titleNode=document.getElementsByClassName("v3Pages_title");var notificationNode=document.getElementsByClassName("v3Pages_notification");var notifyMsgNode=document.getElementsByClassName("v3Pages_notifyMsg");if((notifyMsgNode.length>0||notificationNode.length>0)&&(titleNode.length>0)){var trEle=document.createElement("tr");var tdEle=document.createElement("td");trEle.style.display="block";if(notificationNode.length>0){var tdChildEle=document.createElement("div");for(var i=0;i<notificationNode.length;){tdChildEle.appendChild(notificationNode[0]);tdChildEle.lastChild.style.display="block";}
+tdEle.appendChild(tdChildEle);trEle.appendChild(tdEle);titleNode[0].children[0].appendChild(trEle);var trPaddingEle=document.createElement("tr");trPaddingEle.style.height="4px";titleNode[0].children[0].appendChild(trPaddingEle);}
+else if(notifyMsgNode.length>0){var cloneNotify=notifyMsgNode[0].cloneNode(true);cloneNotify.style.display="block";tdEle.appendChild(cloneNotify);trEle.appendChild(tdEle);titleNode[0].children[0].appendChild(trEle);}}}
+function topNavSubMenu(){this.attachEvents();}
+topNavSubMenu.prototype.attachEvents=function(){var submenuEl=document.querySelectorAll(".shreskin-top-nav-submenu>ul>li:last-child a"),submenuElLth=submenuEl.length;var expandBtn=document.querySelectorAll(".shreskin-top-nav button[aria-expanded]"),expandBtnLth=expandBtn.length;for(var el=0;el<submenuElLth;el++){submenuEl[el].addEventListener('blur',this.hideSubMenu,false);}
+for(var btn=0;btn<expandBtnLth;btn++){expandBtn[btn].addEventListener('click',this.showSubMenu,false);expandBtn[btn].addEventListener('focus',this.hideWhenFocus,false);}}
+topNavSubMenu.prototype.hideSubMenu=function(event){var currentElem=event.target||event.srcElement,parentNode;var closestByClass=function(el,clazz){while(el.className!=clazz){el=el.parentNode;if(!el){return null;}}
+return el;}
+parentNode=closestByClass(currentElem,"shreskin-top-nav-submenu");if(parentNode.getAttribute("aria-hidden")=="false"){parentNode.setAttribute("aria-hidden","true");}}
+topNavSubMenu.prototype.showSubMenu=function(event){var currentTarget=event.target||event.srcElement;currentTarget.setAttribute("aria-expanded","true");var nextNode=currentTarget.nextElementSibling;nextNode.setAttribute("aria-hidden","false");nextNode.getElementsByTagName('a')[0].focus();}
+topNavSubMenu.prototype.hideWhenFocus=function(event){var currentTarget=event.target||event.srcElement;currentTarget.setAttribute("aria-expanded","false");var nextNode=currentTarget.nextElementSibling;nextNode.setAttribute("aria-hidden","true");}
+if(document.addEventListener){document.addEventListener("DOMContentLoaded",function(){v3MsgPositionChange();new topNavSubMenu();},false);}
+// b=18788848 -->
