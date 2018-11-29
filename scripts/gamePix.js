@@ -732,7 +732,7 @@
             showLoaderAnimation.play();
         }
 
-        alert("4");
+        alert("6.1");
         function openGame(data, mode){
             // mode = [menu, catalog]
             //iframeGame.style.display = '';
@@ -760,9 +760,9 @@
                 }
             }
             loader.update(0);
-            //iframeGame.style.display = '';
-            //iframeGame.style.opacity = 0.2;
-            timeLine.play();
+            iframeGame.style.display = '';
+            iframeGame.style.opacity = 0.3;
+            //timeLine.play();
             console.log(data)
         }
         var json = new JSON_Loader();
