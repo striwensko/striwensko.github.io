@@ -480,9 +480,10 @@
         var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
         eventer(messageEvent, function(e){
             console.log(e);
-            switch (e.data.type) {
-                case 'loading':
-                    console.log(e.data.percentage);
+            if (e.data.type == 'loading') {
+                loader.update(e.data.percentage / 100)
+            } else if (e.data.type == 'loaded') {
+                loader.update(100)
             }
         });
 
@@ -731,7 +732,7 @@
             showLoaderAnimation.play();
         }
 
-        alert("1");
+        alert("2");
         function openGame(data, mode){
             // mode = [menu, catalog]
             //iframeGame.style.display = '';
@@ -758,7 +759,10 @@
                     UI['close-bar'].style.opacity = 0;
                 }
             }
-            timeLine.play();
+            loader.update(0);
+            iframeGame.style.display = '';
+            iframeGame.style.opacity = 0.2;
+            //timeLine.play();
             console.log(data)
         }
         var json = new JSON_Loader();
