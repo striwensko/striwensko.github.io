@@ -66,7 +66,16 @@
             padding: 10px 20px;
             padding-top: 35px;
         }
-        
+        .catalog .header > img +  b{
+            margin-top: 20px;
+        }
+        .catalog .header > img +  b,
+        .catalog .header > ul + b{
+            width: 100%;
+            height: 1px;
+            background-color: #777;
+            display: block;
+        }
         .catalog .header ul,
         .catalog .header ul li{
             display: block;
@@ -77,11 +86,8 @@
             font-size: 12px;
         }
         .catalog .header ul{
-            margin-top: 20px;
-            border: 1px solid #777;
             padding: 10px 0;
             border-left: 0;
-            border-right: 0;
         }
         .catalog .header ul li{
             width: 40px;
@@ -97,6 +103,11 @@
             display: block;
             clear: both;
             content: '';
+        }
+        .catalog .header ul li u{
+            display: block;
+            position: relative;
+            cursor: pointer;
         }
         .catalog .header ul li i{
             border: 1px solid #000;
@@ -114,9 +125,14 @@
             transform: translate(-50%, 0);
             position: absolute;
         }
+        .catalog .header ul li span b{
+            font-weight: normal;
+            display: block;
+            cursor: pointer;
+        }
 
 
-        .catalog .header ul li i svg{
+        .catalog .header ul li u svg{
             fill: #fff;
             position: absolute;
             top: 50%;
@@ -193,6 +209,7 @@
             width: 160px;
             display: inline-block;
             margin: 15px;
+            cursor: pointer;
         }
         @media only screen and (max-width:600px)
         {
@@ -296,6 +313,7 @@
         iframe.style.left = 0;
         iframe.style.right = 0;
         iframe.style.bottom = 0;
+        iframe.setAttribute('seamless', 'seamless')
         
         iframe.style.display = "block";
         iframe.style.border =  0;
@@ -305,14 +323,34 @@
         iframe.style.zIndex = 1000000;
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
+
+
+        var iframeGame = document.createElement('iframe');
+        iframeGame.setAttribute('src', 'about:blank');
+        iframeGame.style.position = 'fixed';
+        iframeGame.style.top = '50px';
+        iframeGame.style.left = 0;
+        iframeGame.style.right = 0;
+        iframeGame.style.bottom = 0;
+        iframeGame.setAttribute('seamless', 'seamless')
+        
+        iframeGame.style.display = "block";
+        iframeGame.style.border =  0;
+        
+        iframeGame.style.width = '100%';
+        iframeGame.style.height= 'calc(100% - 50px)';
+        iframeGame.style.zIndex = 1000001;
+        iframeGame.style.display = 'none';
+        document.body.appendChild(iframeGame);
         
         
+        window['globalIframe'] = iframeGame;
+
         var UI = {};
         var html = ''
         html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
-        html += ''
         
-        var SID = 30166;
+        var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
         
         document.body.appendChild(Browser.DOM(html, UI));
         UI.button.icon.style.opacity = '0';
@@ -332,6 +370,13 @@
         font.setAttribute('rel', 'stylesheet');
         head.appendChild(font);        
 
+        var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
+        var eventer = window[eventMethod];
+        var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
+        eventer(messageEvent, function(e){
+        console.log(e);
+        });
+
         var timeLine = new TimeLine(500, 33);
         timeLine.direction = -1;
         timeLine.addEventListener(Event.CHANGE, 'onRender', timeLine);
@@ -348,7 +393,7 @@
             }
             var children = document.body.children;
             function noBlur(element){
-                if (element == UI.button || element == iframe){
+                if (element == UI.button || element == iframe || element == iframeGame){
                     return false;
                 }
                 return true;
@@ -377,20 +422,30 @@
         }
         
 
-        var catalogShowEffect = new TimeLine(500, 33);
+        var catalogShowEffect = new TimeLine(1200, 33);
         catalogShowEffect.direction = -1;
         catalogShowEffect.addEventListener(Event.CHANGE, 'onRender', catalogShowEffect);
         catalogShowEffect.onRender = function(){
-            UI.button.icon.style.opacity = this.getTime(300, 200)
-            UI['catalog-container'].style.display = (this.position < 200 ? '' : 'none');
-            TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * this.getTime(300, 200)});
+            var offset = 500;
+            UI['catalog-container'].style.display = (this.position < this.duration ? '' : 'none');
+            UI['catalog-container'].style.opacity = 1 - this.getTime(300, 400);
             
+            TimeLine.applyMatrix(UI['line-top'], {y: 50 * this.getTime(300, 400)})
+            TimeLine.applyMatrix(UI['line-bottom'], {y: -30 * this.getTime(300, 400)})
+            for (var iCat = 0; iCat < categories.length; iCat++){
+                TimeLine.applyMatrix(categories[iCat].UI.label.text, { y: 24 * this.getTime(300, 400)});
+                TimeLine.applyMatrix(categories[iCat].UI.circle, { scale: 1 - this.getTime(300, 400)});
+            }
+            offset = 1000;
+            
+            UI.button.icon.style.opacity = this.getTime(offset, 200)
+            TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * this.getTime(offset, 200)});
             for (var iItem = 0; iItem < items.length; iItem++){
-                var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200) + 48 * this.getTime(300, 200);
-                var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200);
-                TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(300, 200)});
+                var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200) + 48 * this.getTime(300, 200);
+                var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200);
+                TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(offset, 200)});
                 
-                items[iItem].htmlIcon.style.display = (this.position < 300 ? 'none' : '');
+                items[iItem].htmlIcon.style.display = (this.position < offset ? 'none' : '');
             }
         };
 
@@ -425,8 +480,9 @@
         html += '  <b var="catalog-close-button">' + SVG.close + '</b>';
         html += '  <div class="header">';
         html += '    <img var="catalog-logo"/>';
-        html += '    <ul var="categories">';
-        html += '    </ul>';
+        html += '    <b var="line-top"></b>';
+        html += '    <ul var="categories"></ul>';
+        html += '    <b var="line-bottom"></b>';
         html += '  </div>';
         html += '  <div class="catalog-list" var="catalog"></div>'
         html += '</div>';
@@ -462,11 +518,12 @@
             var _UI = {};
             var html = '';
             html += '<li class="' + categories[iCat].name + '">'
-            html += '  <i>' + categories[iCat].icon + '</i>'
-            html += '  <span var="label"></span>';
+            html += '  <u><i var="circle"></i>' + categories[iCat].icon + '</u>'
+            html += '  <span var="label"><b var="label.text"></b></span>';
             html += '</li>';
 
             categories[iCat].html = Browser.DOM(html, _UI);
+            categories[iCat].UI = _UI;
             if (iCat == 0){
                 categories[iCat].html.classList.add('selected');
                 ALL_CAT_BUTTON = categories[iCat].html;
@@ -492,10 +549,14 @@
             
             UI.categories.appendChild(categories[iCat].html);
             
-            _UI.label.innerHTML = categories[iCat].name;
+            _UI.label.text.innerHTML = categories[iCat].name;
             //_UI.icon.style.fill = categories[iCat].color;
         }
 
+        function openGame(data){
+            iframeGame.style.display = '';
+            iframeGame.setAttribute('src', data.url);;
+        }
         var json = new JSON_Loader();
         json.load('https://games.gamepix.com/games?sid=' + SID)
         json.addEventListener(Event.COMPLETE, 'onData', json);
@@ -518,9 +579,22 @@
                 html += '</div>';
                 var game = Browser.DOM(html, _UI);
 
+                game.data = this.data.data[iData];
+                game.onclick = function(){
+                    openGame(this.data);
+                }
+                //_UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
                 _UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
                 _UI.title.innerHTML = this.data.data[iData].title;
                 _UI.category.innerHTML = categories[0];
+
+                //preload 12 images
+                if (iData <= 12){
+                    var img = new Image();
+                    img.src = this.data.data[iData].thumbnailUrl;
+                    img.style.display = 'none';
+                    body.appendChild(img);
+                }
 
                 this.data.data[iData].html = game;
                 UI['catalog'].appendChild(game);
