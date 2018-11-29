@@ -435,6 +435,7 @@
         iframeGame.style.left = 0;
         iframeGame.style.right = 0;
         iframeGame.style.bottom = 0;
+        iframeGame.id = 'game-frame';
         iframeGame.setAttribute('seamless', 'seamless');
         iframeGame.setAttribute('name', window.location.href);
         
