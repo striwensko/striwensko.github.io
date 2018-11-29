@@ -720,7 +720,7 @@
         showGameAnimation.addEventListener(Event.CHANGE, 'render', showGameAnimation);
         showGameAnimation.render = function(){
             UI['loader-screen'].style.opacity = 1 - this.getTime(0, 500);
-            iframeGame.style.opacity = this.getTime(0, 500);
+            iframeGame.style.opacity = 0.5 * this.getTime(0, 500);
             UI['close-bar'].style.opacity = this.getTime(0, 500);
             if (this.position == this.duration){
                 UI['loader-screen'].style.display = 'none';
@@ -760,9 +760,9 @@
                 }
             }
             loader.update(0);
-            iframeGame.style.display = '';
-            iframeGame.style.opacity = 0.2;
-            //timeLine.play();
+            //iframeGame.style.display = '';
+            //iframeGame.style.opacity = 0.2;
+            timeLine.play();
             console.log(data)
         }
         var json = new JSON_Loader();
