@@ -479,21 +479,10 @@
         var eventer = window[eventMethod];
         var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
         eventer(messageEvent, function(e){
-            console.log("Event", e.data.type, e);
-
+            console.log(e);
             switch (e.data.type) {
                 case 'loading':
                     console.log(e.data.percentage);
-                    loader.update(e.data.percentage / 100);
-                    if (e.data.percentage == 100){
-                        showGameAnimation.position = 0;
-                        showGameAnimation.play();
-                        iframeGame.style.display = '';
-                        iframeGame.style.opacity = 0;
-                        UI['close-bar'].style.display = '';
-                        UI['close-bar'].style.opacity = 0;
-                    }
-                    break;
             }
         });
 
@@ -742,10 +731,10 @@
             showLoaderAnimation.play();
         }
 
+        alert("1");
         function openGame(data, mode){
             // mode = [menu, catalog]
             //iframeGame.style.display = '';
-            loader.update(0);
             iframeGame.setAttribute('src', data.url);
 
             UI.loader.gameLogo.src = data.thumbnailUrl;
@@ -769,10 +758,7 @@
                     UI['close-bar'].style.opacity = 0;
                 }
             }
-
-            iframeGame.style.display = '';
-            iframeGame.style.opacity = 0.2;
-            //timeLine.play();
+            timeLine.play();
             console.log(data)
         }
         var json = new JSON_Loader();
