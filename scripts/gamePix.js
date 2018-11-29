@@ -17,8 +17,10 @@
         return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
     };
 
+    var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
+
     var SVG = {};
-    SVG.close = '<svg var="close-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -2 20 20" version="1.1"><defs><path d="M9.16666667,9.16666667 L9.16666667,3.3278314 C9.16666667,2.87063274 9.53655402,2.5 10,2.5 C10.4602373,2.5 10.8333333,2.87078857 10.8333333,3.3278314 L10.8333333,9.16666667 L16.6721686,9.16666667 C17.1293673,9.16666667 17.5,9.53655402 17.5,10 C17.5,10.4602373 17.1292114,10.8333333 16.6721686,10.8333333 L10.8333333,10.8333333 L10.8333333,16.6721686 C10.8333333,17.1293673 10.463446,17.5 10,17.5 C9.53976271,17.5 9.16666667,17.1292114 9.16666667,16.6721686 L9.16666667,10.8333333 L3.3278314,10.8333333 C2.87063274,10.8333333 2.5,10.463446 2.5,10 C2.5,9.53976271 2.87078857,9.16666667 3.3278314,9.16666667 L9.16666667,9.16666667 Z" id="path-1"/></defs><g id="Mobile" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="Overlay" transform="translate(-314.000000, -326.000000)"><g id="Shape-/-Icon" transform="translate(300.000000, 310.000000)"><g id="Icon-/-Close" transform="translate(14.000000, 14.000000)"><mask id="mask-2" fill="white"><use xlink:href="#path-1"/></mask><use id="Close" fill-rule="evenodd" transform="translate(10.000000, 10.000000) rotate(45.000000) translate(-10.000000, -10.000000) " xlink:href="#path-1"/></g></g></g></g></svg>';
+    SVG.close = '<svg var="close-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -4 20 20" version="1.1"><defs><path d="M9.16666667,9.16666667 L9.16666667,3.3278314 C9.16666667,2.87063274 9.53655402,2.5 10,2.5 C10.4602373,2.5 10.8333333,2.87078857 10.8333333,3.3278314 L10.8333333,9.16666667 L16.6721686,9.16666667 C17.1293673,9.16666667 17.5,9.53655402 17.5,10 C17.5,10.4602373 17.1292114,10.8333333 16.6721686,10.8333333 L10.8333333,10.8333333 L10.8333333,16.6721686 C10.8333333,17.1293673 10.463446,17.5 10,17.5 C9.53976271,17.5 9.16666667,17.1292114 9.16666667,16.6721686 L9.16666667,10.8333333 L3.3278314,10.8333333 C2.87063274,10.8333333 2.5,10.463446 2.5,10 C2.5,9.53976271 2.87078857,9.16666667 3.3278314,9.16666667 L9.16666667,9.16666667 Z" id="path-1"/></defs><g id="Mobile" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="Overlay" transform="translate(-314.000000, -326.000000)"><g id="Shape-/-Icon" transform="translate(300.000000, 310.000000)"><g id="Icon-/-Close" transform="translate(14.000000, 14.000000)"><mask id="mask-2" fill="white"><use xlink:href="#path-1"/></mask><use id="Close" fill-rule="evenodd" transform="translate(10.000000, 10.000000) rotate(45.000000) translate(-10.000000, -10.000000) " xlink:href="#path-1"/></g></g></g></g></svg>';
     SVG.plus = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" version="1.1"><path d="M11,11 L11,6.00684547 C11,5.45078007 11.4438648,5 12,5 C12.5522847,5 13,5.44994876 13,6.00684547 L13,11 L17.9931545,11 C18.5492199,11 19,11.4438648 19,12 C19,12.5522847 18.5500512,13 17.9931545,13 L13,13 L13,17.9931545 C13,18.5492199 12.5561352,19 12,19 C11.4477153,19 11,18.5500512 11,17.9931545 L11,13 L6.00684547,13 C5.45078007,13 5,12.5561352 5,12 C5,11.4477153 5.44994876,11 6.00684547,11 L11,11 Z" id="path-1"/></svg>'
     SVG.girls = '<svg var="icon" width="24px" height="24px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill-rule="evenodd" d="M7.36019498,5.04841579 C7.32759155,3.31618827 7.01594469,3.05001387 5.28741855,2.58101985 C4.94899727,2.48919738 4.74908946,2.14041591 4.84091193,1.80199464 C4.9327344,1.46357337 5.28151587,1.26366555 5.61993714,1.35548802 C6.81289631,1.67916882 7.55031378,2.0250992 7.99668019,2.58596614 C8.44304661,2.0250992 9.18046407,1.67916882 10.3734232,1.35548802 C10.7118445,1.26366555 11.060626,1.46357337 11.1524485,1.80199464 C11.2442709,2.14041591 11.0443631,2.48919738 10.7059419,2.58101985 C8.97526826,3.05059653 8.6649967,3.31684932 8.63304521,5.05487874 C8.90096705,4.79813396 9.22234655,4.56047003 9.60683175,4.35149271 C11.4634508,3.34237647 13.7476445,4.30450757 13.7476445,4.30450757 C14.0816254,4.41074557 14.3492064,4.79089183 14.3492064,5.13993494 L14.3492064,7.68253968 C14.3492064,8.68246978 13.8645873,9.60900325 13.1956603,10.1324718 C13.1481492,10.1696513 12.6402032,10.6052132 12.0318476,10.7399358 C12.4379651,11.2253111 12.4167365,11.9506809 12.4379651,11.9443972 C12.4422603,12.0047019 12.4444445,12.0655886 12.4444445,12.1269841 C12.4444445,13.526758 11.3073905,14.6666667 9.90476191,14.6666667 C9.14724128,14.6666667 8.46582857,14.3336589 8,13.8057668 C7.53417143,14.3336589 6.85275872,14.6666667 6.09523809,14.6666667 C4.69260951,14.6666667 3.55555553,13.526758 3.55555553,12.1269841 C3.55555553,12.0655886 3.55773966,12.0047019 3.5620349,11.9443972 C3.58326347,11.9506809 3.5620349,11.2253111 3.96815236,10.7399358 C3.3597968,10.6052132 2.85185077,10.1696513 2.80433966,10.1324718 C2.13541267,9.60900325 1.65079362,8.68246978 1.65079362,7.68253968 L1.65079362,5.13993494 C1.65079362,4.79089183 1.91837457,4.41074557 2.25235553,4.30450757 C2.25235553,4.30450757 4.53654919,3.34237647 6.39316825,4.35149271 C6.77442526,4.55871544 7.0936318,4.79414507 7.36019498,5.04841579 Z M5.0308668,11.4350153 C4.89717263,11.6394217 4.82539681,11.8764153 4.82539681,12.1269841 C4.82539681,12.8266502 5.39512973,13.3968254 6.09523809,13.3968254 C6.79490418,13.3968254 7.36507936,12.8270925 7.36507936,12.1269841 L7.36507936,10.2222222 L7.36507936,8.30397448 C7.36507936,7.03895346 6.91885079,6.08250219 5.78676197,5.46718516 C5.60625344,5.36907451 5.41005306,5.29536145 5.19816185,5.24465665 C4.59254022,5.09973359 3.8943926,5.14838289 3.21515794,5.32601889 C2.98117277,5.38721158 2.9206349,5.41129556 2.9206349,5.41129556 L2.9206349,7.68253968 C2.9206349,8.5422668 3.4954509,9.28902172 4.31036971,9.51707677 L5.36761552,9.81294693 C5.7056897,9.90755696 5.82306372,10.2238173 5.63181085,10.5162259 L5.0308668,11.4350153 Z M10.9691332,11.4350153 L10.3681892,10.5162259 C10.1769363,10.2238173 10.2943103,9.90755696 10.6323845,9.81294693 L11.6896303,9.51707677 C12.5045491,9.28902172 13.0793651,8.5422668 13.0793651,7.68253968 L13.0793651,5.41129556 C13.0793651,5.41129556 13.0188272,5.38721158 12.7848421,5.32601889 C12.1056074,5.14838289 11.4074598,5.09973359 10.8018382,5.24465665 C10.5899469,5.29536145 10.3937466,5.36907451 10.213238,5.46718516 C9.08114921,6.08250219 8.63492064,7.03895346 8.63492064,8.30397448 L8.63492064,10.2222222 L8.63492064,12.1269841 C8.63492064,12.8270925 9.20509582,13.3968254 9.90476191,13.3968254 C10.6048703,13.3968254 11.1746032,12.8266502 11.1746032,12.1269841 C11.1746032,11.8764153 11.1028274,11.6394217 10.9691332,11.4350153 Z M5.14285713,8.31746032 C4.61687165,8.31746032 4.19047617,7.89106482 4.19047617,7.36507936 C4.19047617,6.83909389 4.61687165,6.4126984 5.14285713,6.4126984 C5.6688426,6.4126984 6.09523809,6.83909389 6.09523809,7.36507936 C6.09523809,7.89106482 5.6688426,8.31746032 5.14285713,8.31746032 Z M10.8571429,8.31746032 C10.3311574,8.31746032 9.90476191,7.89106482 9.90476191,7.36507936 C9.90476191,6.83909389 10.3311574,6.4126984 10.8571429,6.4126984 C11.3831283,6.4126984 11.8095238,6.83909389 11.8095238,7.36507936 C11.8095238,7.89106482 11.3831283,8.31746032 10.8571429,8.31746032 Z" id="path-3"></path></svg>';
     SVG.puzzles = '<svg var="icon" width="24px" height="24px" viewBox="0 -2 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill-rule="evenodd" d="M9.8639012,1.09677419 C9.6013106,2.19793878 8.56557115,3.01612903 7.33333333,3.01612903 C6.10102551,3.01612903 5.06513151,2.19780701 4.80267641,1.09677419 L3.15897436,1.09677419 L3.15897436,3.74731183 C3.15897436,4.05017766 2.90641704,4.29569892 2.59487179,4.29569892 C1.78135321,4.29569892 1.12820513,4.91301324 1.12820513,5.66666667 C1.12820513,6.42032009 1.78135321,7.03763441 2.59487179,7.03763441 C2.90641704,7.03763441 3.15897436,7.28315567 3.15897436,7.58602151 L3.15897436,10.2365591 L4.80267641,10.2365591 C5.06513151,9.13552632 6.10102551,8.3172043 7.33333333,8.3172043 C8.56564115,8.3172043 9.60153516,9.13552632 9.86399026,10.2365591 L11.5076923,10.2365591 L11.5076923,7.58602151 C11.5076923,7.28315567 11.7602496,7.03763441 12.0717949,7.03763441 C12.8853135,7.03763441 13.5384615,6.42032009 13.5384615,5.66666667 C13.5384615,4.91301324 12.8853135,4.29569892 12.0717949,4.29569892 C11.7602496,4.29569892 11.5076923,4.05017766 11.5076923,3.74731183 L11.5076923,1.09677419 L9.8639012,1.09677419 Z M2.03076923,3.25745781 L2.03076923,0.548387097 C2.03076923,0.245521266 2.28332655,0 2.59487179,0 L5.3025641,0 C5.61410935,0 5.86666667,0.245521266 5.86666667,0.548387097 C5.86666667,1.30204052 6.51981474,1.91935484 7.33333333,1.91935484 C8.14675825,1.91935484 8.79976986,1.30221136 8.79999986,0.548224476 C8.80009223,0.245422164 9.05262248,0 9.3641024,0 L12.0717949,0 C12.3833401,0 12.6358974,0.245521266 12.6358974,0.548387097 L12.6358974,3.25745781 C13.7956784,3.50212251 14.6666667,4.48532897 14.6666667,5.66666667 C14.6666667,6.84800437 13.7956784,7.83121083 12.6358974,8.07587552 L12.6358974,10.7849462 C12.6358974,11.0878121 12.3833401,11.3333333 12.0717949,11.3333333 L9.36410256,11.3333333 C9.05255732,11.3333333 8.8,11.0878121 8.8,10.7849462 C8.8,10.0312928 8.14685192,9.41397849 7.33333333,9.41397849 C6.51981474,9.41397849 5.86666667,10.0312928 5.86666667,10.7849462 C5.86666667,11.0878121 5.61410935,11.3333333 5.3025641,11.3333333 L2.59487179,11.3333333 C2.28332655,11.3333333 2.03076923,11.0878121 2.03076923,10.7849462 L2.03076923,8.07587552 C0.870988236,7.83121083 0,6.84800437 0,5.66666667 C0,4.48532897 0.870988236,3.50212251 2.03076923,3.25745781 Z" id="path-7"></path></svg>';
@@ -54,13 +56,14 @@
         .catalog > b{
             color: #fff;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 9px;
+            right: 9px;
             cursor: pointer;
         }
         .catalog > b svg{
             width: 32px;
             fill: #fff;
+            margin-top: -3px;
         }
         .catalog .header{
             padding: 10px 20px;
@@ -303,9 +306,109 @@
             fill: #fff;
         }
 
+        .loader-screen{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+            padding-top: 85px;
+            box-sizing: border-box;
+        }
+        .loader-screen > img{
+            position: absolute;
+            width: 84px;
+            height: 84px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 84px;
+            overflow: hidden;
+            margin-bottom: 48px;
+            top: 123px;
+            left: 50%;
+            margin-left: -42px;
+        }
+        .loader-screen b{
+            font-weight: normal;
+            font-size: 20px;
+        }
+        .loader-screen div.brand{
+            position: absolute;
+            bottom: 0;
+            padding: 20px;
+            border-top: 1px solid #777;
+            left: 20px;
+            right: 20px;
+        }
+        .loader-screen div.brand img{
+            display: block;
+            margin: 0 auto;
+        }
+        .close-bar{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #000;
+        }
+        .close-bar > b {
+            color: #fff;
+            position: absolute;
+            top: 9px;
+            right: 9px;
+            cursor: pointer;
+            cursor: pointer;
+        }
+        .close-bar > b svg{
+            width: 32px;
+            fill: #fff;
+            margin-top: -3px;
+        }
+        
     </style>`;
     
     function start(){
+        function SVG_Loader(){
+            this.holder = document.createElement('div');
+            this.holder.style.paddingBottom = '15px';
+        }
+        SVG_Loader.prototype.update = function(percent){
+            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="72.5" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 15;"></circle>';
+            
+            var angle = (Math.min(percent, 0.5) * 360) * Math.PI / 180
+            var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
+            var pointB = {x:Math.sin(angle) * 64, y: -Math.cos(angle) * 64}
+
+            var path = 'M 0 -80';
+            path += 'A 80 80 0 0 1 ' + pointA.x + ' ' + pointA.y;
+            path += 'L ' + pointB.x + ' ' + pointB.y;
+            path += 'A 64 64 0 0 0 0 -64';
+            path += 'L 0 -80Z';
+            
+            html += '<path transform="translate(80,80)" d="' + path + '" fill="#FFDD00"></path>'
+    
+    
+            if (percent > 0.5){
+                var angle = (percent * 360) * Math.PI / 180
+                var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
+                var pointB = {x:Math.sin(angle) * 64, y: -Math.cos(angle) * 64}
+
+                var path = 'M 0 80';
+                path += 'A 80 80 0 0 1 ' + pointA.x + ' ' + pointA.y;
+                path += 'L ' + pointB.x + ' ' + pointB.y;
+                path += 'A 64 64 0 0 0 0 64';
+                path += 'L 0 80Z';
+    
+                html += '<path transform="translate(80,80)" d="' + path + '" fill="#FFDD00"></path>'
+            }
+            html += '</svg>';
+            this.holder.innerHTML = html;
+        }
+
         var iframe = document.createElement('iframe');
         iframe.setAttribute('src', 'about:blank');
         iframe.style.position = 'fixed';
@@ -350,9 +453,7 @@
         var html = ''
         html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
         
-        console.log(document.currentScript.src);
-        console.log(Browser.urlParams((document.currentScript && document.currentScript.src) || ''))
-        var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
+        //var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
         
         document.body.appendChild(Browser.DOM(html, UI));
         UI.button.icon.style.opacity = '0';
@@ -443,7 +544,7 @@
             UI.button.icon.style.opacity = this.getTime(offset, 200)
             TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * this.getTime(offset, 200)});
             for (var iItem = 0; iItem < items.length; iItem++){
-                var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200) + 48 * this.getTime(300, 200);
+                var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200) + 48 * this.getTime(offset, 200);
                 var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200);
                 TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(offset, 200)});
                 
@@ -488,6 +589,14 @@
         html += '  </div>';
         html += '  <div class="catalog-list" var="catalog"></div>'
         html += '</div>';
+        html += '<div class="loader-screen" var="loader-screen" style="display:none">';
+        html += '  <img var="loader.gameLogo"/>';
+        html += '  <b var="loader.title"></b>'
+        html += '  <div class="brand"><img var="brand-logo"/></div>';
+        html += '</div>'
+        html += '<div var="close-bar" class="close-bar" style="display: none">';
+        html += '  <b var="close-bar.button">' + SVG.close + '</b>';
+        html += '</div>';
         body.appendChild(Browser.DOM(html, UI));
 
         UI['catalog-close-button'].onclick = function(){
@@ -498,6 +607,11 @@
             timeLine.direction = -1;
         }
         UI['catalog-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png'
+        UI['brand-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png';
+        var loader = new SVG_Loader();
+        console.log(loader);
+        loader.update(0.6);
+        UI['loader-screen'].insertBefore(loader.holder, UI['loader-screen'].children[0]);
         console.log(body, UI['catalog-logo']);
 
 
@@ -555,9 +669,90 @@
             //_UI.icon.style.fill = categories[iCat].color;
         }
 
-        function openGame(data){
-            iframeGame.style.display = '';
-            iframeGame.setAttribute('src', data.url);;
+        var showLoaderAnimation = new TimeLine(600, 33);
+        showLoaderAnimation.addEventListener(Event.CHANGE, 'render', showLoaderAnimation);
+        showLoaderAnimation.render = function(){
+            if (this.mode == 'catalog'){
+                UI['catalog-container'].style.display = this.position < 400 ? '' : 'none';
+                UI['catalog-container'].style.opacity = 1 - this.getTime(0, 400);
+                if (this.direction == 1){
+                    UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
+                    UI['loader-screen'].style.opacity = this.getTime(200, 400);
+                } else {
+                    iframeGame.style.opacity = this.getTime(200, 400);
+                    UI['close-bar'].style.opacity = this.getTime(200, 400);
+                    iframeGame.style.display = (this.position > 200 ? '': 'none')
+                    UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                }
+                
+            }
+            else if (this.mode == 'menu'){
+                if (this.direction == 1){
+                    UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
+                    UI['loader-screen'].style.opacity = this.getTime(200, 400);
+                } else {
+                    iframeGame.style.opacity = this.getTime(200, 400);
+                    UI['close-bar'].style.opacity = this.getTime(200, 400);
+                    iframeGame.style.display = (this.position > 200 ? '': 'none')
+                    UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                }
+
+                var animationValue = 1 - this.getTime(0, 200)
+                UI.button.icon.style.opacity = animationValue;
+                TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * animationValue});
+                for (var iItem = 0; iItem < items.length; iItem++){
+                    var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * animationValue + 48 * animationValue;
+                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * animationValue;
+                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: animationValue});
+                    
+                    items[iItem].htmlIcon.style.display = (this.position > 200 ? 'none' : '');
+                }
+            }
+        }
+        var showGameAnimation = new TimeLine(500, 33);
+        showGameAnimation.addEventListener(Event.CHANGE, 'render', showGameAnimation);
+        showGameAnimation.render = function(){
+            UI['loader-screen'].style.opacity = 1 - this.getTime(0, 500);
+            iframeGame.style.opacity = this.getTime(0, 500);
+            UI['close-bar'].style.opacity = this.getTime(0, 500);
+            if (this.position == this.duration){
+                UI['loader-screen'].style.display = 'none';
+                
+            }
+        }
+        UI['close-bar'].button.onclick = function(){
+            showLoaderAnimation.direction = -1;
+            showLoaderAnimation.play();
+        }
+
+        function openGame(data, mode){
+            // mode = [menu, catalog]
+            //iframeGame.style.display = '';
+            iframeGame.setAttribute('src', data.url);
+
+            UI.loader.gameLogo.src = data.thumbnailUrl;
+            UI.loader.title.innerHTML = data.title;
+
+            showLoaderAnimation.mode = mode;
+            showLoaderAnimation.position = 0;
+            showLoaderAnimation.direction = 1;
+            showLoaderAnimation.play();
+
+            var timeLine = new TimeLine(1800, 33);
+            timeLine.addEventListener(Event.CHANGE, 'render', timeLine);
+            timeLine.render = function(){
+                loader.update(Math.max((this.position - 300) /1500, 0));
+                if (this.position == this.duration){
+                    showGameAnimation.position = 0;
+                    showGameAnimation.play();
+                    iframeGame.style.display = '';
+                    iframeGame.style.opacity = 0;
+                    UI['close-bar'].style.display = '';
+                    UI['close-bar'].style.opacity = 0;
+                }
+            }
+            timeLine.play();
+            console.log(data)
         }
         var json = new JSON_Loader();
         json.load('https://games.gamepix.com/games?sid=' + SID)
@@ -583,7 +778,7 @@
 
                 game.data = this.data.data[iData];
                 game.onclick = function(){
-                    openGame(this.data);
+                    openGame(this.data, 'catalog');
                 }
                 //_UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
                 _UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
@@ -617,6 +812,10 @@
                 itemUI.img.src = items[iItem].thumbnailUrl100;
                 items[iItem].htmlIcon = item;
                 item.UI = itemUI;
+                item.data = items[iItem];
+                item.onclick = function(){
+                    openGame(this.data, 'menu');
+                }
                 body.appendChild(item);
             }
         
@@ -638,6 +837,10 @@
             item.UI = itemUI;
             body.appendChild(item);
         }
+
+
+
+        
     }
     if (document.body){
         start();
