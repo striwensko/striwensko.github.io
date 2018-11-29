@@ -732,7 +732,7 @@
             showLoaderAnimation.play();
         }
 
-        alert("3");
+        alert("4");
         function openGame(data, mode){
             // mode = [menu, catalog]
             //iframeGame.style.display = '';
