@@ -350,6 +350,8 @@
         var html = ''
         html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
         
+        console.log(document.currentScript.src);
+        console.log(Browser.urlParams((document.currentScript && document.currentScript.src) || ''))
         var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
         
         document.body.appendChild(Browser.DOM(html, UI));
