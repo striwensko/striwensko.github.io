@@ -451,404 +451,421 @@
         
         window['globalIframe'] = iframeGame;
 
-        var UI = {};
-        var html = ''
-        html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
-        
-        //var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
-        
-        document.body.appendChild(Browser.DOM(html, UI));
-        UI.button.icon.style.opacity = '0';
-        UI['close-button'].style.fill = '#fff';
-        UI['close-button'].style.width = '32px';
 
-        UI.button.children[0].style.position = 'absolute';
-        UI.button.children[0].style.top = '50%';
-        UI.button.children[0].style.left = '50%';
-        UI.button.children[0].style.transform = 'translate(-50%, -50%)';
+        var inter = window.setInterval(function() {
+            // put inside function 
+            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
+            if(iframeDoc.readyState == "complete") {
+                window.clearInterval(inter);
 
-        var body = iframe.contentWindow.document.body;
-        var head = iframe.contentWindow.document.head;
-        var font = document.createElement('link');
-        font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
-        font.setAttribute('rel', 'stylesheet');
-        head.appendChild(font);        
-
-        var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
-        var eventer = window[eventMethod];
-        var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
-        eventer(messageEvent, function(e){
-            console.log(e);
-            if (e.data.type == 'loading') {
-                loader.update(e.data.percentage / 100)
-            } else if (e.data.type == 'loaded') {
-                loader.update(100)
+                renderUI();
             }
-        });
+        },100);
 
-        var timeLine = new TimeLine(500, 33);
-        timeLine.direction = -1;
-        timeLine.addEventListener(Event.CHANGE, 'onRender', timeLine);
-        timeLine.onRender = function(){
-            iframe.style.display = (this.position > 0 ? '' : 'none');
-            iframe.style.opacity = (this.getTime(100, 200));
-            UI.button.icon.style.opacity = this.getTime(300, 200)
+        function renderUI(){
+            var UI = {};
+            var html = ''
+            html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
             
-            TimeLine.applyMatrix(UI.button, {x: -48 * this.getTime(300, 200)});
-            if (timeLine.position == 0 && timeLine.direction == -1){
-                document.body.style.overflow = '';
-            } else {
-                document.body.style.overflow = 'hidden';
-            }
-            var children = document.body.children;
-            function noBlur(element){
-                if (element == UI.button || element == iframe || element == iframeGame){
-                    return false;
+            //var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
+            
+            document.body.appendChild(Browser.DOM(html, UI));
+            UI.button.icon.style.opacity = '0';
+            UI['close-button'].style.fill = '#fff';
+            UI['close-button'].style.width = '32px';
+    
+            UI.button.children[0].style.position = 'absolute';
+            UI.button.children[0].style.top = '50%';
+            UI.button.children[0].style.left = '50%';
+            UI.button.children[0].style.transform = 'translate(-50%, -50%)';
+    
+            
+            var body = (iframe.contentDocument || iframe.contentWindow.document).body;
+            var head = (iframe.contentDocument || iframe.contentWindow.document).head;
+            var font = document.createElement('link');
+            font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
+            font.setAttribute('rel', 'stylesheet');
+            head.appendChild(font);
+            console.log(body, head);
+    
+            var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
+            var eventer = window[eventMethod];
+            var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
+            eventer(messageEvent, function(e){
+                console.log(e);
+                if (e.data.type == 'loading') {
+                    loader.update(e.data.percentage / 100)
+                } else if (e.data.type == 'loaded') {
+                    loader.update(100)
                 }
-                return true;
-            }
-            for (var iChild = 0; iChild < children.length; iChild++) {
-                var blur = (timeLine.position == 0 ? '' : 'blur(' + Math.min(Math.floor(timeLine.position / 100), 5) + 'px)')
-                children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
-            }
-        
-            for (var iItem = 0; iItem < items.length; iItem++){
-                /*var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300 + iItem * 50, 200, easeOutBack) + 40 * this.getTime(300 + iItem * 50, 200);
-                var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300 + iItem * 50, 200, easeOutBack);
-                TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(300 + iItem * 50, 200)});
-                TimeLine.applyMatrix(items[iItem].htmlIcon.UI.label, {opacity: this.getTime(500 + iItem * 50, 200), x: 20 - 20 * this.getTime(500 + iItem * 50, 200, easeOutBack)});
-                items[iItem].htmlIcon.style.display = (this.position < 300 + iItem * 50 ? 'none' : '');*/
-                var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200) + 48 * this.getTime(300, 200);
-                var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200);
-                TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(300, 200)});
-                
-                items[iItem].htmlIcon.style.display = (this.position < 300 ? 'none' : '');
-            }
-        }
-        UI.button.onclick = function(){
-            timeLine.direction = -(timeLine.direction);
-            timeLine.play();
-        }
-        
-
-        var catalogShowEffect = new TimeLine(1200, 33);
-        catalogShowEffect.direction = -1;
-        catalogShowEffect.addEventListener(Event.CHANGE, 'onRender', catalogShowEffect);
-        catalogShowEffect.onRender = function(){
-            var offset = 500;
-            UI['catalog-container'].style.display = (this.position < this.duration ? '' : 'none');
-            UI['catalog-container'].style.opacity = 1 - this.getTime(300, 400);
-            
-            TimeLine.applyMatrix(UI['line-top'], {y: 50 * this.getTime(300, 400)})
-            TimeLine.applyMatrix(UI['line-bottom'], {y: -30 * this.getTime(300, 400)})
-            for (var iCat = 0; iCat < categories.length; iCat++){
-                TimeLine.applyMatrix(categories[iCat].UI.label.text, { y: 24 * this.getTime(300, 400)});
-                TimeLine.applyMatrix(categories[iCat].UI.circle, { scale: 1 - this.getTime(300, 400)});
-            }
-            offset = 1000;
-            
-            UI.button.icon.style.opacity = this.getTime(offset, 200)
-            TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * this.getTime(offset, 200)});
-            for (var iItem = 0; iItem < items.length; iItem++){
-                var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200) + 48 * this.getTime(offset, 200);
-                var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200);
-                TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(offset, 200)});
-                
-                items[iItem].htmlIcon.style.display = (this.position < offset ? 'none' : '');
-            }
-        };
-
-        var catalogCloseEffect = new TimeLine(500, 33);
-        catalogCloseEffect.direction = -1;
-        catalogCloseEffect.addEventListener(Event.CHANGE, 'onRender', catalogCloseEffect);
-        catalogCloseEffect.onRender = function(){
-            TimeLine.applyMatrix(UI.button, {x: 24 * (this.getTime(0, 200))});
-            iframe.style.display = (this.position > 0 ? '' : 'none');
-            iframe.style.opacity = (this.getTime(300, 200));
-            UI['catalog-container'].style.display = (this.position > 0 ? '' : 'none');
-
-            var children = document.body.children;
-            function noBlur(element){
-                if (element == UI.button || element == iframe){
-                    return false;
-                }
-                return true;
-            }
-            for (var iChild = 0; iChild < children.length; iChild++) {
-                var blur = (timeLine.position == 0 ? '' : 'blur(' + (5 - Math.min(Math.floor(timeLine.position / 100), 5)) + 'px)')
-                children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
-            }
-        }
-        body.innerHTML = stylesheet;
-
-
-        // Catalog UI
-
-        html = '';
-        html += '<div var="catalog-container" class="catalog" style="display: none">';
-        html += '  <b var="catalog-close-button">' + SVG.close + '</b>';
-        html += '  <div class="header">';
-        html += '    <img var="catalog-logo"/>';
-        html += '    <b var="line-top"></b>';
-        html += '    <ul var="categories"></ul>';
-        html += '    <b var="line-bottom"></b>';
-        html += '  </div>';
-        html += '  <div class="catalog-list" var="catalog"></div>'
-        html += '</div>';
-        html += '<div class="loader-screen" var="loader-screen" style="display:none">';
-        html += '  <img var="loader.gameLogo"/>';
-        html += '  <b var="loader.title"></b>'
-        html += '  <div class="brand"><img var="brand-logo"/></div>';
-        html += '</div>'
-        html += '<div var="close-bar" class="close-bar" style="display: none">';
-        html += '  <b var="close-bar.button">' + SVG.close + '</b>';
-        html += '</div>';
-        body.appendChild(Browser.DOM(html, UI));
-
-        UI['catalog-close-button'].onclick = function(){
-            catalogCloseEffect.position = catalogCloseEffect.duration;
-            catalogCloseEffect.direction = -1;
-            catalogCloseEffect.play();
-            timeLine.position = 0;
+            });
+    
+            var timeLine = new TimeLine(500, 33);
             timeLine.direction = -1;
-        }
-        UI['catalog-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png'
-        UI['brand-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png';
-        var loader = new SVG_Loader();
-        console.log(loader);
-        loader.update(0.6);
-        UI['loader-screen'].insertBefore(loader.holder, UI['loader-screen'].children[0]);
-        console.log(body, UI['catalog-logo']);
-
-
-        var items = [];
-        var CATALOG = {};
-
-        var categories = [
-            {name: 'All', icon: SVG.all, color: '#4666E2', items: []},
-            {name: 'Adventure', icon: SVG.adventure, color: '#04BD68', items: []},
-            {name: 'Arcade', icon: SVG.arcade, color: '#FFC11C', items: []},
-            {name: 'Sports', icon: SVG.sports, color: '#4666E2', items: []},
-            {name: 'Strategy', icon: SVG.strategy, color: '#8736FD', items: []},
-            {name: 'Classics', icon: SVG.classics, color: '#1BBCEA', items: []},
-            {name: 'Casino', icon: SVG.casino, color: '#F77D38', items: []},
-            {name: 'Girls', icon: SVG.girls, color: '#ED80F3', items: []},
-            {name: 'Puzzles', icon: SVG.puzzles, color: '#E20074', items: []}
-        ]
-        for (var iCat = 0; iCat < categories.length; iCat++){
-            CATALOG[categories[iCat].name] = categories[iCat];
-            var _UI = {};
-            var html = '';
-            html += '<li class="' + categories[iCat].name + '">'
-            html += '  <u><i var="circle"></i>' + categories[iCat].icon + '</u>'
-            html += '  <span var="label"><b var="label.text"></b></span>';
-            html += '</li>';
-
-            categories[iCat].html = Browser.DOM(html, _UI);
-            categories[iCat].UI = _UI;
-            if (iCat == 0){
-                categories[iCat].html.classList.add('selected');
-                ALL_CAT_BUTTON = categories[iCat].html;
+            timeLine.addEventListener(Event.CHANGE, 'onRender', timeLine);
+            timeLine.onRender = function(){
+                iframe.style.display = (this.position > 0 ? '' : 'none');
+                iframe.style.opacity = (this.getTime(100, 200));
+                UI.button.icon.style.opacity = this.getTime(300, 200)
+                
+                TimeLine.applyMatrix(UI.button, {x: -48 * this.getTime(300, 200)});
+                if (timeLine.position == 0 && timeLine.direction == -1){
+                    document.body.style.overflow = '';
+                } else {
+                    document.body.style.overflow = 'hidden';
+                }
+                var children = document.body.children;
+                function noBlur(element){
+                    if (element == UI.button || element == iframe || element == iframeGame){
+                        return false;
+                    }
+                    return true;
+                }
+                for (var iChild = 0; iChild < children.length; iChild++) {
+                    var blur = (timeLine.position == 0 ? '' : 'blur(' + Math.min(Math.floor(timeLine.position / 100), 5) + 'px)')
+                    children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                }
+            
+                for (var iItem = 0; iItem < items.length; iItem++){
+                    /*var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300 + iItem * 50, 200, easeOutBack) + 40 * this.getTime(300 + iItem * 50, 200);
+                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300 + iItem * 50, 200, easeOutBack);
+                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(300 + iItem * 50, 200)});
+                    TimeLine.applyMatrix(items[iItem].htmlIcon.UI.label, {opacity: this.getTime(500 + iItem * 50, 200), x: 20 - 20 * this.getTime(500 + iItem * 50, 200, easeOutBack)});
+                    items[iItem].htmlIcon.style.display = (this.position < 300 + iItem * 50 ? 'none' : '');*/
+                    var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200) + 48 * this.getTime(300, 200);
+                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200);
+                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(300, 200)});
+                    
+                    items[iItem].htmlIcon.style.display = (this.position < 300 ? 'none' : '');
+                }
             }
-            categories[iCat].html.category = categories[iCat].name;
-            categories[iCat].html.onclick = function(){
+            UI.button.onclick = function(){
+                timeLine.direction = -(timeLine.direction);
+                timeLine.play();
+            }
+            
+    
+            var catalogShowEffect = new TimeLine(1200, 33);
+            catalogShowEffect.direction = -1;
+            catalogShowEffect.addEventListener(Event.CHANGE, 'onRender', catalogShowEffect);
+            catalogShowEffect.onRender = function(){
+                var offset = 500;
+                UI['catalog-container'].style.display = (this.position < this.duration ? '' : 'none');
+                UI['catalog-container'].style.opacity = 1 - this.getTime(300, 400);
+                
+                TimeLine.applyMatrix(UI['line-top'], {y: 50 * this.getTime(300, 400)})
+                TimeLine.applyMatrix(UI['line-bottom'], {y: -30 * this.getTime(300, 400)})
                 for (var iCat = 0; iCat < categories.length; iCat++){
-                    if (categories[iCat].html == this){
-                        categories[iCat].html.classList.add('selected');
-                    } else {
-                        categories[iCat].html.classList.remove('selected');
+                    TimeLine.applyMatrix(categories[iCat].UI.label.text, { y: 24 * this.getTime(300, 400)});
+                    TimeLine.applyMatrix(categories[iCat].UI.circle, { scale: 1 - this.getTime(300, 400)});
+                }
+                offset = 1000;
+                
+                UI.button.icon.style.opacity = this.getTime(offset, 200)
+                TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * this.getTime(offset, 200)});
+                for (var iItem = 0; iItem < items.length; iItem++){
+                    var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200) + 48 * this.getTime(offset, 200);
+                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(offset, 200);
+                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(offset, 200)});
+                    
+                    items[iItem].htmlIcon.style.display = (this.position < offset ? 'none' : '');
+                }
+            };
+    
+            var catalogCloseEffect = new TimeLine(500, 33);
+            catalogCloseEffect.direction = -1;
+            catalogCloseEffect.addEventListener(Event.CHANGE, 'onRender', catalogCloseEffect);
+            catalogCloseEffect.onRender = function(){
+                TimeLine.applyMatrix(UI.button, {x: 24 * (this.getTime(0, 200))});
+                iframe.style.display = (this.position > 0 ? '' : 'none');
+                iframe.style.opacity = (this.getTime(300, 200));
+                UI['catalog-container'].style.display = (this.position > 0 ? '' : 'none');
+    
+                var children = document.body.children;
+                function noBlur(element){
+                    if (element == UI.button || element == iframe){
+                        return false;
+                    }
+                    return true;
+                }
+                for (var iChild = 0; iChild < children.length; iChild++) {
+                    var blur = (timeLine.position == 0 ? '' : 'blur(' + (5 - Math.min(Math.floor(timeLine.position / 100), 5)) + 'px)')
+                    children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                }
+            }
+            body.innerHTML = stylesheet;
+    
+    
+            // Catalog UI
+    
+            html = '';
+            html += '<div var="catalog-container" class="catalog" style="display: none">';
+            html += '  <b var="catalog-close-button">' + SVG.close + '</b>';
+            html += '  <div class="header">';
+            html += '    <img var="catalog-logo"/>';
+            html += '    <b var="line-top"></b>';
+            html += '    <ul var="categories"></ul>';
+            html += '    <b var="line-bottom"></b>';
+            html += '  </div>';
+            html += '  <div class="catalog-list" var="catalog"></div>'
+            html += '</div>';
+            html += '<div class="loader-screen" var="loader-screen" style="display:none">';
+            html += '  <img var="loader.gameLogo"/>';
+            html += '  <b var="loader.title"></b>'
+            html += '  <div class="brand"><img var="brand-logo"/></div>';
+            html += '</div>'
+            html += '<div var="close-bar" class="close-bar" style="display: none">';
+            html += '  <b var="close-bar.button">' + SVG.close + '</b>';
+            html += '</div>';
+            body.appendChild(Browser.DOM(html, UI));
+    
+            UI['catalog-close-button'].onclick = function(){
+                catalogCloseEffect.position = catalogCloseEffect.duration;
+                catalogCloseEffect.direction = -1;
+                catalogCloseEffect.play();
+                timeLine.position = 0;
+                timeLine.direction = -1;
+            }
+            UI['catalog-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png'
+            UI['brand-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png';
+            var loader = new SVG_Loader();
+            console.log(loader);
+            loader.update(0.6);
+            UI['loader-screen'].insertBefore(loader.holder, UI['loader-screen'].children[0]);
+            console.log(body, UI['catalog-logo']);
+    
+    
+            var items = [];
+            var CATALOG = {};
+    
+            var categories = [
+                {name: 'All', icon: SVG.all, color: '#4666E2', items: []},
+                {name: 'Adventure', icon: SVG.adventure, color: '#04BD68', items: []},
+                {name: 'Arcade', icon: SVG.arcade, color: '#FFC11C', items: []},
+                {name: 'Sports', icon: SVG.sports, color: '#4666E2', items: []},
+                {name: 'Strategy', icon: SVG.strategy, color: '#8736FD', items: []},
+                {name: 'Classics', icon: SVG.classics, color: '#1BBCEA', items: []},
+                {name: 'Casino', icon: SVG.casino, color: '#F77D38', items: []},
+                {name: 'Girls', icon: SVG.girls, color: '#ED80F3', items: []},
+                {name: 'Puzzles', icon: SVG.puzzles, color: '#E20074', items: []}
+            ]
+            for (var iCat = 0; iCat < categories.length; iCat++){
+                CATALOG[categories[iCat].name] = categories[iCat];
+                var _UI = {};
+                var html = '';
+                html += '<li class="' + categories[iCat].name + '">'
+                html += '  <u><i var="circle"></i>' + categories[iCat].icon + '</u>'
+                html += '  <span var="label"><b var="label.text"></b></span>';
+                html += '</li>';
+    
+                categories[iCat].html = Browser.DOM(html, _UI);
+                categories[iCat].UI = _UI;
+                if (iCat == 0){
+                    categories[iCat].html.classList.add('selected');
+                    ALL_CAT_BUTTON = categories[iCat].html;
+                }
+                categories[iCat].html.category = categories[iCat].name;
+                categories[iCat].html.onclick = function(){
+                    for (var iCat = 0; iCat < categories.length; iCat++){
+                        if (categories[iCat].html == this){
+                            categories[iCat].html.classList.add('selected');
+                        } else {
+                            categories[iCat].html.classList.remove('selected');
+                        }
+                    }
+                    var items = CATALOG['All'].items;
+                    for (var iItem = 0; iItem < items.length; iItem++){
+                        items[iItem].html.style.display = 'none';
+                    }
+                    var items = CATALOG[this.category].items;
+                    for (var iItem = 0; iItem < items.length; iItem++){
+                        items[iItem].html.style.display = '';
                     }
                 }
-                var items = CATALOG['All'].items;
-                for (var iItem = 0; iItem < items.length; iItem++){
-                    items[iItem].html.style.display = 'none';
-                }
-                var items = CATALOG[this.category].items;
-                for (var iItem = 0; iItem < items.length; iItem++){
-                    items[iItem].html.style.display = '';
-                }
-            }
-            
-            UI.categories.appendChild(categories[iCat].html);
-            
-            _UI.label.text.innerHTML = categories[iCat].name;
-            //_UI.icon.style.fill = categories[iCat].color;
-        }
-
-        var showLoaderAnimation = new TimeLine(600, 33);
-        showLoaderAnimation.addEventListener(Event.CHANGE, 'render', showLoaderAnimation);
-        showLoaderAnimation.render = function(){
-            if (this.mode == 'catalog'){
-                UI['catalog-container'].style.display = this.position < 400 ? '' : 'none';
-                UI['catalog-container'].style.opacity = 1 - this.getTime(0, 400);
-                if (this.direction == 1){
-                    UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
-                    UI['loader-screen'].style.opacity = this.getTime(200, 400);
-                } else {
-                    iframeGame.style.opacity = this.getTime(200, 400);
-                    UI['close-bar'].style.opacity = this.getTime(200, 400);
-                    iframeGame.style.display = (this.position > 200 ? '': 'none')
-                    UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
-                }
                 
+                UI.categories.appendChild(categories[iCat].html);
+                
+                _UI.label.text.innerHTML = categories[iCat].name;
+                //_UI.icon.style.fill = categories[iCat].color;
             }
-            else if (this.mode == 'menu'){
-                if (this.direction == 1){
-                    UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
-                    UI['loader-screen'].style.opacity = this.getTime(200, 400);
-                } else {
-                    iframeGame.style.opacity = this.getTime(200, 400);
-                    UI['close-bar'].style.opacity = this.getTime(200, 400);
-                    iframeGame.style.display = (this.position > 200 ? '': 'none')
-                    UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
-                }
-
-                var animationValue = 1 - this.getTime(0, 200)
-                UI.button.icon.style.opacity = animationValue;
-                TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * animationValue});
-                for (var iItem = 0; iItem < items.length; iItem++){
-                    var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * animationValue + 48 * animationValue;
-                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * animationValue;
-                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: animationValue});
+    
+            var showLoaderAnimation = new TimeLine(600, 33);
+            showLoaderAnimation.addEventListener(Event.CHANGE, 'render', showLoaderAnimation);
+            showLoaderAnimation.render = function(){
+                if (this.mode == 'catalog'){
+                    UI['catalog-container'].style.display = this.position < 400 ? '' : 'none';
+                    UI['catalog-container'].style.opacity = 1 - this.getTime(0, 400);
+                    if (this.direction == 1){
+                        UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
+                        UI['loader-screen'].style.opacity = this.getTime(200, 400);
+                    } else {
+                        iframeGame.style.opacity = this.getTime(200, 400);
+                        UI['close-bar'].style.opacity = this.getTime(200, 400);
+                        iframeGame.style.display = (this.position > 200 ? '': 'none')
+                        UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                    }
                     
-                    items[iItem].htmlIcon.style.display = (this.position > 200 ? 'none' : '');
+                }
+                else if (this.mode == 'menu'){
+                    if (this.direction == 1){
+                        UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
+                        UI['loader-screen'].style.opacity = this.getTime(200, 400);
+                    } else {
+                        iframeGame.style.opacity = this.getTime(200, 400);
+                        UI['close-bar'].style.opacity = this.getTime(200, 400);
+                        iframeGame.style.display = (this.position > 200 ? '': 'none')
+                        UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                    }
+    
+                    var animationValue = 1 - this.getTime(0, 200)
+                    UI.button.icon.style.opacity = animationValue;
+                    TimeLine.applyMatrix(UI.button, {x: 24 -(48 + 24) * animationValue});
+                    for (var iItem = 0; iItem < items.length; iItem++){
+                        var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * animationValue + 48 * animationValue;
+                        var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * animationValue;
+                        TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: animationValue});
+                        
+                        items[iItem].htmlIcon.style.display = (this.position > 200 ? 'none' : '');
+                    }
                 }
             }
-        }
-        var showGameAnimation = new TimeLine(500, 33);
-        showGameAnimation.addEventListener(Event.CHANGE, 'render', showGameAnimation);
-        showGameAnimation.render = function(){
-            UI['loader-screen'].style.opacity = 1 - this.getTime(0, 500);
-            iframeGame.style.opacity = 0.5 * this.getTime(0, 500);
-            UI['close-bar'].style.opacity = this.getTime(0, 500);
-            if (this.position == this.duration){
-                UI['loader-screen'].style.display = 'none';
-                
-            }
-        }
-        UI['close-bar'].button.onclick = function(){
-            showLoaderAnimation.direction = -1;
-            showLoaderAnimation.play();
-        }
-
-        alert("6.1");
-        function openGame(data, mode){
-            // mode = [menu, catalog]
-            //iframeGame.style.display = '';
-            iframeGame.setAttribute('src', data.url);
-
-            UI.loader.gameLogo.src = data.thumbnailUrl;
-            UI.loader.title.innerHTML = data.title;
-
-            showLoaderAnimation.mode = mode;
-            showLoaderAnimation.position = 0;
-            showLoaderAnimation.direction = 1;
-            showLoaderAnimation.play();
-
-            var timeLine = new TimeLine(1800, 33);
-            timeLine.addEventListener(Event.CHANGE, 'render', timeLine);
-            timeLine.render = function(){
-                loader.update(Math.max((this.position - 300) /1500, 0));
+            var showGameAnimation = new TimeLine(500, 33);
+            showGameAnimation.addEventListener(Event.CHANGE, 'render', showGameAnimation);
+            showGameAnimation.render = function(){
+                UI['loader-screen'].style.opacity = 1 - this.getTime(0, 500);
+                iframeGame.style.opacity = 0.5 * this.getTime(0, 500);
+                UI['close-bar'].style.opacity = this.getTime(0, 500);
                 if (this.position == this.duration){
-                    showGameAnimation.position = 0;
-                    showGameAnimation.play();
-                    iframeGame.style.display = '';
-                    iframeGame.style.opacity = 0;
-                    UI['close-bar'].style.display = '';
-                    UI['close-bar'].style.opacity = 0;
+                    UI['loader-screen'].style.display = 'none';
+                    
                 }
             }
-            loader.update(0);
-            iframeGame.style.display = '';
-            iframeGame.style.opacity = 0.3;
-            //timeLine.play();
-            console.log(data)
-        }
-        var json = new JSON_Loader();
-        json.load('https://games.gamepix.com/games?sid=' + SID)
-        json.addEventListener(Event.COMPLETE, 'onData', json);
-        json.onData = function(){
-            console.log(UI)
-            for (var iData = 0; iData < this.data.data.length; iData++){
-                CATALOG.All.items.push(this.data.data[iData]);
-                var categories = this.data.data[iData].categories;
-                for (var iCat = 0; iCat < categories.length; iCat++){
-                    var category = categories[iCat];
-                    CATALOG[category].items.push(this.data.data[iData]);
-                }
-                var html = '';
-                html += '<div class="game-item">';
-                html += '  <i var="img"></i>';
-                html += '  <span>';
-                html += '    <b var="title"></b>';
-                html += '    <u var="category"></u>';
-                html += '  </span>';
-                html += '</div>';
-                var game = Browser.DOM(html, _UI);
-
-                game.data = this.data.data[iData];
-                game.onclick = function(){
-                    openGame(this.data, 'catalog');
-                }
-                //_UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
-                _UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
-                _UI.title.innerHTML = this.data.data[iData].title;
-                _UI.category.innerHTML = categories[0];
-
-                //preload 12 images
-                if (iData <= 12){
-                    var img = new Image();
-                    img.src = this.data.data[iData].thumbnailUrl;
-                    img.style.display = 'none';
-                    body.appendChild(img);
-                }
-
-                this.data.data[iData].html = game;
-                UI['catalog'].appendChild(game);
+            UI['close-bar'].button.onclick = function(){
+                showLoaderAnimation.direction = -1;
+                showLoaderAnimation.play();
             }
-            console.log(CATALOG)
-            items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
-            items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
-            items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
-            for (var iItem = 0; iItem < items.length; iItem++){
+    
+            //alert("6.1");
+            function openGame(data, mode){
+                // mode = [menu, catalog]
+                //iframeGame.style.display = '';
+                iframeGame.setAttribute('src', data.url);
+    
+                UI.loader.gameLogo.src = data.thumbnailUrl;
+                UI.loader.title.innerHTML = data.title;
+    
+                showLoaderAnimation.mode = mode;
+                showLoaderAnimation.position = 0;
+                showLoaderAnimation.direction = 1;
+                showLoaderAnimation.play();
+    
+                var timeLine = new TimeLine(1800, 33);
+                timeLine.addEventListener(Event.CHANGE, 'render', timeLine);
+                timeLine.render = function(){
+                    loader.update(Math.max((this.position - 300) /1500, 0));
+                    if (this.position == this.duration){
+                        showGameAnimation.position = 0;
+                        showGameAnimation.play();
+                        iframeGame.style.display = '';
+                        iframeGame.style.opacity = 0;
+                        UI['close-bar'].style.display = '';
+                        UI['close-bar'].style.opacity = 0;
+                    }
+                }
+                loader.update(0);
+                iframeGame.style.display = '';
+                iframeGame.style.opacity = 0.3;
+                //timeLine.play();
+                console.log(data)
+            }
+            var json = new JSON_Loader();
+            json.load('https://games.gamepix.com/games?sid=' + SID)
+            json.addEventListener(Event.COMPLETE, 'onData', json);
+            json.onData = function(){
+                console.log("loaded UI")
+                console.log(UI, body.children)
+                for (var iData = 0; iData < this.data.data.length; iData++){
+                    CATALOG.All.items.push(this.data.data[iData]);
+                    var categories = this.data.data[iData].categories;
+                    for (var iCat = 0; iCat < categories.length; iCat++){
+                        var category = categories[iCat];
+                        CATALOG[category].items.push(this.data.data[iData]);
+                    }
+                    var html = '';
+                    html += '<div class="game-item">';
+                    html += '  <i var="img"></i>';
+                    html += '  <span>';
+                    html += '    <b var="title"></b>';
+                    html += '    <u var="category"></u>';
+                    html += '  </span>';
+                    html += '</div>';
+                    var game = Browser.DOM(html, _UI);
+    
+                    game.data = this.data.data[iData];
+                    game.onclick = function(){
+                        openGame(this.data, 'catalog');
+                    }
+                    //_UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
+                    _UI.img.style.backgroundImage = 'url("' + this.data.data[iData].thumbnailUrl + '")';
+                    _UI.title.innerHTML = this.data.data[iData].title;
+                    _UI.category.innerHTML = categories[0];
+    
+                    //preload 12 images
+                    if (iData <= 12){
+                        var img = new Image();
+                        img.src = this.data.data[iData].thumbnailUrl;
+                        img.style.display = 'none';
+                        body.appendChild(img);
+                    }
+    
+                    this.data.data[iData].html = game;
+                    UI['catalog'].appendChild(game);
+                }
+                console.log(CATALOG)
+                items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
+                items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
+                items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
+                for (var iItem = 0; iItem < items.length; iItem++){
+                    var itemUI = {};
+                    var html = '';
+                    html += '<div class="game-icon">'
+                    html += ' <span var="label"></span>'
+                    html += ' <img var="img">';
+                    html += '</div>'
+                    var item = Browser.DOM(html, itemUI)
+                    itemUI.label.innerHTML = items[iItem].title;
+                    itemUI.img.src = items[iItem].thumbnailUrl100;
+                    items[iItem].htmlIcon = item;
+                    item.UI = itemUI;
+                    item.data = items[iItem];
+                    item.onclick = function(){
+                        openGame(this.data, 'menu');
+                    }
+                    body.appendChild(item);
+                }
+            
                 var itemUI = {};
                 var html = '';
-                html += '<div class="game-icon">'
-                html += ' <span var="label"></span>'
-                html += ' <img var="img">';
+                html += '<div class="plus-game-icon">'
+                html += ' <span var="label">More Games</span>'
+                html += ' <b>' + SVG.plus + '</b>';
                 html += '</div>'
                 var item = Browser.DOM(html, itemUI)
-                itemUI.label.innerHTML = items[iItem].title;
-                itemUI.img.src = items[iItem].thumbnailUrl100;
-                items[iItem].htmlIcon = item;
-                item.UI = itemUI;
-                item.data = items[iItem];
                 item.onclick = function(){
-                    openGame(this.data, 'menu');
-                }
+                    //UI['catalog-container'].style.display = '';
+                    ALL_CAT_BUTTON.onclick();
+                    catalogShowEffect.direction = -1;
+                    catalogShowEffect.position = catalogShowEffect.duration;
+                    catalogShowEffect.play();
+                };
+                items.push({htmlIcon:item});
+                item.UI = itemUI;
                 body.appendChild(item);
             }
-        
-            var itemUI = {};
-            var html = '';
-            html += '<div class="plus-game-icon">'
-            html += ' <span var="label">More Games</span>'
-            html += ' <b>' + SVG.plus + '</b>';
-            html += '</div>'
-            var item = Browser.DOM(html, itemUI)
-            item.onclick = function(){
-                //UI['catalog-container'].style.display = '';
-                ALL_CAT_BUTTON.onclick();
-                catalogShowEffect.direction = -1;
-                catalogShowEffect.position = catalogShowEffect.duration;
-                catalogShowEffect.play();
-            };
-            items.push({htmlIcon:item});
-            item.UI = itemUI;
-            body.appendChild(item);
+    
         }
-
+        
 
 
         
