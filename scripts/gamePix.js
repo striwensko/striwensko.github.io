@@ -435,7 +435,8 @@
         iframeGame.style.left = 0;
         iframeGame.style.right = 0;
         iframeGame.style.bottom = 0;
-        iframeGame.setAttribute('seamless', 'seamless')
+        iframeGame.setAttribute('seamless', 'seamless');
+        iframe.setAttribute('name', window.location.href);
         
         iframeGame.style.display = "block";
         iframeGame.style.border =  0;
