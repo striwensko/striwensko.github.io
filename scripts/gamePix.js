@@ -72,12 +72,19 @@
         .catalog .header > img +  b{
             margin-top: 20px;
         }
+        .catalog .header > .categories-bar{
+            overflow-x: scroll;
+        }
         .catalog .header > img +  b,
-        .catalog .header > ul + b{
+        .catalog .header > .categories-bar + b{
             width: 100%;
             height: 1px;
             background-color: #777;
             display: block;
+        }
+        .catalog .header ul{
+            width: 504px;
+            margin: 0 auto;
         }
         .catalog .header ul,
         .catalog .header ul li{
@@ -318,6 +325,26 @@
             padding-top: 85px;
             box-sizing: border-box;
         }
+        .loader-screen > i{
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding-left: 20px;
+            cursor: pointer;
+            font-style: normal;
+        }
+        .loader-screen > i:after{
+            display: block;
+            content: '';
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            width: 8px;
+            height: 8px;
+            left: 3px;
+            top: 4px;
+            transform: rotate(-45deg);
+            position: absolute;
+        }
         .loader-screen > img{
             position: absolute;
             width: 84px;
@@ -370,13 +397,121 @@
         }
         
     </style>`;
+
+
+    var stylesheetClose = `
+        <style type="text/css">
+
+        html, body{
+            font-family:'Roboto', sans-serif;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .loader-screen{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+            padding-top: 85px;
+            box-sizing: border-box;
+        }
+        .loader-screen > i{
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding-left: 20px;
+            cursor: pointer;
+            font-style: normal;
+        }
+        .loader-screen > i:after{
+            display: block;
+            content: '';
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            width: 8px;
+            height: 8px;
+            left: 3px;
+            top: 4px;
+            transform: rotate(-45deg);
+            position: absolute;
+        }
+        .loader-screen > img{
+            position: absolute;
+            width: 84px;
+            height: 84px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 84px;
+            overflow: hidden;
+            margin-bottom: 48px;
+            top: 123px;
+            left: 50%;
+            margin-left: -42px;
+        }
+        .loader-screen > b{
+            font-weight: normal;
+            font-size: 20px;
+        }
+        .loader-screen div.buttons{
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            width: 100%;
+        }
+        .loader-screen div.buttons b{
+            display: block;
+            margin: 0 auto;
+            font-size: 14px;
+
+        }
+        
+        .loader-screen div.buttons b.play{
+            background-color: #0499D7;
+            color: #fff;
+            border: 1px solid #0499D7;
+            border-radius: 5px;
+            line-height: 45px;
+            width: 260px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .loader-screen div.buttons b.catalog{
+            color: #fff;
+            border: 1px solid #0499D7;
+            border-radius: 5px;
+            line-height: 45px;
+            width: 260px;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .loader-screen div.buttons b.close{
+            line-height: 30px;
+            width: 260px;
+            margin-top: 15px;
+            text-decoration: underline;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>`;
     
     function start(){
+        var LOADING_PERCENT = 0;
+        var GAME_URL = '';
         function SVG_Loader(){
             this.holder = document.createElement('div');
             this.holder.style.paddingBottom = '15px';
+            this.value = 0;
         }
         SVG_Loader.prototype.update = function(percent){
+            //console.log("RENDER PERCENT", percent)
             var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="72.5" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 15;"></circle>';
             
             var angle = (Math.min(percent, 0.5) * 360) * Math.PI / 180
@@ -407,6 +542,10 @@
             }
             html += '</svg>';
             this.holder.innerHTML = html;
+            this.value = percent;
+        }
+        SVG_Loader.prototype.setValue = function(){
+            return this.value;
         }
 
         var iframe = document.createElement('iframe');
@@ -449,14 +588,34 @@
         document.body.appendChild(iframeGame);
         console.log(iframeGame)
         
+
+        var closeIframe = document.createElement('iframe');
+        closeIframe.setAttribute('src', 'about:blank');
+        closeIframe.style.position = 'fixed';
+        closeIframe.style.top = 0;
+        closeIframe.style.left = 0;
+        closeIframe.style.right = 0;
+        closeIframe.style.bottom = 0;
+        closeIframe.setAttribute('seamless', 'seamless')
+        
+        closeIframe.style.display = "none";
+        closeIframe.style.border =  0;
+        closeIframe.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        closeIframe.style.width = '100%';
+        closeIframe.style.height= '100%';
+        closeIframe.style.zIndex = 1000002;
+        closeIframe.style.display = 'none';
+        document.body.appendChild(closeIframe);
+
+
         window['globalIframe'] = iframeGame;
 
 
         var inter = window.setInterval(function() {
             // put inside function 
             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
-            if(iframeDoc.readyState == "complete") {
+            var closeIframeDoc = closeIframe.contentDocument || closeIframe.contentWindow.document;
+            if(iframeDoc.readyState == "complete" && closeIframeDoc.readyState == "complete") {
                 window.clearInterval(inter);
 
                 renderUI();
@@ -465,12 +624,12 @@
 
         function renderUI(){
             var UI = {};
+
+            // Open game corner Button
             var html = ''
             html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
-            
-            //var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 30166;
-            
             document.body.appendChild(Browser.DOM(html, UI));
+
             UI.button.icon.style.opacity = '0';
             UI['close-button'].style.fill = '#fff';
             UI['close-button'].style.width = '32px';
@@ -480,14 +639,108 @@
             UI.button.children[0].style.left = '50%';
             UI.button.children[0].style.transform = 'translate(-50%, -50%)';
     
+            // Close Screen Iframe
+            var bodyClose = (closeIframe.contentDocument || closeIframe.contentWindow.document).body;
+            var headClose = (closeIframe.contentDocument || closeIframe.contentWindow.document).head;
+            var font = document.createElement('link');
+            font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
+            font.setAttribute('rel', 'stylesheet');
+            headClose.appendChild(font);
+
+            var UI_Close = {};
+            var html = '';
+            html += '<div class="loader-screen" var="loader-screen">';
+            html += '  <img var="loader.gameLogo"/>';
+            html += '  <b var="loader.title"></b>'
+            html += '  <div class="buttons">';
+            html += '    <b class="play" var="play">Keep Playing</b>'
+            html += '    <b class="catalog" var="catalog">Game Corner</b>'
+            html += '    <b class="close" var="close">Back to Website</b>'
+            html += '  </div>';
+            html += '</div>'
             
+
+            bodyClose.innerHTML = stylesheetClose;
+            bodyClose.appendChild(Browser.DOM(html, UI_Close));
+
+            UI_Close.play.onclick = function(){
+                closeIframe.mode = 'play';
+                closeIframe.hide();
+            }
+            UI_Close.catalog.onclick = function(){
+                closeIframe.mode = 'catalog';
+                closeIframe.hide();
+            }
+            UI_Close.close.onclick = function(){
+                closeIframe.hide();
+                closeIframe.mode = 'close';
+            }
+            
+            closeIframe.effect = new TimeLine(700, 300);
+            closeIframe.effect.addEventListener(Event.CHANGE, 'render', closeIframe.effect);
+            closeIframe.effect.render = function(){
+                var blur = (this.position < 200 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 100), 5) + 'px)')
+                closeIframe.style.display = (this.position > 0 ? '' : 'none');
+                closeIframe.style.opacity = this.getTime(0, 400);
+                
+                iframe.style.filter = blur;
+                iframeGame.style.filter = blur;
+                
+                if (closeIframe.mode == 'close'){
+                    var children = document.body.children;
+                    function noBlur(element){
+                        if (element == UI.button || element == iframe || element == iframeGame || element == closeIframe){
+                            return false;
+                        }
+                        return true;
+                    }
+                    for (var iChild = 0; iChild < children.length; iChild++) {
+                        var blur = (this.position == 0 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 100), 5) + 'px)')
+                        children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                    }
+                    TimeLine.applyMatrix(UI.button, {x: 24 * this.getTime(100, 200)});
+                    
+
+                    iframe.style.opacity = this.getTime(200, 500)
+                    iframeGame.style.opacity = this.getTime(200, 500)
+                    iframe.style.display = (this.position > 200 ? '': 'none');
+                    iframeGame.style.display = (this.position > 200 ? '': 'none');
+
+                    UI['close-bar'].style.opacity = this.getTime(200, 400);
+                    UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+
+                    timeLine.direction = -1;
+                    timeLine.position = 0;
+                }
+                else if (closeIframe.mode == 'catalog'){
+
+                    UI['catalog-container'].style.display = (this.position < this.duration ? '' : 'none');
+                    UI['catalog-container'].style.opacity = 1 - this.getTime(300, 400);
+
+                    iframeGame.style.opacity = this.getTime(200, 500);
+                    iframeGame.style.display = (this.position > 200 ? '': 'none');
+
+                    UI['close-bar'].style.opacity = this.getTime(200, 400);
+                    UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                }
+            }
+            closeIframe.show = function(){
+                this.effect.direction = 1;
+                this.effect.play();
+            }
+            closeIframe.hide = function(){
+                this.effect.direction = -1;
+                this.effect.play();
+            }
+
+            // Games Iframe
             var body = (iframe.contentDocument || iframe.contentWindow.document).body;
             var head = (iframe.contentDocument || iframe.contentWindow.document).head;
             var font = document.createElement('link');
             font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
             font.setAttribute('rel', 'stylesheet');
             head.appendChild(font);
-            console.log(body, head);
+            
     
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
@@ -495,9 +748,24 @@
             eventer(messageEvent, function(e){
                 console.log(e);
                 if (e.data.type == 'loading') {
-                    loader.update(e.data.percentage / 100)
+                    console.log("PERCENT LOADED " + e.data.percentage)
+                    if (LOADING_PERCENT == 0){
+                        LOADING_PERCENT = e.data.percentage / 100;
+                    }
+                    var percent = timeLineLoader.position / timeLineLoader.duration;
+                    var relPercent = ((e.data.percentage / 100) - LOADING_PERCENT) / (1 - LOADING_PERCENT)
+                    percent = percent + relPercent * (1 - percent);
+                    loader.update(percent);
+                    if (e.data.percentage == 100){
+                        showGameAnimation.show();
+                    }
                 } else if (e.data.type == 'loaded') {
+                    console.log("GAME LOADED")
+                    GAME_URL = e.data.url;
+                    LOADING_PERCENT = 1;
                     loader.update(100)
+                    showGameAnimation.show();
+                    globalIframe.contentWindow.postMessage({message: 'callbackExecuted'}, e.data.url);
                 }
             });
     
@@ -517,7 +785,7 @@
                 }
                 var children = document.body.children;
                 function noBlur(element){
-                    if (element == UI.button || element == iframe || element == iframeGame){
+                    if (element == UI.button || element == iframe || element == iframeGame || element == closeIframe){
                         return false;
                     }
                     return true;
@@ -605,12 +873,15 @@
             html += '  <div class="header">';
             html += '    <img var="catalog-logo"/>';
             html += '    <b var="line-top"></b>';
-            html += '    <ul var="categories"></ul>';
+            html += '    <div class="categories-bar">';
+            html += '      <ul var="categories"></ul>';
+            html += '    </div>'
             html += '    <b var="line-bottom"></b>';
             html += '  </div>';
             html += '  <div class="catalog-list" var="catalog"></div>'
             html += '</div>';
             html += '<div class="loader-screen" var="loader-screen" style="display:none">';
+            html += '  <i var="loader.back">Back</i>';
             html += '  <img var="loader.gameLogo"/>';
             html += '  <b var="loader.title"></b>'
             html += '  <div class="brand"><img var="brand-logo"/></div>';
@@ -629,12 +900,10 @@
             }
             UI['catalog-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png'
             UI['brand-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png';
+
             var loader = new SVG_Loader();
-            console.log(loader);
-            loader.update(0.6);
             UI['loader-screen'].insertBefore(loader.holder, UI['loader-screen'].children[0]);
-            console.log(body, UI['catalog-logo']);
-    
+            
     
             var items = [];
             var CATALOG = {};
@@ -700,10 +969,16 @@
                         UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
                         UI['loader-screen'].style.opacity = this.getTime(200, 400);
                     } else {
-                        iframeGame.style.opacity = this.getTime(200, 400);
-                        UI['close-bar'].style.opacity = this.getTime(200, 400);
-                        iframeGame.style.display = (this.position > 200 ? '': 'none')
-                        UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                        if (this.gameOpen){
+                            iframeGame.style.opacity = this.getTime(200, 400);
+                            UI['close-bar'].style.opacity = this.getTime(200, 400);
+                            iframeGame.style.display = (this.position > 200 ? '': 'none')
+                            UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                        } else {
+                            iframeGame.style.display = (this.position > 200 ? '': 'none')
+                            UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
+                            UI['loader-screen'].style.opacity = this.getTime(200, 400);
+                        }
                     }
                     
                 }
@@ -712,10 +987,16 @@
                         UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
                         UI['loader-screen'].style.opacity = this.getTime(200, 400);
                     } else {
-                        iframeGame.style.opacity = this.getTime(200, 400);
-                        UI['close-bar'].style.opacity = this.getTime(200, 400);
-                        iframeGame.style.display = (this.position > 200 ? '': 'none')
-                        UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                        if (this.gameOpen){
+                            iframeGame.style.opacity = this.getTime(200, 400);
+                            UI['close-bar'].style.opacity = this.getTime(200, 400);
+                            iframeGame.style.display = (this.position > 200 ? '': 'none')
+                            UI['close-bar'].style.display = (this.position > 200 ? '': 'none')
+                        } else {
+                            iframeGame.style.display = (this.position > 200 ? '': 'none')
+                            UI['loader-screen'].style.display = this.position > 200 ? '' : 'none';
+                            UI['loader-screen'].style.opacity = this.getTime(200, 400);
+                        }
                     }
     
                     var animationValue = 1 - this.getTime(0, 200)
@@ -734,50 +1015,81 @@
             showGameAnimation.addEventListener(Event.CHANGE, 'render', showGameAnimation);
             showGameAnimation.render = function(){
                 UI['loader-screen'].style.opacity = 1 - this.getTime(0, 500);
-                iframeGame.style.opacity = 0.5 * this.getTime(0, 500);
+                iframeGame.style.opacity =  this.getTime(0, 500);
                 UI['close-bar'].style.opacity = this.getTime(0, 500);
                 if (this.position == this.duration){
                     UI['loader-screen'].style.display = 'none';
                     
                 }
             }
+            showGameAnimation.show = function(){
+                //console.log("SHOW ANIMATION")
+                showGameAnimation.position = 0;
+                showGameAnimation.direction = 1;
+                showGameAnimation.play();
+                iframeGame.style.display = '';
+                iframeGame.style.opacity = 0;
+                UI['close-bar'].style.display = '';
+                UI['close-bar'].style.opacity = 0;
+            }
             UI['close-bar'].button.onclick = function(){
+                //showLoaderAnimation.direction = -1;
+                //showLoaderAnimation.play();
+                //showLoaderAnimation.gameOpen = true;
+                //iframeGame.setAttribute('src', 'about:blank');
+                closeIframe.show();
+            }
+            UI.loader.back.onclick = function(){
                 showLoaderAnimation.direction = -1;
                 showLoaderAnimation.play();
+                showLoaderAnimation.gameOpen = false;
+                iframeGame.setAttribute('src', 'about:blank');
+                timeLineLoader.stop();
             }
     
+            var timeLineLoader = new TimeLine( 15000, 33);
+            timeLineLoader.addEventListener(Event.CHANGE, 'render', timeLineLoader);
+            timeLineLoader.render = function(){
+                if (LOADING_PERCENT != 0){
+                    timeLineLoader.stop();
+                    return false;
+                }
+                //console.log(this.position);
+                loader.update(Math.max(this.position / 15000, 0));
+                if (this.position == this.duration){
+                    showGameAnimation.show();
+                }
+            }
+
+            //closeIframe.
             //alert("6.1");
             function openGame(data, mode){
                 // mode = [menu, catalog]
                 //iframeGame.style.display = '';
+                LOADING_PERCENT = 0;
                 iframeGame.setAttribute('src', data.url);
     
                 UI.loader.gameLogo.src = data.thumbnailUrl;
                 UI.loader.title.innerHTML = data.title;
+
+                UI_Close.loader.gameLogo.src = data.thumbnailUrl;
+                UI_Close.loader.title.innerHTML = data.title;
     
                 showLoaderAnimation.mode = mode;
                 showLoaderAnimation.position = 0;
                 showLoaderAnimation.direction = 1;
                 showLoaderAnimation.play();
     
-                var timeLine = new TimeLine(1800, 33);
-                timeLine.addEventListener(Event.CHANGE, 'render', timeLine);
-                timeLine.render = function(){
-                    loader.update(Math.max((this.position - 300) /1500, 0));
-                    if (this.position == this.duration){
-                        showGameAnimation.position = 0;
-                        showGameAnimation.play();
-                        iframeGame.style.display = '';
-                        iframeGame.style.opacity = 0;
-                        UI['close-bar'].style.display = '';
-                        UI['close-bar'].style.opacity = 0;
-                    }
-                }
+                showGameAnimation.position = 0;
+                
                 loader.update(0);
                 iframeGame.style.display = '';
-                iframeGame.style.opacity = 0.3;
-                //timeLine.play();
-                console.log(data)
+                iframeGame.style.opacity = 0;
+                
+                
+                timeLineLoader.position = 0;
+                timeLineLoader.play();
+                console.log("LOAD GAME", data)
             }
             var json = new JSON_Loader();
             json.load('https://games.gamepix.com/games?sid=' + SID)
@@ -875,12 +1187,51 @@
     } else {
         addEvent(window, 'load', start)
     }
-    
-    
-    /*
-    
-    
-    
-    console.log(UI.button)*/
 })();
     
+
+/*
+function init() {
+    //////// 1) Create the iframe that will contains the game ////////
+    var iframe = document.createElement('iframe');
+    iframe.id = 'game-frame';
+    iframe.src = 'https://games.gamepix.com/play/40071?sid=110880';
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('name', window.location.href);
+    iframe.setAttribute('width', '100%');
+    iframe.setAttribute('height', '100%');
+    iframe.setAttribute('scrolling', 'no');
+    iframe.style.top = '0%';
+    iframe.style.left = '0%';
+    iframe.style.position = 'absolute';
+    //////// 2) Create the parent-child communication ////////
+    var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
+    var eventer = window[eventMethod];
+    var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
+    // Listen to message from child window
+    eventer(messageEvent, function(e) {
+        console.log(e);
+    switch (e.data.type) {
+    case 'loading':
+    // this event may not arrives linear
+    // e.g. not all values from 0 to 100 may be sent
+    loading(e.data.percentage);
+    break;
+    case 'loaded':
+    iframe.contentWindow.postMessage({
+        message: 'callbackExecuted'
+        }, e.data.url);
+
+    break;
+    case 'send':
+    sendScore({
+    type: e.data.label,
+    level: e.data.level,
+    score: e.data.score
+    });
+    break;
+    }
+    }, false);
+    document.getElementsByTagName('body')[0].appendChild(iframe);
+    globalIframe = iframe;
+    }*/
