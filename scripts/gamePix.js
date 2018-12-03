@@ -73,7 +73,7 @@
             margin-top: 20px;
         }
         .catalog .header > .categories-bar{
-            overflow-x: scroll;
+            overflow-x: auto;
         }
         .catalog .header > img +  b,
         .catalog .header > .categories-bar + b{
@@ -82,10 +82,7 @@
             background-color: #777;
             display: block;
         }
-        .catalog .header ul{
-            width: 504px;
-            margin: 0 auto;
-        }
+        
         .catalog .header ul,
         .catalog .header ul li{
             display: block;
@@ -94,6 +91,10 @@
             margin: 0;
             color: #fff;
             font-size: 12px;
+        }
+        .catalog .header ul{
+            width: 504px;
+            margin: 0 auto;
         }
         .catalog .header ul{
             padding: 10px 0;
