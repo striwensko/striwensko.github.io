@@ -75,6 +75,7 @@
         }
         .catalog .header > .categories-bar{
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .catalog .header > img +  b,
         .catalog .header > .categories-bar + b{
@@ -214,13 +215,14 @@
         }
         .catalog .catalog-list{
             overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
             flex: 1;
             overflow-x: hidden;
         }
         .catalog .catalog-list .game-item{
             width: 160px;
             display: inline-block;
-            margin: 15px;
+            margin: 8px;
             cursor: pointer;
         }
         @media only screen and (max-width:600px)
@@ -245,7 +247,8 @@
             display: block;
             border-radius: 0 0 15px 15px;
             color: #fff;
-            padding: 5px;
+            padding: 5px 10px;
+            text-align: left;
         }
         .catalog .catalog-list .game-item span *{
             display: block;
@@ -286,7 +289,7 @@
         .plus-game-icon span{
             position: absolute;
             line-height: 40px;
-            font-size: 12px;
+            font-size: 14px;
             color: #fff;
             margin-top: -20px;
             top: 0;
@@ -936,8 +939,8 @@
             UI.catalog.effect.render = function(){
                 var rect = UI.catalog.getBoundingClientRect();
                 var width = UI.catalog.children[0].getBoundingClientRect().width;
-                var cols = Math.floor(width / 190);
-                var rows = Math.ceil(rect.height / (188 + 30));
+                var cols = Math.floor(width / (160 + 16));
+                var rows = Math.ceil(rect.height / (188 + 16));
                 var size = cols * rows
                 this.duration = size * 35 + 250 + 350;
                 var children = UI.catalog.children;
@@ -1207,7 +1210,7 @@
                     this.data.data[iData].html = game;
                     UI['catalog'].appendChild(game);
                 }
-                console.log(CATALOG)
+                //console.log(CATALOG)
                 items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
                 items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
                 items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
@@ -1219,7 +1222,19 @@
                     html += ' <img var="img">';
                     html += '</div>'
                     var item = Browser.DOM(html, itemUI)
-                    itemUI.label.innerHTML = items[iItem].title;
+                    var title = items[iItem].title;
+                    if (title.length > 20){
+                        var words = title.split(' ');
+                        var size = 0;
+                        for (var iWord = 0; iWord < words.length; iWord++){
+                            size += words[iWord].length + 1;
+                            if (size > 20){
+                                break;
+                            }
+                        }
+                        title = words.slice(0, iWord).join(' ');
+                    }
+                    itemUI.label.innerHTML = title;
                     itemUI.img.src = items[iItem].thumbnailUrl100;
                     items[iItem].htmlIcon = item;
                     item.UI = itemUI;
