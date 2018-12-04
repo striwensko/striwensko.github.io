@@ -395,7 +395,7 @@
             cursor: pointer;
             cursor: pointer;
             padding-top: 5px;
-            background-color: #00ff00;
+            background-color: #0000ff;
         }
         .close-bar > b svg{
             width: 32px;
@@ -583,8 +583,11 @@
         iframeGame.style.right = 0;
         iframeGame.style.bottom = 0;
         iframeGame.id = 'game-frame';
-        iframeGame.setAttribute('seamless', 'seamless');
+        //iframeGame.setAttribute('seamless', 'seamless');
         iframeGame.setAttribute('name', window.location.href);
+        iframeGame.setAttribute('scrolling', 'no');
+        iframeGame.className = 'iframeGame';
+
         
         iframeGame.style.display = "block";
         iframeGame.style.border =  0;
