@@ -395,7 +395,7 @@
             cursor: pointer;
             cursor: pointer;
             padding-top: 5px;
-            background-color: #ff00ff;
+            background-color: #ff0000;
         }
         .close-bar > b svg{
             width: 32px;
@@ -612,8 +612,8 @@
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
         closeIframe.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-        closeIframe.style.width = '100%';
-        closeIframe.style.height= '100%';
+        closeIframe.style.width = '200px';
+        closeIframe.style.height= '300px';
         closeIframe.style.zIndex = 1000002;
         closeIframe.style.display = 'none';
         document.body.appendChild(closeIframe);
