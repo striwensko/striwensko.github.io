@@ -608,11 +608,13 @@
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
         closeIframe.setAttribute('seamless', 'seamless');
+        closeIframe.setAttribute('scrolling', 'no');
+        closeIframe.className = 'iframeGame2';
         
         
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
-        closeIframe.style.backgroundColor = "rgba(255, 0, 255, 0.7)";
+        closeIframe.style.backgroundColor = "rgba(0, 255, 255, 0.7)";
         closeIframe.style.width = '100%';
         closeIframe.style.height= '100%';
         closeIframe.style.zIndex = 1000002;
