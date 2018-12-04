@@ -390,15 +390,18 @@
         .close-bar > b {
             color: #fff;
             position: absolute;
-            top: 9px;
-            right: 9px;
+            top: 0px;
+            right: 0;
             cursor: pointer;
             cursor: pointer;
+            padding-top: 5px;
+            background-color: #ff0000;
         }
         .close-bar > b svg{
             width: 32px;
             fill: #fff;
-            margin-top: -3px;
+            margin-top: -8px;
+            padding: 9px;
         }
         
     </style>`;
