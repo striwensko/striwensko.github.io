@@ -608,13 +608,13 @@
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
         closeIframe.setAttribute('seamless', 'seamless');
-        closeIframe.className = 'iframeGame';
+        
         
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
         closeIframe.style.backgroundColor = "rgba(255, 0, 0, 0.7)";
-        closeIframe.style.width = '200px';
-        closeIframe.style.height= '300px';
+        closeIframe.style.width = '100%';
+        closeIframe.style.height= '100%';
         closeIframe.style.zIndex = 1000002;
         closeIframe.style.display = 'none';
         document.body.appendChild(closeIframe);
@@ -747,7 +747,8 @@
                 closeIframe.style.opacity = this.getTime(0, 400);
                 
                 iframe.style.filter = blur;
-                iframeGame.style.filter = blur;
+                //iframeGame.style.filter = blur;
+                iframeGame.style.display = (this.position < 400 ? '' : 'none');
                 if (closeIframe.direction == -1){
 
                 }
