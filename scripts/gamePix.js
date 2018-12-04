@@ -18,6 +18,7 @@
     };
 
     var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 110880;
+    var debug = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).debug || false;
 
     var SVG = {};
     SVG.close = '<svg var="close-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -4 20 20" version="1.1"><defs><path d="M9.16666667,9.16666667 L9.16666667,3.3278314 C9.16666667,2.87063274 9.53655402,2.5 10,2.5 C10.4602373,2.5 10.8333333,2.87078857 10.8333333,3.3278314 L10.8333333,9.16666667 L16.6721686,9.16666667 C17.1293673,9.16666667 17.5,9.53655402 17.5,10 C17.5,10.4602373 17.1292114,10.8333333 16.6721686,10.8333333 L10.8333333,10.8333333 L10.8333333,16.6721686 C10.8333333,17.1293673 10.463446,17.5 10,17.5 C9.53976271,17.5 9.16666667,17.1292114 9.16666667,16.6721686 L9.16666667,10.8333333 L3.3278314,10.8333333 C2.87063274,10.8333333 2.5,10.463446 2.5,10 C2.5,9.53976271 2.87078857,9.16666667 3.3278314,9.16666667 L9.16666667,9.16666667 Z" id="path-1"/></defs><g id="Mobile" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="Overlay" transform="translate(-314.000000, -326.000000)"><g id="Shape-/-Icon" transform="translate(300.000000, 310.000000)"><g id="Icon-/-Close" transform="translate(14.000000, 14.000000)"><mask id="mask-2" fill="white"><use xlink:href="#path-1"/></mask><use id="Close" fill-rule="evenodd" transform="translate(10.000000, 10.000000) rotate(45.000000) translate(-10.000000, -10.000000) " xlink:href="#path-1"/></g></g></g></g></svg>';
@@ -696,8 +697,14 @@
                         return true;
                     }
                     for (var iChild = 0; iChild < children.length; iChild++) {
-                        var blur = (this.position == 0 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 100), 5) + 'px)')
-                        children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                        var blur = (this.position == 0 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 100), 5) + 'px)');
+                        if (children[iChild].style.filter == ''){
+                            children[iChild].applyFilter = true;
+                        }
+                        if (children[iChild].applyFilter){
+                            children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                        }
+                        
                     }
                     TimeLine.applyMatrix(UI.button, {x: 24 * this.getTime(100, 200)});
                     
@@ -792,8 +799,13 @@
                     return true;
                 }
                 for (var iChild = 0; iChild < children.length; iChild++) {
-                    var blur = (timeLine.position == 0 ? '' : 'blur(' + Math.min(Math.floor(timeLine.position / 100), 5) + 'px)')
-                    children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                    var blur = (timeLine.position == 0 ? '' : 'blur(' + Math.min(Math.floor(timeLine.position / 100), 5) + 'px)');
+                    if (children[iChild].style.filter == ''){
+                        children[iChild].applyFilter = true;
+                    }
+                    if (children[iChild].applyFilter){
+                        children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                    }
                 }
             
                 for (var iItem = 0; iItem < items.length; iItem++){
@@ -860,7 +872,12 @@
                 }
                 for (var iChild = 0; iChild < children.length; iChild++) {
                     var blur = (timeLine.position == 0 ? '' : 'blur(' + (5 - Math.min(Math.floor(timeLine.position / 100), 5)) + 'px)')
-                    children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                    if (children[iChild].style.filter == ''){
+                        children[iChild].applyFilter = true;
+                    }
+                    if (children[iChild].applyFilter){
+                        children[iChild].style.filter = (noBlur(children[iChild]) ? blur : '')
+                    }
                 }
             }
             body.innerHTML = stylesheet;
@@ -879,7 +896,7 @@
             html += '    </div>'
             html += '    <b var="line-bottom"></b>';
             html += '  </div>';
-            html += '  <div class="catalog-list" var="catalog"></div>'
+            html += '  <div class="catalog-list" var="catalog"><div></div></div>'
             html += '</div>';
             html += '<div class="loader-screen" var="loader-screen" style="display:none">';
             html += '  <i var="loader.back">Back</i>';
@@ -891,7 +908,37 @@
             html += '  <b var="close-bar.button">' + SVG.close + '</b>';
             html += '</div>';
             body.appendChild(Browser.DOM(html, UI));
-    
+            UI.catalog.effect = new TimeLine(1500, 33);
+            UI.catalog.effect.addEventListener(Event.CHANGE, 'render', UI.catalog.effect);
+            UI.catalog.effect.render = function(){
+                var rect = UI.catalog.getBoundingClientRect();
+                var width = UI.catalog.children[0].getBoundingClientRect().width;
+                var cols = Math.floor(width / 190);
+                var rows = Math.ceil(rect.height / (188 + 30));
+                var size = cols * rows
+                this.duration = size * 35 + 250 + 350;
+                var children = UI.catalog.children;
+                var iItem = 0;
+                for (var iChild = 1; iChild < children.length; iChild++){
+                    if (children[iChild].style.display != 'none' && iItem < size){
+                        TimeLine.applyMatrix(children[iChild], {
+                            y: Math.max(rect.height, 400) * (1 - this.getTime(iItem * 35 + 350, 250)),
+                            opacity: this.getTime(iItem * 35 + 350, 250)
+                        });
+                        iItem++;
+                    } else {
+                        TimeLine.applyMatrix(children[iChild], null);
+                    }
+
+                }
+                //if (width190
+                //console.log(rect, )
+            }
+            UI.catalog.show = function(){
+                this.effect.position = 0;
+                this.effect.direction = 1;
+                this.effect.play();
+            }
             UI['catalog-close-button'].onclick = function(){
                 catalogCloseEffect.position = catalogCloseEffect.duration;
                 catalogCloseEffect.direction = -1;
@@ -952,6 +999,9 @@
                     for (var iItem = 0; iItem < items.length; iItem++){
                         items[iItem].html.style.display = '';
                     }
+                    UI.catalog.scrollTop = 0;
+                    UI.catalog.show();
+
                 }
                 
                 UI.categories.appendChild(categories[iCat].html);
@@ -1067,8 +1117,13 @@
             function openGame(data, mode){
                 // mode = [menu, catalog]
                 //iframeGame.style.display = '';
+                
                 LOADING_PERCENT = 0;
+                if (debug) {
+                    data.url = data.url.replace('https://games.gamepix.com', 'https://gpx-api-dev-e-us-w-wa.azurewebsites.net');
+                }
                 iframeGame.setAttribute('src', data.url);
+                //https://gpx-api-dev-e-us-w-wa.azurewebsites.net/play/${GID}?sid=110880
     
                 UI.loader.gameLogo.src = data.thumbnailUrl;
                 UI.loader.title.innerHTML = data.title;
@@ -1171,6 +1226,8 @@
                     catalogShowEffect.direction = -1;
                     catalogShowEffect.position = catalogShowEffect.duration;
                     catalogShowEffect.play();
+
+                    UI.catalog.show();
                 };
                 items.push({htmlIcon:item});
                 item.UI = itemUI;
