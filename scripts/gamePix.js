@@ -517,7 +517,7 @@
         }
         SVG_Loader.prototype.update = function(percent){
             //console.log("RENDER PERCENT", percent)
-            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="72.5" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 15;"></circle>';
+            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="72" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 16;"></circle>';
             
             var angle = (Math.min(percent, 0.5) * 360) * Math.PI / 180
             var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
@@ -1056,7 +1056,6 @@
                             UI['loader-screen'].style.opacity = this.getTime(200, 400);
                         }
                     }
-                    
                 }
                 else if (this.mode == 'menu'){
                     if (this.direction == 1){
