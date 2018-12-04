@@ -395,7 +395,7 @@
             cursor: pointer;
             cursor: pointer;
             padding-top: 5px;
-            background-color: #ff0000;
+            background-color: #00ff00;
         }
         .close-bar > b svg{
             width: 32px;
@@ -589,8 +589,8 @@
         iframeGame.style.display = "block";
         iframeGame.style.border =  0;
         
-        iframeGame.style.width = '100%';
-        iframeGame.style.height= 'calc(100% - 50px)';
+        iframeGame.style.width = '200px';
+        iframeGame.style.height= '300px';
         iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
         document.body.appendChild(iframeGame);
