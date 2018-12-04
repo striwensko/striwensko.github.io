@@ -607,11 +607,12 @@
         closeIframe.style.left = 0;
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
-        closeIframe.setAttribute('seamless', 'seamless')
+        closeIframe.setAttribute('seamless', 'seamless');
+        closeIframe.className = 'iframeGame';
         
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
-        closeIframe.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        closeIframe.style.backgroundColor = "rgba(255, 0, 0, 0.7)";
         closeIframe.style.width = '200px';
         closeIframe.style.height= '300px';
         closeIframe.style.zIndex = 1000002;
