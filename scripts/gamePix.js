@@ -230,7 +230,7 @@
             .catalog .catalog-list .game-item{
                 width: 130px;
                 display: inline-block;
-                margin: 10px;
+                margin: 8px;
             }
         }
         .catalog .catalog-list .game-item i{
@@ -949,9 +949,17 @@
             UI.catalog.effect.render = function(){
                 var rect = UI.catalog.getBoundingClientRect();
                 var width = UI.catalog.children[0].getBoundingClientRect().width;
-                var cols = Math.floor(width / (160 + 16));
-                var rows = Math.ceil(rect.height / (188 + 16));
-                var size = cols * rows
+                if (rect.width <= 600){
+                    var cols = Math.floor(width / (130 + 16));
+                    var rows = Math.ceil(rect.height / (164 + 16));
+                } else {
+                    var cols = Math.floor(width / (160 + 16));
+                    var rows = Math.ceil(rect.height / (188 + 16));
+                }
+                // 130x 164
+                
+                var size = cols * rows;
+                console.log(cols, rows);
                 this.duration = size * 35 + 250 + 350;
                 var children = UI.catalog.children;
                 var iItem = 0;
@@ -1232,12 +1240,12 @@
                     html += '</div>'
                     var item = Browser.DOM(html, itemUI)
                     var title = items[iItem].title;
-                    if (title.length > 20){
+                    if (title.length > 17){
                         var words = title.split(' ');
                         var size = 0;
                         for (var iWord = 0; iWord < words.length; iWord++){
                             size += words[iWord].length + 1;
-                            if (size > 20){
+                            if (size > 17){
                                 break;
                             }
                         }
