@@ -583,7 +583,7 @@
         iframeGame.style.height= 'calc(100% - 50px)';
         iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
-        //document.body.appendChild(iframeGame);
+        document.body.appendChild(iframeGame);
         console.log(iframeGame)
         
 
