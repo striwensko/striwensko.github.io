@@ -460,7 +460,7 @@
             overflow: hidden;
             margin-bottom: 48px;
             top: 123px;
-            left: 50%;
+            left: 0%;
             margin-left: -42px;
         }
         .loader-screen > b{
@@ -603,8 +603,8 @@
         var closeIframe = document.createElement('iframe');
         closeIframe.setAttribute('src', 'about:blank');
         closeIframe.style.position = 'fixed';
-        closeIframe.style.top = 0;
-        closeIframe.style.left = 0;
+        closeIframe.style.top = '10px';
+        closeIframe.style.left = '10px';
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
         closeIframe.setAttribute('seamless', 'seamless');
@@ -615,8 +615,8 @@
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
         closeIframe.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-        closeIframe.style.width = '100%';
-        closeIframe.style.height= '100%';
+        closeIframe.style.width = '50%';
+        closeIframe.style.height= '50%';
         closeIframe.style.zIndex = 1000002;
         closeIframe.style.display = 'none';
         document.body.appendChild(closeIframe);
