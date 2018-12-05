@@ -780,6 +780,9 @@
                     iframe.style.opacity = this.getTime(200, 500)
                     iframeGame.style.opacity = this.getTime(200, 500)
                     iframe.style.display = (this.position > 200 ? '': 'none');
+                    if (this.position == 0 && this.direction == -1){
+                        document.body.style.overflow = PREVIOUS_OVERFLOW;
+                    }
                     iframeGame.style.display = (this.position > 200 ? '': 'none');
 
                     UI['close-bar'].style.opacity = this.getTime(200, 400);
@@ -862,9 +865,10 @@
                 
                 TimeLine.applyMatrix(UI.button, {x: -48 * this.getTime(300, 200)});
                 if (timeLine.position == 0 && timeLine.direction == -1){
-                    document.body.style.overflow = '';
+                    document.body.style.overflow = PREVIOUS_OVERFLOW;
                 } else {
                     document.body.style.overflow = 'hidden';
+                    
                 }
                 for (var iItem = 0; iItem < items.length; iItem++){
                     var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200) + 48 * this.getTime(300, 200);
@@ -877,10 +881,34 @@
             UI.button.onclick = function(){
                 timeLine.direction = -(timeLine.direction);
                 timeLine.play();
-
+                if (timeLine.direction == 1){
+                    PREVIOUS_OVERFLOW = document.body.style.overflow;
+                    
+                }
                 blurEffect.blur({elements:['*'], delay: 0, direction: timeLine.direction})
             }
-            
+            function isLandscape() {
+                return window.innerHeight > window.innerWidth ? false : true;
+            }
+            /*window.setInterval(function() {
+                if (iframe.style.display != 'none'){
+
+                }
+                if (!isLandscape()) {
+                    document.documentElement.style.overflow = 'hidden';
+                } else {
+                    document.documentElement.style.overflow = '';
+                }
+                window.scroll(0, 1);
+                document.documentElement.style.height = window.innerHeight + 'px';
+            }, 1000);*/
+
+            function updateOverflow(){
+                if (navigator.userAgent.match(/iphone/i)) {
+                    
+                }
+            }
+            var PREVIOUS_OVERFLOW = '';
     
             var catalogShowEffect = new TimeLine(1200, 33);
             catalogShowEffect.direction = -1;
@@ -915,6 +943,9 @@
             catalogCloseEffect.onRender = function(){
                 TimeLine.applyMatrix(UI.button, {x: 24 * (this.getTime(0, 200))});
                 iframe.style.display = (this.position > 0 ? '' : 'none');
+                if (this.position == 0 && this.direction == -1){
+                    document.body.style.overflow = PREVIOUS_OVERFLOW;
+                }
                 iframe.style.opacity = (this.getTime(300, 200));
                 UI['catalog-container'].style.display = (this.position > 0 ? '' : 'none');
             }
