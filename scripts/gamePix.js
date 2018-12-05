@@ -412,14 +412,17 @@
 
     var stylesheetClose = `
         <style type="text/css">
-        .iframeGame{
+        #game-frame{
             width: 1px;
             min-width: 100%;
             *width: 100%;
-            position: relative;
+            height: 1px;
+            min-height: 100%;
+            *height: 100%;
+            position: fixed;
             top: 0px;
             left: 0px;
-          }
+        }
         .gamePix {
             font-family:'Roboto', sans-serif;
             width: 100%;
@@ -565,7 +568,7 @@
         document.body.appendChild(iframe);
 
 
-        var iframeGame = document.createElement('iframe');
+        /*var iframeGame = document.createElement('iframe');
         iframeGame.setAttribute('src', 'about:blank');
         iframeGame.style.position = 'fixed';
         iframeGame.style.top = '50px';
@@ -585,9 +588,21 @@
         iframeGame.style.width = '100%';
         iframeGame.style.height= 'calc(100% - 50px)';
         iframeGame.style.zIndex = 1000001;
+        iframeGame.style.display = 'none';*/
+        var iframeGame = document.createElement('iframe');
+        iframeGame.id = 'game-frame';
+        iframeGame.src = 'https://games.gamepix.com/play/40353?sid=110880';
+        iframeGame.setAttribute('frameborder', '0');
+        iframeGame.setAttribute('name', window.location.href);
+        iframeGame.setAttribute('width', '100%');
+        iframeGame.setAttribute('height', '100%');
+        iframeGame.setAttribute('scrolling', 'no');
+        iframeGame.style.top = '0%';
+        iframeGame.style.left = '0%';
+        iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
         document.body.appendChild(iframeGame);
-        console.log(iframeGame)
+        
         
 
         var closeIframe = document.createElement('div');
