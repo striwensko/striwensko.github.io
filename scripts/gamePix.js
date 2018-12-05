@@ -653,7 +653,7 @@
                     }
                 }
 
-                var blurAmount = Math.min(Math.floor((timeLine.position - this.delay) / 50), 10);
+                var blurAmount = Math.min(Math.floor((timeLine.position - this.delay) / 25), 20);
                 blurAmount = Math.max(blurAmount, 0) | 0;
                 var blur = (timeLine.position == 0 ? '' : 'blur(' + blurAmount + 'px)');
 
@@ -731,7 +731,7 @@
             closeIframe.effect = new TimeLine(700, 300);
             closeIframe.effect.addEventListener(EVENT.CHANGE, 'render', closeIframe.effect);
             closeIframe.effect.render = function(){
-                var blur = (this.position < 200 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 50), 10) + 'px)')
+                var blur = (this.position < 200 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 25), 20) + 'px)')
                 closeIframe.style.display = (this.position > 0 ? '' : 'none');
                 closeIframe.style.opacity = this.getTime(0, 400);
                 
@@ -750,7 +750,7 @@
                         return true;
                     }
                     for (var iChild = 0; iChild < children.length; iChild++) {
-                        var blur = (this.position == 0 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 50), 10) + 'px)');
+                        var blur = (this.position == 0 ? '' : 'blur(' + Math.min(Math.floor((this.position - 200) / 25), 20) + 'px)');
                         if (children[iChild].style.filter == ''){
                             children[iChild].applyFilter = true;
                         }
