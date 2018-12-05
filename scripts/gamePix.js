@@ -616,7 +616,7 @@
         closeIframe.style.border =  0;
         closeIframe.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
         closeIframe.style.width = '50%';
-        closeIframe.style.height= '50%';
+        closeIframe.style.height= '100%';
         closeIframe.style.zIndex = 1000002;
         closeIframe.style.display = 'none';
         document.body.appendChild(closeIframe);
@@ -725,7 +725,7 @@
             html += '</div>'
             
 
-            //bodyClose.innerHTML = stylesheetClose;
+            bodyClose.innerHTML = stylesheetClose;
             bodyClose.appendChild(Browser.DOM(html, UI_Close));
 
             UI_Close.play.onclick = function(){
