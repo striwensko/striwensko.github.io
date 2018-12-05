@@ -600,17 +600,12 @@
         console.log(iframeGame)
         
 
-        var closeIframe = document.createElement('iframe');
-        closeIframe.setAttribute('src', 'about:blank');
+        var closeIframe = document.createElement('div');
         closeIframe.style.position = 'fixed';
         closeIframe.style.top = '-10px';
         closeIframe.style.left = '-10px';
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
-        closeIframe.setAttribute('seamless', 'seamless');
-        closeIframe.setAttribute('scrolling', 'no');
-        closeIframe.className = 'iframeGame2';
-        
         
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
@@ -727,7 +722,7 @@
 
             bodyClose.innerHTML = stylesheetClose;
             bodyClose.appendChild(Browser.DOM(html, UI_Close));
-            alert(bodyClose.children);
+            alert(bodyClose.children.lenght);
 
             UI_Close.play.onclick = function(){
                 closeIframe.mode = 'play';
