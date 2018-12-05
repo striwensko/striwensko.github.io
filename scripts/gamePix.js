@@ -409,7 +409,14 @@
 
     var stylesheetClose = `
         <style type="text/css">
-
+        .iframeGame{
+            width: 1px;
+            min-width: 100%;
+            *width: 100%;
+            position: relative;
+            top: 0px;
+            left: 0px;
+          }
         .gamePix {
             font-family:'Roboto', sans-serif;
             width: 100%;
@@ -427,28 +434,8 @@
             text-align: center;
             color: #fff;
             padding: 20px;
-            padding-top: 85px;
+            padding-top: 245px;
             box-sizing: border-box;
-        }
-        .gamePix .loader-screen > i{
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            padding-left: 20px;
-            cursor: pointer;
-            font-style: normal;
-        }
-        .gamePix .loader-screen > i:after{
-            display: block;
-            content: '';
-            border-top: 2px solid #fff;
-            border-left: 2px solid #fff;
-            width: 8px;
-            height: 8px;
-            left: 3px;
-            top: 4px;
-            transform: rotate(-45deg);
-            position: absolute;
         }
         .gamePix .loader-screen > img{
             position: absolute;
@@ -1156,7 +1143,7 @@
                 if (debug) {
                     data.url = data.url.replace('https://games.gamepix.com', 'https://gpx-api-dev-e-us-w-wa.azurewebsites.net');
                 }
-                //iframeGame.setAttribute('src', data.url);
+                iframeGame.setAttribute('src', data.url);
                 //https://gpx-api-dev-e-us-w-wa.azurewebsites.net/play/${GID}?sid=110880
     
                 UI.loader.gameLogo.src = data.thumbnailUrl;
