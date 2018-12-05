@@ -213,6 +213,27 @@
             text-align: center;
 
         }
+        @media only screen and (min-width:900px)
+        {
+            .catalog .header ul li span{
+                top: 56px;
+            }
+            .catalog .header ul{
+                width: 720px;
+            }
+            .catalog .header ul li{
+                width: 56px;
+                height: 56px;
+            }
+            .catalog .header ul li i{
+                width: 56px;
+                height: 56px;
+            }
+            .catalog .header ul li u svg{
+                width:36px;
+                height: 30px;
+            }
+        }
         .catalog .catalog-list{
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
@@ -236,6 +257,7 @@
                 margin: 8px;
             }
         }
+        
         .catalog .catalog-list .game-item i{
             width: 100%;
             display: block;
@@ -1076,7 +1098,7 @@
                         items[iItem].html.style.display = '';
                     }
                     UI.catalog.scrollTop = 0;
-                    UI.catalog.show();
+                    //UI.catalog.show();
 
                 }
                 
