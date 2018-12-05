@@ -591,13 +591,13 @@
         iframeGame.style.display = 'none';*/
         var iframeGame = document.createElement('iframe');
         iframeGame.id = 'game-frame';
-        iframeGame.src = 'https://games.gamepix.com/play/40353?sid=110880';
+        iframeGame.setAttribute('src', 'about:blank');
         iframeGame.setAttribute('frameborder', '0');
         iframeGame.setAttribute('name', window.location.href);
         iframeGame.setAttribute('width', '100%');
         iframeGame.setAttribute('height', '100%');
         iframeGame.setAttribute('scrolling', 'no');
-        iframeGame.style.top = '0%';
+        iframeGame.style.top = '50px';
         iframeGame.style.left = '0%';
         iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
