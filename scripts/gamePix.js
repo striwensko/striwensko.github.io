@@ -227,8 +227,11 @@
         }
         @media only screen and (max-width:600px)
         {
+            .catalog .catalog-list{
+                padding: 0 12px;
+            }
             .catalog .catalog-list .game-item{
-                width: 130px;
+                width: calc(50% - 16px);
                 display: inline-block;
                 margin: 8px;
             }
@@ -395,7 +398,7 @@
             cursor: pointer;
             cursor: pointer;
             padding-top: 5px;
-            background-color: #ff0000;
+            background-color: transparent;
         }
         .close-bar > b svg{
             width: 32px;
