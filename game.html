@@ -105,7 +105,7 @@ function init() {
 //////// 1) Create the iframe that will contains the game ////////
 var iframe = document.createElement('iframe');
 iframe.id = 'game-frame';
-iframe.src = 'https://games.gamepix.com/play/40071?sid=110880';
+iframe.src = 'https://games.gamepix.com/play/40353?sid=110880';
 iframe.setAttribute('frameborder', '0');
 iframe.setAttribute('name', window.location.href);
 iframe.setAttribute('width', '100%');
@@ -142,6 +142,30 @@ break;
 document.getElementsByTagName('body')[0].appendChild(iframe);
 globalIframe = iframe;
 }
+
+
+        function isLandscape() {
+            return window.innerHeight > window.innerWidth ? false : true;
+        }
+
+
+
+        if (navigator.userAgent.match(/iphone/i)) {
+            window.setInterval(function() {
+                if (!isLandscape()) {
+                    document.documentElement.style.overflow = 'hidden';
+                } else {
+                    document.documentElement.style.overflow = '';
+                }
+                window.scroll(0, 1);
+                document.documentElement.style.height = window.innerHeight + 'px';
+            }, 1000);
+        }
+
+
+        
 init();
+
+
 </script>
 </body></html>
