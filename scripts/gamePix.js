@@ -460,7 +460,7 @@
             overflow: hidden;
             margin-bottom: 48px;
             top: 123px;
-            left: 0%;
+            left: 50%;
             margin-left: -42px;
         }
         .loader-screen > b{
@@ -725,7 +725,7 @@
             html += '</div>'
             
 
-            bodyClose.innerHTML = stylesheetClose;
+            //bodyClose.innerHTML = stylesheetClose;
             bodyClose.appendChild(Browser.DOM(html, UI_Close));
 
             UI_Close.play.onclick = function(){
