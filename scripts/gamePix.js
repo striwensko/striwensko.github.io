@@ -417,11 +417,11 @@
             min-width: 100%;
             *width: 100%;
             height: 1px;
-            min-height: 100%;
-            *height: 100%;
+            min-height: calc(100% - 50px);
+            *height: calc(100% - 50px);
             position: fixed;
-            top: 0px;
-            left: 0px;
+            top: 50px;
+            left: 50px;
         }
         .gamePix {
             font-family:'Roboto', sans-serif;
