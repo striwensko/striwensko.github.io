@@ -410,7 +410,7 @@
     var stylesheetClose = `
         <style type="text/css">
 
-        html, body{
+        .gamePix {
             font-family:'Roboto', sans-serif;
             width: 100%;
             height: 100%;
@@ -418,7 +418,7 @@
             margin: 0;
             padding: 0;
         }
-        .loader-screen{
+        .gamePix .loader-screen{
             position: fixed;
             top: 0;
             left: 0;
@@ -430,7 +430,7 @@
             padding-top: 85px;
             box-sizing: border-box;
         }
-        .loader-screen > i{
+        .gamePix .loader-screen > i{
             position: absolute;
             top: 15px;
             left: 15px;
@@ -438,7 +438,7 @@
             cursor: pointer;
             font-style: normal;
         }
-        .loader-screen > i:after{
+        .gamePix .loader-screen > i:after{
             display: block;
             content: '';
             border-top: 2px solid #fff;
@@ -450,7 +450,7 @@
             transform: rotate(-45deg);
             position: absolute;
         }
-        .loader-screen > img{
+        .gamePix .loader-screen > img{
             position: absolute;
             width: 84px;
             height: 84px;
@@ -463,24 +463,24 @@
             left: 50%;
             margin-left: -42px;
         }
-        .loader-screen > b{
+        .gamePix .loader-screen > b{
             font-weight: normal;
             font-size: 20px;
         }
-        .loader-screen div.buttons{
+        .gamePix .loader-screen div.buttons{
             position: absolute;
             bottom: 50px;
             left: 0;
             width: 100%;
         }
-        .loader-screen div.buttons b{
+        .gamePix .loader-screen div.buttons b{
             display: block;
             margin: 0 auto;
             font-size: 14px;
 
         }
         
-        .loader-screen div.buttons b.play{
+        .gamePix .loader-screen div.buttons b.play{
             background-color: #0499D7;
             color: #fff;
             border: 1px solid #0499D7;
@@ -490,7 +490,7 @@
             text-align: center;
             cursor: pointer;
         }
-        .loader-screen div.buttons b.catalog{
+        .gamePix .loader-screen div.buttons b.catalog{
             color: #fff;
             border: 1px solid #0499D7;
             border-radius: 5px;
@@ -500,7 +500,7 @@
             margin-top: 15px;
             cursor: pointer;
         }
-        .loader-screen div.buttons b.close{
+        .gamePix .loader-screen div.buttons b.close{
             line-height: 30px;
             width: 260px;
             margin-top: 15px;
@@ -602,15 +602,16 @@
 
         var closeIframe = document.createElement('div');
         closeIframe.style.position = 'fixed';
-        closeIframe.style.top = '-10px';
-        closeIframe.style.left = '-10px';
+        closeIframe.style.top = '0px';
+        closeIframe.style.left = '0px';
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
+        closeIframe.className = 'gamePix'
         
         closeIframe.style.display = "none";
         closeIframe.style.border =  0;
         closeIframe.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-        closeIframe.style.width = '50%';
+        closeIframe.style.width = '100%';
         closeIframe.style.height= '100%';
         closeIframe.style.zIndex = 1000002;
         closeIframe.style.display = 'none';
