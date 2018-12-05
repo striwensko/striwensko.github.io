@@ -623,8 +623,8 @@
         var inter = window.setInterval(function() {
             // put inside function 
             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var closeIframeDoc = closeIframe.contentDocument || closeIframe.contentWindow.document;
-            if(iframeDoc.readyState == "complete" && closeIframeDoc.readyState == "complete") {
+            //var closeIframeDoc = closeIframe.contentDocument || closeIframe.contentWindow.document;
+            if(iframeDoc.readyState == "complete") {
                 window.clearInterval(inter);
 
                 renderUI();
@@ -700,8 +700,8 @@
             UI.button.children[0].style.transform = 'translate(-50%, -50%)';
     
             // Close Screen Iframe
-            var bodyClose = (closeIframe.contentDocument || closeIframe.contentWindow.document).body;
-            var headClose = (closeIframe.contentDocument || closeIframe.contentWindow.document).head;
+            var bodyClose = closeIframe;
+            var headClose = document.head;
             var font = document.createElement('link');
             font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
             font.setAttribute('rel', 'stylesheet');
