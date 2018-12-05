@@ -722,7 +722,7 @@
 
             bodyClose.innerHTML = stylesheetClose;
             bodyClose.appendChild(Browser.DOM(html, UI_Close));
-            alert(bodyClose.children.lenght);
+            
 
             UI_Close.play.onclick = function(){
                 closeIframe.mode = 'play';
