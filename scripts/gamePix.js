@@ -99,7 +99,7 @@
             margin: 0 auto;
         }
         .catalog .header ul{
-            padding: 10px 0;
+            padding: 13px 0 3px 0;
             border-left: 0;
         }
         .catalog .header ul li{
