@@ -596,15 +596,15 @@
         iframeGame.style.height= 'calc(100% - 50px)';
         iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
-        document.body.appendChild(iframeGame);
+        //document.body.appendChild(iframeGame);
         console.log(iframeGame)
         
 
         var closeIframe = document.createElement('iframe');
         closeIframe.setAttribute('src', 'about:blank');
         closeIframe.style.position = 'fixed';
-        closeIframe.style.top = '10px';
-        closeIframe.style.left = '10px';
+        closeIframe.style.top = '-10px';
+        closeIframe.style.left = '-10px';
         closeIframe.style.right = 0;
         closeIframe.style.bottom = 0;
         closeIframe.setAttribute('seamless', 'seamless');
