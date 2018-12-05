@@ -95,7 +95,7 @@
             font-size: 12px;
         }
         .catalog .header ul{
-            width: 504px;
+            width: 576px;
             margin: 0 auto;
         }
         .catalog .header ul{
@@ -108,7 +108,7 @@
             /* float: left; */
             padding-bottom: 30px;
             line-height: 30px;
-            margin: 0 8px;
+            margin: 0 12px;
             position: relative;
             display: inline-block;
         }
