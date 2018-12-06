@@ -868,7 +868,6 @@
                 
                 iframe.style.filter = blur;
                 iframeGame.style.filter = blur;
-                console.log(closeIframe.mode);
                 if (closeIframe.mode == 'close'){
                     var children = document.body.children;
                     function noBlur(element){
@@ -1241,15 +1240,18 @@
                 if (this.position == this.duration){
                     UI['loader-screen'].style.display = 'none';
                 }
+
             }
             showGameAnimation.show = function(){
                 //console.log("SHOW ANIMATION")
                 showGameAnimation.direction = 1;
                 showGameAnimation.play();
+                
                 iframeGame.style.display = '';
                 iframeGame.style.opacity = 0;
                 UI['close-bar'].style.display = '';
                 UI['close-bar'].style.opacity = 0;
+                showGameAnimation.render();
             }
             UI['close-bar'].button.onclick = function(){
                 closeIframe.show();
@@ -1315,8 +1317,7 @@
             json.load('https://games.gamepix.com/games?sid=' + SID)
             json.addEventListener(EVENT.COMPLETE, 'onData', json);
             json.onData = function(){
-                console.log("loaded UI")
-                console.log(UI, body.children)
+                
                 for (var iData = 0; iData < this.data.data.length; iData++){
                     CATALOG.All.items.push(this.data.data[iData]);
                     var categories = this.data.data[iData].categories;
