@@ -69,7 +69,7 @@
         .catalog .header{
             padding: 10px 20px;
             padding-top: 35px;
-            padding-bottom: 20px;
+            padding-bottom: 8px;
         }
         .catalog .header > img +  b{
             margin-top: 20px;
