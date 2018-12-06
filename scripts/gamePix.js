@@ -310,17 +310,19 @@
             position: absolute;
             top: -24px;
             right: -24px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         }
         .game-icon span,
         .plus-game-icon span{
             position: absolute;
             line-height: 40px;
-            font-size: 14px;
+            font-size: 16px;
             color: #fff;
             margin-top: -20px;
             top: 0;
             right: 45px;
             white-space: nowrap;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         }
         .plus-game-icon b{
             width: 48px;
@@ -332,7 +334,8 @@
             right: -24px;
             box-sizing:border-box;
             border: 2px solid #fff;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
             color: #fff;
         }
         .plus-game-icon svg{
@@ -716,7 +719,7 @@
 
             // Open game corner Button
             var html = ''
-            html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
+            html += '<div var="button" style="width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b></div>';
             document.body.appendChild(Browser.DOM(html, UI));
 
             UI.button.icon.style.opacity = '0';
