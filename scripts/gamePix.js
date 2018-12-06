@@ -71,6 +71,12 @@
             padding-top: 35px;
             padding-bottom: 8px;
         }
+        .catalog .header > img{
+            display: block;
+            max-width: 100%;
+            margin: 0 auto;
+            max-height: 100px;
+        }
         .catalog .header .categories-menu{
             margin: 0 auto;
         }
@@ -733,13 +739,16 @@
                             var cols = (catWidth/ 64);
                             if (cols % 1 > 0.5){
                                 UI['categories-menu'].style.width = (Math.floor(cols) * 64 + 32) + 'px';
+                                UI['catalog-logo'].style.maxWidth = (Math.floor(cols) * 64 + 32) + 'px';
                             } else {
                                 UI['categories-menu'].style.width = (Math.floor(cols - 1) * 64 + 32) + 'px';
+                                UI['catalog-logo'].style.maxWidth = (Math.floor(cols - 1) * 64 + 32) + 'px';
                             }
                         } else {
                             var width = UI.catalog.children[0].getBoundingClientRect().width;
                             var cols = Math.floor(width / (160 + 16))
                             UI['categories-menu'].style.width = (cols * (160 + 16) - 16 - 32) + 'px';
+                            UI['catalog-logo'].style.maxWidth = (cols * (160 + 16) - 16 - 32) + 'px';
                         }
                     }
                 }
@@ -754,7 +763,6 @@
             UI.button.icon.style.opacity = '0';
             UI['close-button'].style.fill = '#fff';
             UI['close-button'].style.width = '25px';
-            UI['close-button'].style.marginTop = '4px';
     
             UI.button.children[0].style.position = 'absolute';
             UI.button.children[0].style.top = '50%';
