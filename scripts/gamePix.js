@@ -428,15 +428,7 @@
             font-weight: normal;
             font-size: 20px;
         }
-        @media only screen and (max-width:550px)
-        {
-            .loader-screen > img{
-                display: none;
-            }
-            .loader-screen > b{
-                display: none;
-            }
-        }
+        
         .loader-screen div.brand{
             position: absolute;
             bottom: 0;
@@ -528,6 +520,15 @@
         .gamePix .loader-screen > b{
             font-weight: normal;
             font-size: 20px;
+        }
+        @media only screen and (max-height:550px)
+        {
+            .gamePix .loader-screen > img{
+                display: none;
+            }
+            .gamePix .loader-screen > b{
+                display: none;
+            }
         }
         .gamePix .loader-screen div.buttons{
             position: absolute;
