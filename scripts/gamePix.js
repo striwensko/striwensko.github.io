@@ -255,7 +255,31 @@
             margin: 8px;
             cursor: pointer;
         }
+        
+        
+        @media only screen and (max-width:750px)
+        {
+            .catalog .catalog-list{
+                padding: 0 12px;
+            }
+            .catalog .catalog-list .game-item{
+                width: calc(25% - 16px);
+                display: inline-block;
+                margin: 8px;
+            }
+        }
         @media only screen and (max-width:600px)
+        {
+            .catalog .catalog-list{
+                padding: 0 12px;
+            }
+            .catalog .catalog-list .game-item{
+                width: calc(33% - 16px);
+                display: inline-block;
+                margin: 8px;
+            }
+        }
+        @media only screen and (max-width:400px)
         {
             .catalog .catalog-list{
                 padding: 0 12px;
@@ -733,17 +757,33 @@
                     if (WIDTH != _width){
                         WIDTH = _width;
                         
-                        if (_width < 600){
+                        for (var iCat = 0; iCat < categories.length; iCat++){
+                            categories[iCat].html.style.margin = '';
+                        }
+                        UI['categories'].style.width = '';
+                        if (_width < 750){
                             UI['categories-menu'].style.width = '';
                             var catWidth = UI['categories-menu'].getBoundingClientRect().width;
                             var cols = (catWidth/ 64);
+                            if (cols % 1 < 0.5){
+                                cols--;
+                            }
+                            cols = Math.floor(cols);
+                            var itemWidth = (catWidth / (cols + 0.5));
+                            var margin = Math.round((itemWidth - 40) / 2)
+                            for (var iCat = 0; iCat < categories.length; iCat++){
+                                categories[iCat].html.style.margin = '0 ' + margin + 'px';
+                            }
+                            UI['categories'].style.width = 9 * (40 + 2 * margin) ;
+                            //0 12px
+                            /*
                             if (cols % 1 > 0.5){
                                 UI['categories-menu'].style.width = (Math.floor(cols) * 64 + 32) + 'px';
                                 UI['catalog-logo'].style.maxWidth = (Math.floor(cols) * 64 + 32) + 'px';
                             } else {
                                 UI['categories-menu'].style.width = (Math.floor(cols - 1) * 64 + 32) + 'px';
                                 UI['catalog-logo'].style.maxWidth = (Math.floor(cols - 1) * 64 + 32) + 'px';
-                            }
+                            }*/
                         } else {
                             var width = UI.catalog.children[0].getBoundingClientRect().width;
                             var cols = Math.floor(width / (160 + 16))
@@ -1049,16 +1089,15 @@
             UI.catalog.effect.render = function(){
                 var rect = UI.catalog.getBoundingClientRect();
                 var width = UI.catalog.children[0].getBoundingClientRect().width;
-                if (rect.width <= 600){
-                    var cols = Math.floor(width / (130 + 16));
-                    var rows = Math.ceil(rect.height / (164 + 16));
-                } else {
-                    var cols = Math.floor(width / (160 + 16));
-                    var rows = Math.ceil(rect.height / (188 + 16));
-                }
+                
+                
+                var cols = Math.floor(width / (160 + 16));
+                var rows = Math.ceil(rect.height / (188 + 16));
+                
                 // 130x 164
                 
                 var size = cols * rows;
+                size = Math.max(12, size);
                 this.duration = size * 35 + 250 + 350;
                 var children = UI.catalog.children;
                 var iItem = 0;
