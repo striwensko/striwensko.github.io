@@ -334,12 +334,12 @@
             right: -24px;
             box-sizing:border-box;
             border: 2px solid #fff;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.1);
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
             color: #fff;
         }
         .plus-game-icon svg{
-            width: 34px;
+            width: 26px;
             position: absolute;
             top: 50%;
             left: 50%;
