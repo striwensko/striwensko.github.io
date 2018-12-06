@@ -787,8 +787,8 @@
                         } else {
                             var width = UI.catalog.children[0].getBoundingClientRect().width;
                             var cols = Math.floor(width / (160 + 16))
-                            UI['categories-menu'].style.width = (cols * (160 + 16) - 16 - 32) + 'px';
-                            UI['catalog-logo'].style.maxWidth = (cols * (160 + 16) - 16 - 32) + 'px';
+                            UI['categories-menu'].style.width = (cols * (160 + 16) - 16) + 'px';
+                            UI['catalog-logo'].style.maxWidth = (cols * (160 + 16) - 16) + 'px';
                         }
                     }
                 }
