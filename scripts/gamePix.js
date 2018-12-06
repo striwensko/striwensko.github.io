@@ -71,15 +71,17 @@
             padding-top: 35px;
             padding-bottom: 8px;
         }
-        .catalog .header > img +  b{
+        .catalog .header .categories-menu{
+            margin: 0 auto;
+        }
+        .catalog .header .categories-menu > b:first-child{
             margin-top: 20px;
         }
-        .catalog .header > .categories-bar{
+        .catalog .header .categories-menu > .categories-bar{
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        .catalog .header > img +  b,
-        .catalog .header > .categories-bar + b{
+        .catalog .header .categories-menu > b{
             width: 100%;
             height: 1px;
             background-color: #777;
@@ -716,6 +718,33 @@
                 blurEffect.play();
             }
             
+            var WIDTH = '';
+            setInterval(resize, 300);
+            function resize(){
+                if (UI['catalog-container'].style.display == ''){
+                    var _width = Browser.getSize().width;
+                    
+                    if (WIDTH != _width){
+                        WIDTH = _width;
+                        
+                        if (_width < 600){
+                            UI['categories-menu'].style.width = '';
+                            var catWidth = UI['categories-menu'].getBoundingClientRect().width;
+                            var cols = (catWidth/ 64);
+                            if (cols % 1 > 0.5){
+                                UI['categories-menu'].style.width = (Math.floor(cols) * 64 + 32) + 'px';
+                            } else {
+                                UI['categories-menu'].style.width = (Math.floor(cols - 1) * 64 + 32) + 'px';
+                            }
+                        } else {
+                            var width = UI.catalog.children[0].getBoundingClientRect().width;
+                            var cols = Math.floor(width / (160 + 16))
+                            UI['categories-menu'].style.width = (cols * (160 + 16) - 16 - 32) + 'px';
+                        }
+                    }
+                }
+            }
+            //<meta name="viewport" content="user-scalable=no"/>
 
             // Open game corner Button
             var html = ''
@@ -945,6 +974,7 @@
                 UI['catalog-container'].style.display = (this.position < this.duration ? '' : 'none');
                 UI['catalog-container'].style.opacity = 1 - this.getTime(300, 400);
                 
+                
                 TimeLine.applyMatrix(UI['line-top'], {y: 50 * this.getTime(300, 400)})
                 TimeLine.applyMatrix(UI['line-bottom'], {y: -30 * this.getTime(300, 400)})
                 for (var iCat = 0; iCat < categories.length; iCat++){
@@ -986,11 +1016,13 @@
             html += '  <b var="catalog-close-button">' + SVG.close + '</b>';
             html += '  <div class="header">';
             html += '    <img var="catalog-logo"/>';
-            html += '    <b var="line-top"></b>';
-            html += '    <div class="categories-bar">';
-            html += '      <ul var="categories"></ul>';
-            html += '    </div>'
-            html += '    <b var="line-bottom"></b>';
+            html += '    <div var="categories-menu" class="categories-menu">';
+            html += '      <b var="line-top"></b>';
+            html += '      <div class="categories-bar">';
+            html += '        <ul var="categories"></ul>';
+            html += '      </div>';
+            html += '      <b var="line-bottom"></b>';
+            html += '    </div>';
             html += '  </div>';
             html += '  <div class="catalog-list" var="catalog"><div></div></div>'
             html += '</div>';
@@ -1019,7 +1051,6 @@
                 // 130x 164
                 
                 var size = cols * rows;
-                console.log(cols, rows);
                 this.duration = size * 35 + 250 + 350;
                 var children = UI.catalog.children;
                 var iItem = 0;
