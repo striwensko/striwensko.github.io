@@ -428,6 +428,15 @@
             font-weight: normal;
             font-size: 20px;
         }
+        @media only screen and (max-width:550px)
+        {
+            .loader-screen > img{
+                display: none;
+            }
+            .loader-screen > b{
+                display: none;
+            }
+        }
         .loader-screen div.brand{
             position: absolute;
             bottom: 0;
@@ -439,6 +448,8 @@
         .loader-screen div.brand img{
             display: block;
             margin: 0 auto;
+            max-width: 100%;
+            max-height: 100px;
         }
         .close-bar{
             position: absolute;
@@ -856,11 +867,8 @@
                 closeIframe.style.opacity = this.getTime(0, 400);
                 
                 iframe.style.filter = blur;
-                //iframeGame.style.filter = blur;
-                iframeGame.style.display = (this.position < 400 ? '' : 'none');
-                if (closeIframe.direction == -1){
-
-                }
+                iframeGame.style.filter = blur;
+                console.log(closeIframe.mode);
                 if (closeIframe.mode == 'close'){
                     var children = document.body.children;
                     function noBlur(element){
@@ -881,7 +889,7 @@
                     }
                     TimeLine.applyMatrix(UI.button, {x: 24 * this.getTime(100, 200)});
                     
-
+                    
                     iframe.style.opacity = this.getTime(200, 500)
                     iframeGame.style.opacity = this.getTime(200, 500)
                     iframe.style.display = (this.position > 200 ? '': 'none');
@@ -916,6 +924,7 @@
                 }
             }
             closeIframe.show = function(){
+                closeIframe.mode = '';
                 this.effect.direction = 1;
                 this.effect.play();
             }
@@ -1235,7 +1244,6 @@
             }
             showGameAnimation.show = function(){
                 //console.log("SHOW ANIMATION")
-                showGameAnimation.position = 0;
                 showGameAnimation.direction = 1;
                 showGameAnimation.play();
                 iframeGame.style.display = '';
