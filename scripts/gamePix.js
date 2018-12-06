@@ -960,16 +960,16 @@
                 }
             });
     
-            var timeLine = new TimeLine(500, 33);
+            var timeLine = new TimeLine(5, 33);
             timeLine.direction = -1;
             timeLine.addEventListener(EVENT.CHANGE, 'onRender', timeLine);
             timeLine.onRender = function(){
                 UI['text'].innerHTML = this.position;
                 iframe.style.display = (this.position > 0 ? '' : 'none');
-                iframe.style.opacity = (this.getTime(100, 200));
-                UI.button.icon.style.opacity = this.getTime(300, 200)
+                iframe.style.opacity = (this.getTime(1, 2));
+                UI.button.icon.style.opacity = this.getTime(3, 2)
                 
-                TimeLine.applyMatrix(UI.button, {x: -48 * this.getTime(300, 200)});
+                TimeLine.applyMatrix(UI.button, {x: -48 * this.getTime(3, 2)});
                 if (timeLine.position == 0 && timeLine.direction == -1){
                     document.body.style.overflow = PREVIOUS_OVERFLOW;
                 } else {
@@ -977,11 +977,11 @@
                     
                 }
                 for (var iItem = 0; iItem < items.length; iItem++){
-                    var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200) + 48 * this.getTime(300, 200);
-                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(300, 200);
-                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(300, 200)});
+                    var x = Math.cos((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(3, 2) + 48 * this.getTime(3, 2);
+                    var y = Math.sin((130 + 33.3 * (3 - iItem)) * Math.PI / 180) * 150 * this.getTime(3, 2);
+                    TimeLine.applyMatrix(items[iItem].htmlIcon, {x:x, y:y, opacity: this.getTime(3, 2)});
                     
-                    items[iItem].htmlIcon.style.display = (this.position < 300 ? 'none' : '');
+                    items[iItem].htmlIcon.style.display = (this.position < 3 ? 'none' : '');
                 }
             }
             UI.button.onclick = function(){
