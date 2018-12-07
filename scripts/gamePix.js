@@ -454,7 +454,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 50px;
+            height: 40px;
             background-color: #000;
         }
         .close-bar > b {
@@ -471,7 +471,7 @@
             width: 32px;
             fill: #fff;
             margin-top: -8px;
-            padding: 9px;
+            padding: 4px;
         }
         
     </style>`;
@@ -498,11 +498,10 @@
             min-width: 100%;
             *width: 100%;
             height: 1px;
-            min-height: calc(100% - 50px);
-            *height: calc(100% - 50px);
+            min-height: calc(100% - 40px);
+            *height: calc(100% - 40px);
             position: fixed;
-            top: 50px;
-            left: 50px;
+            top: 40px;
         }
         .gamePix {
             font-family:'Roboto', sans-serif;
@@ -687,7 +686,7 @@
         iframeGame.setAttribute('width', '100%');
         iframeGame.setAttribute('height', '100%');
         iframeGame.setAttribute('scrolling', 'no');
-        iframeGame.style.top = '50px';
+        iframeGame.style.top = '40px';
         iframeGame.style.left = '0%';
         iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
