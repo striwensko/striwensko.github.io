@@ -43,6 +43,12 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+             -khtml-user-select: none; /* Konqueror HTML */
+               -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /
         }
         .catalog{
             position: fixed;
@@ -473,6 +479,20 @@
 
     var stylesheetClose = `
         <style type="text/css">
+        html, body{
+            font-family:'Roboto', sans-serif;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+             -khtml-user-select: none; /* Konqueror HTML */
+               -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /
+        }
         #game-frame{
             width: 1px;
             min-width: 100%;
