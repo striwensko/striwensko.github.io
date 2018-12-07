@@ -869,6 +869,7 @@
             UI_Close.play.onclick = function(){
                 closeIframe.mode = 'play';
                 closeIframe.hide();
+                resumeGame();
             }
             UI_Close.catalog.onclick = function(){
                 closeIframe.mode = 'catalog';
@@ -1297,6 +1298,7 @@
             }
             UI['close-bar'].button.onclick = function(){
                 closeIframe.show();
+                pauseGame();
             }
             UI.loader.back.onclick = function(){
                 showLoaderAnimation.direction = -1;
@@ -1355,6 +1357,13 @@
                 timeLineLoader.play();
                 console.log("LOAD GAME", data)
             }
+            function pauseGame () {
+                globalIframe.contentWindow.postMessage({ message: 'pause' }, GAME_URL);
+            }
+            function resumeGame () {
+                globalIframe.contentWindow.postMessage({ message: 'resume' }, GAME_URL);
+            }
+            
             var json = new JSON_Loader();
             json.load('https://games.gamepix.com/games?sid=' + SID)
             json.addEventListener(EVENT.COMPLETE, 'onData', json);
