@@ -971,7 +971,7 @@
             body.appendChild(meta);
 
             
-            
+            var children = document.head.children;
             for (var iChild = 0; iChild < children.length; iChild++){
                 if (children[iChild].tagName.toUpperCase() == 'META'){
                     if (children[iChild].getAttribute('name') == 'viewport'){
