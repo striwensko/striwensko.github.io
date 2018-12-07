@@ -486,7 +486,17 @@
                 display: none;
             }
         }
-        
+        @media only screen and (max-height:600px) and (orientation : landscape){
+            .close-bar{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 40px;
+                bottom: 0px;
+                height: auto;
+                background-color: #000;
+            }
+        }
     </style>`;
 
 
@@ -515,6 +525,19 @@
             *height: calc(100% - 40px);
             position: fixed;
             top: 40px;
+        }
+        @media only screen and (max-height:600px) and (orientation : landscape){
+            #game-frame{
+                width: 1px;
+                min-width: calc(100% - 40px);
+                *width: calc(100% - 40px);
+                height: 1px;
+                min-height: 100%;
+                *height: 100%;
+                position: fixed;
+                left: 40px;
+                top: 0;
+            }
         }
         .gamePix {
             font-family:'Roboto', sans-serif;
@@ -711,8 +734,6 @@
         iframeGame.setAttribute('width', '100%');
         iframeGame.setAttribute('height', '100%');
         iframeGame.setAttribute('scrolling', 'no');
-        iframeGame.style.top = '40px';
-        iframeGame.style.left = '0%';
         iframeGame.style.zIndex = 1000001;
         iframeGame.style.display = 'none';
         document.body.appendChild(iframeGame);
