@@ -1357,7 +1357,7 @@
                 if (debug) {
                     data.url = data.url.replace('https://games.gamepix.com', 'https://gpx-api-dev-e-us-w-wa.azurewebsites.net');
                 }
-                //iframeGame.setAttribute('src', data.url);
+                iframeGame.setAttribute('src', data.url);
                 //https://gpx-api-dev-e-us-w-wa.azurewebsites.net/play/${GID}?sid=110880
     
                 UI.loader.gameLogo.src = data.thumbnailUrl;
@@ -1379,7 +1379,7 @@
                 
                 
                 timeLineLoader.position = 0;
-                //timeLineLoader.play();
+                timeLineLoader.play();
                 console.log("LOAD GAME", data)
             }
             function pauseGame () {
