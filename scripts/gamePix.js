@@ -1402,6 +1402,17 @@
                 timeLineLoader.position = 0;
                 timeLineLoader.play();
                 console.log("LOAD GAME", data)
+
+                var elem = document.body;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { /* Firefox */
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                    elem.msRequestFullscreen();
+                }
             }
             function pauseGame () {
                 globalIframe.contentWindow.postMessage({ message: 'pause' }, GAME_URL);
