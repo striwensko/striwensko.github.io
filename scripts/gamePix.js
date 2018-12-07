@@ -959,8 +959,30 @@
             font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
             font.setAttribute('rel', 'stylesheet');
             head.appendChild(font);
+
+            var meta = document.createElement('meta');
+            meta.setAttribute('name', 'viewport');
+            meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            body.appendChild(meta);
+
+            var meta = document.createElement('meta');
+            meta.setAttribute('name', 'HandheldFriendly');
+            meta.setAttribute('content', 'true');
+            body.appendChild(meta);
+
             
-    
+            
+            for (var iChild = 0; iChild < children.length; iChild++){
+                if (children[iChild].tagName.toUpperCase() == 'META'){
+                    if (children[iChild].getAttribute('name') == 'viewport'){
+                        var content = children[iChild].getAttribute('content');
+                        if (content.search('user-scalable') == -1){
+                            children[iChild].setAttribute('content', content + ', user-scalable=no');
+                        }
+                    }
+                }
+            }
+            
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
             var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
