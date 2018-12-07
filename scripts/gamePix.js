@@ -540,15 +540,7 @@
             font-weight: normal;
             font-size: 20px;
         }
-        @media only screen and (max-height:550px)
-        {
-            .gamePix .loader-screen > img{
-                display: none;
-            }
-            .gamePix .loader-screen > b{
-                display: none;
-            }
-        }
+        
         .gamePix .loader-screen div.buttons{
             position: absolute;
             bottom: 50px;
@@ -589,6 +581,26 @@
             text-decoration: underline;
             text-align: center;
             cursor: pointer;
+        }
+        @media only screen and (max-height:650px){
+            .gamePix .loader-screen{
+                padding-top: 175px;
+            }
+            .gamePix .loader-screen > img{
+                top: 73px;
+            }
+            .gamePix .loader-screen div.buttons{
+                bottom: 30px;
+            }
+        }
+        @media only screen and (max-height:400px)
+        {
+            .gamePix .loader-screen > img{
+                display: none;
+            }
+            .gamePix .loader-screen > b{
+                display: none;
+            }
         }
     </style>`;
     
