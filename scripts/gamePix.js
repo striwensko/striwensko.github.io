@@ -77,7 +77,12 @@
             padding-top: 35px;
             padding-bottom: 8px;
         }
-        .catalog .header > img{
+        .catalog .header .catalog-logo-header{
+            display: block;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .catalog .header .catalog-logo-header img{
             display: block;
             max-width: 100%;
             margin: 0 auto;
@@ -110,7 +115,7 @@
             font-size: 12px;
         }
         .catalog .header ul{
-            width: 576px;
+            width: 552px;
             margin: 0 auto;
         }
         .catalog .header ul{
@@ -120,12 +125,18 @@
         .catalog .header ul li{
             width: 40px;
             height: 40px;
-            /* float: left; */
+            float: left;
             padding-bottom: 30px;
             line-height: 30px;
             margin: 0 12px;
             position: relative;
-            display: inline-block;
+            display: block;
+        }
+        .catalog .header ul li:first-child{
+            margin-left: 0 !important;
+        }
+        .catalog .header ul li:last-child{
+            margin-right: 0 !important;
         }
         .catalog .header ul:after{
             display: block;
@@ -234,7 +245,7 @@
                 top: 56px;
             }
             .catalog .header ul{
-                width: 720px;
+                width: 696px;
             }
             .catalog .header ul li{
                 width: 56px;
@@ -846,8 +857,8 @@
                                 cols--;
                             }
                             cols = Math.floor(cols);
-                            var itemWidth = (catWidth / (cols + 0.5));
-                            var margin = Math.round((itemWidth - 40) / 2)
+                            var itemWidth = (catWidth - 40 * (cols + 0.5));
+                            var margin = Math.round((itemWidth/ cols) / 2)
                             for (var iCat = 0; iCat < categories.length; iCat++){
                                 categories[iCat].html.style.margin = '0 ' + margin + 'px';
                             }
@@ -865,7 +876,7 @@
                             var width = UI.catalog.children[0].getBoundingClientRect().width;
                             var cols = Math.floor(width / (160 + 16))
                             UI['categories-menu'].style.width = (cols * (160 + 16) - 16) + 'px';
-                            UI['catalog-logo'].style.maxWidth = (cols * (160 + 16) - 16) + 'px';
+                            UI['catalog-logo-header'].style.maxWidth = (cols * (160 + 16) - 16) + 'px';
                         }
                     }
                 }
@@ -1141,7 +1152,7 @@
             html += '<div var="catalog-container" class="catalog" style="display: none">';
             html += '  <b var="catalog-close-button">' + SVG.close + '</b>';
             html += '  <div class="header">';
-            html += '    <img var="catalog-logo"/>';
+            html += '    <div var="catalog-logo-header" class="catalog-logo-header"><img var="catalog-logo"/></div>';
             html += '    <div var="categories-menu" class="categories-menu">';
             html += '      <b var="line-top"></b>';
             html += '      <div class="categories-bar">';
