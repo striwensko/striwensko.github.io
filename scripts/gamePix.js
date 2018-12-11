@@ -1071,7 +1071,7 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
-            alert(4);
+            alert(6);
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== 'none'){
                     if (event.touches.length > 1){ event.preventDefault(); }
@@ -1090,6 +1090,10 @@
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
                 if (event.touches.length > 1){ event.preventDefault(); }
             }, false);
+            (closeIframe.contentDocument || closeIframe.contentWindow.document).addEventListener('touchmove', function (event) {
+                if (event.touches.length > 1){ event.preventDefault(); }
+            }, false);
+            
             
             
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
@@ -1482,6 +1486,7 @@
                 UI['close-bar'].style.display = '';
                 UI['close-bar'].style.opacity = 0;
                 showGameAnimation.render();
+                iframeGame.style.top = '0'
             }
             UI['close-bar'].button.onclick = function(){
                 closeIframe.show();
@@ -1538,7 +1543,7 @@
                 loader.update(0);
                 iframeGame.style.display = '';
                 iframeGame.style.opacity = 0;
-                
+                iframeGame.style.top = '100%';
                 
                 timeLineLoader.position = 0;
                 timeLineLoader.play();
