@@ -949,13 +949,6 @@
                 closeIframe.mode = 'catalog';
                 closeIframe.hide();
             }
-            UI_Close.close.onclick = function(){
-                if (closeIframe.effect.position !== closeIframe.effect.duration){
-                    return false;
-                }
-                closeIframe.hide();
-                closeIframe.mode = 'close';
-            }
             
             closeIframe.effect = new TimeLine(700, 300);
             closeIframe.effect.addEventListener(EVENT.CHANGE, 'render', closeIframe.effect);
