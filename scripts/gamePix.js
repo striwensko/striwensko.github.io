@@ -1073,7 +1073,9 @@
             }*/
 
             document.addEventListener('touchmove', function (event) {
-                if (event.touches.length > 1){ event.preventDefault(); }
+                if (iframe.style.display !== ''){
+                    if (event.touches.length > 1){ event.preventDefault(); }
+                }
             }, false);
             var lastTouchEnd = 0;
             document.addEventListener('touchend', function (event) {
@@ -1086,7 +1088,6 @@
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
                 if (event.touches.length > 1){ event.preventDefault(); }
-                document.body.style.opacity = Math.random();
             }, false);
             
             
