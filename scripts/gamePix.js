@@ -1071,6 +1071,15 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
+
+            addEvent(document, 'touchmove', function(event){
+                if (iframe.style.display !== ''){
+                    if (event.touches.length > 1){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                    }
+                }
+            });
             
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
