@@ -1071,7 +1071,7 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
-            alert(7);
+            alert(8);
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== 'none'){
                     if (event.touches.length > 1){ event.preventDefault(); }
@@ -1483,7 +1483,7 @@
                 UI['close-bar'].style.display = '';
                 UI['close-bar'].style.opacity = 0;
                 showGameAnimation.render();
-                iframeGame.style.top = '0'
+                iframeGame.style.top = ''
             }
             UI['close-bar'].button.onclick = function(){
                 closeIframe.show();
