@@ -1071,21 +1071,13 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
-            alert(8);
+            
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== 'none'){
                     if (event.touches.length > 1){ event.preventDefault(); }
-                    document.body.style.opacity = Math.random();
                 }
             }, false);
-            var lastTouchEnd = 0;
-            document.addEventListener('touchend', function (event) {
-                var now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
+            
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
                 if (event.touches.length > 1){ event.preventDefault(); }
