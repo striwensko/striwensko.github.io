@@ -923,9 +923,9 @@
             html += '  <img var="loader.gameLogo"/>';
             html += '  <b var="loader.title"></b>'
             html += '  <div class="buttons">';
-            html += '    <b class="play" var="play">Keep Playing</b>'
-            html += '    <b class="catalog" var="catalog">Game Corner</b>'
-            html += '    <b class="close" var="close">Back to Website</b>'
+            html += '    <b class="play" var="play">Play</b>'
+            html += '    <b class="catalog" var="catalog">Exit</b>'
+            //html += '    <b class="close" var="close">Back to Website</b>'
             html += '  </div>';
             html += '</div>'
             
