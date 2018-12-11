@@ -75,7 +75,7 @@
         .catalog .header{
             padding: 10px 20px;
             padding-top: 0px;
-            padding-bottom: 8px;
+            padding-bottom: 0px;
         }
         .catalog .header .catalog-logo-header{
             display: block;
@@ -88,13 +88,14 @@
             max-width: 100%;
             margin: 0 auto;
             max-height: 100px;
-            padding-top: 35px;
+            padding-top: 40px;
+            padding-bottom: 20px;
         }
         .catalog .header .categories-menu{
             margin: 0 auto;
         }
         .catalog .header .categories-menu > b:first-child{
-            margin-top: 20px;
+            margin-top: 0px;
         }
         .catalog .header .categories-menu > .categories-bar{
             overflow-x: auto;
@@ -436,16 +437,16 @@
             height: 84px;
             display: block;
             margin: 0 auto;
-            border-radius: 84px;
             overflow: hidden;
             margin-bottom: 48px;
             top: 123px;
             left: 50%;
             margin-left: -42px;
+            border-radius: 4px;
         }
         .loader-screen b{
             font-weight: normal;
-            font-size: 20px;
+            font-size: 24px;
         }
         
         .loader-screen div.brand{
@@ -537,6 +538,7 @@
             min-height: calc(100% - 40px);
             *height: calc(100% - 40px);
             position: fixed;
+            left: 0;
             top: 40px;
         }
         @media only screen and (max-height:600px) and (orientation : landscape){
@@ -578,7 +580,7 @@
             height: 84px;
             display: block;
             margin: 0 auto;
-            border-radius: 84px;
+            border-radius: 4px;
             overflow: hidden;
             margin-bottom: 48px;
             top: 123px;
@@ -587,7 +589,7 @@
         }
         .gamePix .loader-screen > b{
             font-weight: normal;
-            font-size: 20px;
+            font-size: 24px;
         }
         
         .gamePix .loader-screen div.buttons{
@@ -913,7 +915,7 @@
             var bodyClose = closeIframe;
             var headClose = document.head;
             var font = document.createElement('link');
-            font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto");
+            font.setAttribute('href', "https://fonts.googleapis.com/css?family=Roboto:400,700");
             font.setAttribute('rel', 'stylesheet');
             headClose.appendChild(font);
 
@@ -1149,7 +1151,7 @@
             UI.button.HIDE_GAME_PAGE = -5000;
             UI.button.timeLine.render = function(){
                 var _width = Browser.getSize().width;
-                var distance = _width > 600 ? 40 : 30;
+                var distance = _width > 600 ? 36 : 29;
                 if (timeLine.position == 0 && iframe.style.display == 'none'){
                     var now = this.position;
                     var relTime = now - UI.button.PREV_CYCLE;
@@ -1277,8 +1279,8 @@
             html += '</div>';
             body.appendChild(Browser.DOM(html, UI));
             UI.catalog.onscroll = function(){
-                var logoHeight = UI['catalog-logo'].offsetHeight - 35 + 10;
-                UI['catalog-logo-header'].style.height = (25 + logoHeight - Math.min(Math.max(UI.catalog.scrollTop, 0), logoHeight)) + 'px';
+                var logoHeight = UI['catalog-logo'].offsetHeight - 60 + 20;
+                UI['catalog-logo-header'].style.height = (40 + logoHeight - Math.min(Math.max(UI.catalog.scrollTop, 0), logoHeight)) + 'px';
             }
             UI.catalog.effect = new TimeLine(1500, 33);
             UI.catalog.effect.addEventListener(EVENT.CHANGE, 'render', UI.catalog.effect);
@@ -1461,7 +1463,7 @@
                 UI['close-bar'].style.display = '';
                 UI['close-bar'].style.opacity = 0;
                 showGameAnimation.render();
-                iframeGame.style.top = ''
+                //iframeGame.style.top = ''
             }
             UI['close-bar'].button.onclick = function(){
                 closeIframe.show();
@@ -1518,7 +1520,7 @@
                 loader.update(0);
                 iframeGame.style.display = '';
                 iframeGame.style.opacity = 0;
-                iframeGame.style.top = '100%';
+                //iframeGame.style.top = '100%';
                 
                 timeLineLoader.position = 0;
                 timeLineLoader.play();
