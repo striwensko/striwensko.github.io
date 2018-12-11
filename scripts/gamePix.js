@@ -488,14 +488,9 @@
             padding: 4px;
         }
         @media only screen and (max-height:650px){
-            .loader-screen{
-                padding-top: 45px;
-            }
-            .loader-screen > img{
-                top: 83px;
-            }
+            
         }
-        @media only screen and (max-height:400px){
+        @media only screen and (max-height:479px){
             .loader-screen div.brand{
                 display: none;
             }
@@ -571,7 +566,7 @@
             text-align: center;
             color: #fff;
             padding: 20px;
-            padding-top: 245px;
+            padding-top: 255px;
             box-sizing: border-box;
         }
         .gamePix .loader-screen > img{
@@ -633,18 +628,8 @@
             text-align: center;
             cursor: pointer;
         }
-        @media only screen and (max-height:650px){
-            .gamePix .loader-screen{
-                padding-top: 175px;
-            }
-            .gamePix .loader-screen > img{
-                top: 73px;
-            }
-            .gamePix .loader-screen div.buttons{
-                bottom: 30px;
-            }
-        }
-        @media only screen and (max-height:400px)
+        
+        @media only screen and (max-height:479px)
         {
             .gamePix .loader-screen > img{
                 display: none;
@@ -660,7 +645,7 @@
         var GAME_URL = '';
         function SVG_Loader(){
             this.holder = document.createElement('div');
-            this.holder.style.paddingBottom = '15px';
+            this.holder.style.paddingBottom = '10px';
             this.value = 0;
         }
         SVG_Loader.prototype.update = function(percent){
@@ -1502,6 +1487,8 @@
                     data.url = data.url.replace('https://games.gamepix.com', 'https://gpx-api-dev-e-us-w-wa.azurewebsites.net');
                 }
                 iframeGame.setAttribute('src', data.url);
+
+
                 //https://gpx-api-dev-e-us-w-wa.azurewebsites.net/play/${GID}?sid=110880
     
                 UI.loader.gameLogo.src = data.thumbnailUrl;
@@ -1509,6 +1496,12 @@
 
                 UI_Close.loader.gameLogo.src = data.thumbnailUrl;
                 UI_Close.loader.title.innerHTML = data.title;
+
+                /*loader.update(0);
+                UI['loader-screen'].style.display = '';
+                UI['loader-screen'].style.opacity = 1;
+                UI.catalog.style.display = 'none';
+                return false;*/
     
                 showLoaderAnimation.mode = mode;
                 showLoaderAnimation.position = 0;
