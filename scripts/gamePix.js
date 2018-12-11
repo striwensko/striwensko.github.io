@@ -601,9 +601,9 @@
         }
         
         .gamePix .loader-screen div.buttons b.play{
-            background-color: #0499D7;
+            background-color: $brand-color;
             color: #fff;
-            border: 1px solid #0499D7;
+            border: 1px solid $brand-color;
             border-radius: 5px;
             line-height: 45px;
             width: 260px;
@@ -612,7 +612,7 @@
         }
         .gamePix .loader-screen div.buttons b.catalog{
             color: #fff;
-            border: 1px solid #0499D7;
+            border: 1px solid $brand-color;
             border-radius: 5px;
             line-height: 45px;
             width: 260px;
@@ -641,8 +641,14 @@
     </style>`;
     
     function start(){
+        var BRAND_COLOR = '#99D704';
+        stylesheetClose = stylesheetClose.replace(/\$brand-color/gim, BRAND_COLOR);
+        stylesheet = stylesheet.replace(/\$brand-color/gim, BRAND_COLOR);
+        
         var LOADING_PERCENT = 0;
         var GAME_URL = '';
+
+        
         function SVG_Loader(){
             this.holder = document.createElement('div');
             this.holder.style.paddingBottom = '10px';
@@ -650,33 +656,33 @@
         }
         SVG_Loader.prototype.update = function(percent){
             //console.log("RENDER PERCENT", percent)
-            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="72" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 16;"></circle>';
+            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="74" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 12;"></circle>';
             
             var angle = (Math.min(percent, 0.5) * 360) * Math.PI / 180
             var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
-            var pointB = {x:Math.sin(angle) * 64, y: -Math.cos(angle) * 64}
+            var pointB = {x:Math.sin(angle) * 68, y: -Math.cos(angle) * 68}
 
             var path = 'M 0 -80';
             path += 'A 80 80 0 0 1 ' + pointA.x + ' ' + pointA.y;
             path += 'L ' + pointB.x + ' ' + pointB.y;
-            path += 'A 64 64 0 0 0 0 -64';
+            path += 'A 68 68 0 0 0 0 -68';
             path += 'L 0 -80Z';
             
-            html += '<path transform="translate(80,80)" d="' + path + '" fill="#FFDD00"></path>'
+            html += '<path transform="translate(80,80)" d="' + path + '" fill="' + BRAND_COLOR + '"></path>'
     
     
             if (percent > 0.5){
                 var angle = (percent * 360) * Math.PI / 180
                 var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
-                var pointB = {x:Math.sin(angle) * 64, y: -Math.cos(angle) * 64}
+                var pointB = {x:Math.sin(angle) * 68, y: -Math.cos(angle) * 68}
 
                 var path = 'M 0 80';
                 path += 'A 80 80 0 0 1 ' + pointA.x + ' ' + pointA.y;
                 path += 'L ' + pointB.x + ' ' + pointB.y;
-                path += 'A 64 64 0 0 0 0 64';
+                path += 'A 68 68 0 0 0 0 68';
                 path += 'L 0 80Z';
     
-                html += '<path transform="translate(80,80)" d="' + path + '" fill="#FFDD00"></path>'
+                html += '<path transform="translate(80,80)" d="' + path + '" fill="' + BRAND_COLOR + '"></path>'
             }
             html += '</svg>';
             this.holder.innerHTML = html;
@@ -874,7 +880,7 @@
 
             // Open game corner Button
             var html = ''
-            html += '<div var="button" style="display: none;width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:#0099D7;position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b><b var="button.gamePad">' + SVG.all + '</b></div>';
+            html += '<div var="button" style="display: none;width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:' + BRAND_COLOR +';position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b><b var="button.gamePad">' + SVG.all + '</b></div>';
             document.body.appendChild(Browser.DOM(html, UI));
 
             UI.button.icon.style.opacity = '0';
