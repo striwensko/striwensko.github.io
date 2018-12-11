@@ -56,15 +56,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            display: flex;
-            flex-direction: column;
+            
             text-align: center;
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
         }
         .catalog > b{
             color: #fff;
-            position: absolute;
+            position: fixed;
             top: 9px;
-            right: 9px;
+            right: 25px;
             cursor: pointer;
         }
         .catalog > b svg{
@@ -74,24 +75,23 @@
         }
         .catalog .header{
             padding: 10px 20px;
-            padding-top: 0px;
+            padding-top: 35px;
             padding-bottom: 8px;
         }
         .catalog .header .catalog-logo-header{
             display: block;
             max-width: 100%;
             margin: 0 auto;
-            overflow:hidden;
         }
         .catalog .header .catalog-logo-header img{
             display: block;
             max-width: 100%;
             margin: 0 auto;
             max-height: 100px;
-            padding-top: 35px;
         }
         .catalog .header .categories-menu{
             margin: 0 auto;
+            overflow-y: hidden;
         }
         .catalog .header .categories-menu > b:first-child{
             margin-top: 20px;
@@ -263,10 +263,7 @@
             }
         }
         .catalog .catalog-list{
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-            flex: 1;
-            overflow-x: hidden;
+            
         }
         .catalog .catalog-list .game-item{
             width: 160px;
@@ -1050,23 +1047,15 @@
 
             
             var children = document.head.children;
-            var injectNoScale = false;
             for (var iChild = 0; iChild < children.length; iChild++){
                 if (children[iChild].tagName.toUpperCase() == 'META'){
                     if (children[iChild].getAttribute('name') == 'viewport'){
                         var content = children[iChild].getAttribute('content');
                         if (content.search('user-scalable') == -1){
                             children[iChild].setAttribute('content', content + ', user-scalable=no');
-                            injectNoScale = true;
                         }
                     }
                 }
-            }
-            if (!injectNoScale){
-                var meta = document.createElement('meta');
-                meta.setAttribute('name', 'viewport');
-                meta.setAttribute('content', 'user-scalable=no');
-                document.head.appendChild(meta);
             }
             
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
@@ -1254,12 +1243,14 @@
             html += '  <b var="catalog-close-button">' + SVG.close + '</b>';
             html += '  <div class="header">';
             html += '    <div var="catalog-logo-header" class="catalog-logo-header"><img var="catalog-logo"/></div>';
-            html += '    <div var="categories-menu" class="categories-menu">';
-            html += '      <b var="line-top"></b>';
-            html += '      <div class="categories-bar">';
-            html += '        <ul var="categories"></ul>';
+            html += '    <div var="categories-menu-space" class="space">';
+            html += '      <div var="categories-menu" class="categories-menu">';
+            html += '        <b var="line-top"></b>';
+            html += '        <div class="categories-bar">';
+            html += '          <ul var="categories"></ul>';
+            html += '        </div>';
+            html += '        <b var="line-bottom"></b>';
             html += '      </div>';
-            html += '      <b var="line-bottom"></b>';
             html += '    </div>';
             html += '  </div>';
             html += '  <div class="catalog-list" var="catalog"><div></div></div>'
@@ -1274,10 +1265,6 @@
             html += '  <b var="close-bar.button">' + SVG.close + '</b>';
             html += '</div>';
             body.appendChild(Browser.DOM(html, UI));
-            UI.catalog.onscroll = function(){
-                var logoHeight = UI['catalog-logo'].offsetHeight - 35 + 10;
-                UI['catalog-logo-header'].style.height = (25 + logoHeight - Math.min(UI.catalog.scrollTop, logoHeight)) + 'px';
-            }
             UI.catalog.effect = new TimeLine(1500, 33);
             UI.catalog.effect.addEventListener(EVENT.CHANGE, 'render', UI.catalog.effect);
             UI.catalog.effect.render = function(){
@@ -1376,7 +1363,7 @@
                     for (var iItem = 0; iItem < items.length; iItem++){
                         items[iItem].html.style.display = '';
                     }
-                    UI.catalog.scrollTop = 0;
+                    //UI.catalog.scrollTop = 0;
                     //UI.catalog.show();
 
                 }
@@ -1641,8 +1628,8 @@
                     catalogShowEffect.onRender();
 
                     UI['catalog-container'].style.display = '';
-                    UI.catalog.scrollTop = 0;
-                    
+                    //UI.catalog.scrollTop = 0;
+                    UI['catalog-container'].scrollTop = 0;
 
                     UI.catalog.show();
                 };
