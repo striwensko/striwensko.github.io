@@ -1072,14 +1072,26 @@
                 document.head.appendChild(meta);
             }*/
 
-            addEvent((iframe.contentDocument || iframe.contentWindow.document), 'touchmove', function(event){
+            document.addEventListener('touchmove', function (event) {
+                if (event.scale !== 1) { event.preventDefault(); }
+            }, false);
+            var lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                var now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+
+            /*addEvent((iframe.contentDocument || iframe.contentWindow.document), 'touchmove', function(event){
                 if (iframe.style.display !== ''){
                     if (event.touches.length > 1){
                         event.preventDefault();
                         event.stopImmediatePropagation();
                     }
                 }
-            });
+            });*/
             
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
