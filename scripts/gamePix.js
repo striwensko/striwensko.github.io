@@ -923,7 +923,7 @@
             html += '  <img var="loader.gameLogo"/>';
             html += '  <b var="loader.title"></b>'
             html += '  <div class="buttons">';
-            html += '    <b class="play" var="play">Play</b>'
+            html += '    <b class="play" var="play">Keep Playing</b>'
             html += '    <b class="catalog" var="catalog">Exit</b>'
             //html += '    <b class="close" var="close">Back to Website</b>'
             html += '  </div>';
@@ -1148,41 +1148,34 @@
             UI.button.PREV_CYCLE = - 5000;
             UI.button.HIDE_GAME_PAGE = -5000;
             UI.button.timeLine.render = function(){
+                var _width = Browser.getSize().width;
+                var distance = _width > 600 ? 40 : 30;
                 if (timeLine.position == 0 && iframe.style.display == 'none'){
                     var now = this.position;
                     var relTime = now - UI.button.PREV_CYCLE;
                     if (relTime > 20000){
                         UI.button.PREV_CYCLE = now;
                     } else if (relTime < 10300) {
-                        var x = -48 * this.getTime(UI.button.PREV_CYCLE + 10000, 200);
+                        var x = -distance * this.getTime(UI.button.PREV_CYCLE + 10000, 200);
                         UI.button.startX = x;
                         TimeLine.applyMatrix(UI.button, {x: x});
                         UI.button.gamePad.style.opacity = this.getTime(UI.button.PREV_CYCLE + 10000, 200);
                     } else if (relTime < 10900){
-                        var x = -48 + 5 * Math.sin(2 * Math.PI * relTime / 150);
+                        var x = -distance + 5 * Math.sin(2 * Math.PI * relTime / 150);
                         UI.button.startX = x;
                         TimeLine.applyMatrix(UI.button, {x: x});
                         UI.button.gamePad.style.opacity = 1;
                     } else if (relTime < 2700){
                         if (relTime > 12100){
-                            var x = -48 + 5 * Math.sin(2 * Math.PI * relTime / 150);
+                            var x = -distance + 5 * Math.sin(2 * Math.PI * relTime / 150);
                             UI.button.startX = x;
                             TimeLine.applyMatrix(UI.button, {x: x});
                         } else {
-                            UI.button.startX = -48;
-                            TimeLine.applyMatrix(UI.button, {x: -48});
-                        }
-                    } else if (relTime < 14500){
-                        if (relTime > 13900){
-                            var x = -48 + 5 * Math.sin(2 * Math.PI * relTime / 150);
-                            UI.button.startX = x;
-                            TimeLine.applyMatrix(UI.button, {x: x});
-                        } else {
-                            UI.button.startX = -48;
-                            TimeLine.applyMatrix(UI.button, {x: -48});
+                            UI.button.startX = -distance;
+                            TimeLine.applyMatrix(UI.button, {x: -distance});
                         }
                     } else if (relTime < 15000) {
-                        var x = -48 * (1 - this.getTime(UI.button.PREV_CYCLE + 4500 + 10000, 200));
+                        var x = -distance * (1 - this.getTime(UI.button.PREV_CYCLE + 4500 + 10000, 200));
                         UI.button.startX = x;
                         TimeLine.applyMatrix(UI.button, {x: x});
                         UI.button.gamePad.style.opacity = (1 - this.getTime(UI.button.PREV_CYCLE + 4500 + 10000, 200));
