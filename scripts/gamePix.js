@@ -1071,9 +1071,9 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
-            alert(3);
+            alert(4);
             document.addEventListener('touchmove', function (event) {
-                if (iframe.style.display !== ''){
+                if (iframe.style.display !== 'none'){
                     if (event.touches.length > 1){ event.preventDefault(); }
                     document.body.style.opacity = Math.random();
                 }
