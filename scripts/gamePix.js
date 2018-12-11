@@ -1071,7 +1071,7 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
-            alert(6);
+            alert(7);
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== 'none'){
                     if (event.touches.length > 1){ event.preventDefault(); }
@@ -1088,9 +1088,6 @@
             }, false);
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
-                if (event.touches.length > 1){ event.preventDefault(); }
-            }, false);
-            (closeIframe.contentDocument || closeIframe.contentWindow.document).addEventListener('touchmove', function (event) {
                 if (event.touches.length > 1){ event.preventDefault(); }
             }, false);
             
