@@ -33,6 +33,18 @@
   <link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
   <meta name="msapplication-TileImage" content="images/icons/icon-144x144.png">
   <meta name="msapplication-TileColor" content="#2F3BA2">
+  <script>function utmx_section(){}function utmx(){}(function(){var
+    k='167615869-0',d=document,l=d.location,c=d.cookie;
+    if(l.search.indexOf('utm_expid='+k)>0)return;
+    function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
+    indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
+    length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
+    '<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
+    '://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
+    '&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
+    valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
+    '" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
+    </script><script>utmx('url','A/B');</script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112242170-1"></script>
 <script>
@@ -42,10 +54,7 @@
 
   gtag('config', 'UA-112242170-1');
 </script>
-<!-- Google Analytics Content Experiment code -->
-
-    <!-- End of Google Analytics Content Experiment code -->
-    
+<script type="text/javascript" src="scripts/gamePix.js?SID=110880"></script>
 <!--
 var script = document.createElement('script');
 script.async = true;
@@ -59,11 +68,12 @@ gtag('js', new Date());
 
 gtag('config', 'UA-112242170-1');
 -->
+
 </head>
 <body>
 
   <header class="header">
-    <h1 class="header__title">My Super Weather PWA</h1>
+    <h1 class="header__title">Weather PWA 32</h1>
     <button id="butRefresh" class="headerButton" aria-label="Refresh"></button>
     <button id="butAdd" class="headerButton" aria-label="Add"></button>
   </header>
@@ -200,6 +210,34 @@ gtag('config', 'UA-112242170-1');
 
   <!-- Uncomment the line below when ready to test with fake data -->
   <script src="scripts/app.js?t=300" async></script>
-
+<script type="text/javascript">
+        function isLandscape() {
+            return window.innerHeight > window.innerWidth ? false : true;
+        }
+/*
+document.addEventListener('touchmove', function (event) {
+  if (event.scale !== 1) { event.preventDefault(); }
+}, false);
+var lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+  var now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+/*
+        if (navigator.userAgent.match(/iphone/i)) {
+            window.setInterval(function() {
+                if (!isLandscape()) {
+                    document.documentElement.style.overflow = 'hidden';
+                } else {
+                    document.documentElement.style.overflow = '';
+                }
+                window.scroll(0, 1);
+                document.documentElement.style.height = window.innerHeight + 'px';
+            }, 1000);
+        }*/
+</script>
 </body>
 </html>
