@@ -1052,9 +1052,12 @@
             var children = document.head.children;
             var injectNoScale = false;
             for (var iChild = 0; iChild < children.length; iChild++){
+                console.log(children[iChild].tagName.toUpperCase(), children[iChild])
                 if (children[iChild].tagName.toUpperCase() == 'META'){
+                    console.log(children[iChild].tagName.toUpperCase())
                     if (children[iChild].getAttribute('name') == 'viewport'){
                         var content = children[iChild].getAttribute('content');
+                        console.log(content, content.search('user-scalable'))
                         if (content.search('user-scalable') == -1){
                             children[iChild].setAttribute('content', content + ', user-scalable=no');
                             injectNoScale = true;
@@ -1276,7 +1279,7 @@
             body.appendChild(Browser.DOM(html, UI));
             UI.catalog.onscroll = function(){
                 var logoHeight = UI['catalog-logo'].offsetHeight - 35 + 10;
-                UI['catalog-logo-header'].style.height = (25 + logoHeight - Math.min(UI.catalog.scrollTop, logoHeight)) + 'px';
+                UI['catalog-logo-header'].style.height = (25 + logoHeight - Math.min(Math.max(UI.catalog.scrollTop, 0), logoHeight)) + 'px';
             }
             UI.catalog.effect = new TimeLine(1500, 33);
             UI.catalog.effect.addEventListener(EVENT.CHANGE, 'render', UI.catalog.effect);
