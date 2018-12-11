@@ -1074,7 +1074,6 @@
 
             document.addEventListener('touchmove', function (event) {
                 if (event.touches.length > 1){ event.preventDefault(); }
-                document.body.style.opacity = Math.random();
             }, false);
             var lastTouchEnd = 0;
             document.addEventListener('touchend', function (event) {
@@ -1085,14 +1084,11 @@
                 lastTouchEnd = now;
             }, false);
 
-            /*addEvent((iframe.contentDocument || iframe.contentWindow.document), 'touchmove', function(event){
-                if (iframe.style.display !== ''){
-                    if (event.touches.length > 1){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                    }
-                }
-            });*/
+            (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
+                if (event.touches.length > 1){ event.preventDefault(); }
+                document.body.style.opacity = Math.random();
+            }, false);
+            
             
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
