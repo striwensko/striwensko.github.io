@@ -1072,7 +1072,7 @@
                 document.head.appendChild(meta);
             }*/
 
-            addEvent(document, 'touchmove', function(event){
+            addEvent((iframe.contentDocument || iframe.contentWindow.document), 'touchmove', function(event){
                 if (iframe.style.display !== ''){
                     if (event.touches.length > 1){
                         event.preventDefault();
