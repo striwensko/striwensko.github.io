@@ -1048,7 +1048,7 @@
             meta.setAttribute('content', 'true');
             body.appendChild(meta);
 
-            
+            /*
             var children = document.head.children;
             var injectNoScale = false;
             for (var iChild = 0; iChild < children.length; iChild++){
@@ -1070,7 +1070,7 @@
                 meta.setAttribute('name', 'viewport');
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
-            }
+            }*/
             
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
