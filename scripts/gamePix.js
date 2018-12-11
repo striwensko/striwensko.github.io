@@ -1071,10 +1071,11 @@
                 meta.setAttribute('content', 'user-scalable=no');
                 document.head.appendChild(meta);
             }*/
-
+            alert(3);
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== ''){
                     if (event.touches.length > 1){ event.preventDefault(); }
+                    document.body.style.opacity = Math.random();
                 }
             }, false);
             var lastTouchEnd = 0;
