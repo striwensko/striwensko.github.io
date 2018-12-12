@@ -653,10 +653,11 @@
             }
         }
     </style>`;
-    
+    var BRAND_COLOR;
+
     function start(){
         // Replace brand color in css
-        var BRAND_COLOR = '#99D704';
+        
         stylesheetClose = stylesheetClose.replace(/\$brand-color/gim, BRAND_COLOR);
         stylesheet = stylesheet.replace(/\$brand-color/gim, BRAND_COLOR);
         
@@ -776,6 +777,8 @@
                 renderUI();
             }
         },100);
+
+        
 
         // Render the ui
         function renderUI(){
@@ -1361,6 +1364,7 @@
                 }
                 categories[iCat].html.category = categories[iCat].name;
                 categories[iCat].html.onclick = function(){
+                    var scrollTop = UI.catalog.scrollTop;
                     for (var iCat = 0; iCat < categories.length; iCat++){
                         if (categories[iCat].html == this){
                             categories[iCat].html.classList.add('selected');
@@ -1376,9 +1380,10 @@
                     for (var iItem = 0; iItem < items.length; iItem++){
                         items[iItem].html.style.display = '';
                     }
-                    UI.catalog.scrollTop = 0;
+                    UI.catalog.scrollTop = scrollTop;
                     //UI.catalog.show();
-
+                    console.log(UI.catalog.scrollTop)
+                    window['catalog'] = UI.catalog;
                 }
                 
                 UI.categories.appendChild(categories[iCat].html);
@@ -1686,9 +1691,14 @@
 
         
     }
-    if (document.body){
+
+    function installColor(){
+        BRAND_COLOR = '#99D704';
         start();
+    }
+    if (document.body){
+        installColor();
     } else {
-        addEvent(window, 'load', start)
+        addEvent(window, 'load', installColor)
     }
 })();
