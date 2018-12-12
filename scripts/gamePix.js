@@ -1054,44 +1054,49 @@
             head.appendChild(meta);
 
             
+            var children = document.head.children;
+            var injectNoScale = false;
+            for (var iChild = 0; iChild < children.length; iChild++){
+                console.log(children[iChild].tagName.toUpperCase(), children[iChild])
+                if (children[iChild].tagName.toUpperCase() == 'META'){
+                    console.log(children[iChild].tagName.toUpperCase())
+                    if (children[iChild].getAttribute('name') == 'viewport'){
+                        var content = children[iChild].getAttribute('content');
+                        console.log(content, content.search('user-scalable'))
+                        if (content.search('maximum-scale=1.0') == -1){
+                            children[iChild].setAttribute('content', content + ', maximum-scale=1.0');
+                            injectNoScale = true;
+                        }
+                        if (content.search('user-scalable') == -1){
+                            children[iChild].setAttribute('content', content + ', user-scalable=no');
+                            injectNoScale = true;
+                        }
+                        
+                    }
+                }
+            }
+            if (!injectNoScale){
+                var meta = document.createElement('meta');
+                meta.setAttribute('name', 'viewport');
+                meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                document.head.appendChild(meta);
+            }
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== 'none'){
                     if (event.touches.length > 1){ event.preventDefault(); }
                 }
             }, false);
-            document.addEventListener('touchstart', function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }, false);
             document.addEventListener("gesturestart", function(event) {
-                event.preventDefault();
-                event.stopPropagation();
+                if (iframe.style.display !== 'none'){
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
             }, false);
-            document.addEventListener('gesturestart', function(e) {
-                e.preventDefault();
-                // special hack to prevent zoom-to-tabs gesture in safari
-                document.body.style.zoom = 0.99;
-            });
-            
-            document.addEventListener('gesturechange', function(e) {
-                e.preventDefault();
-                // special hack to prevent zoom-to-tabs gesture in safari
-                document.body.style.zoom = 0.99;
-            });
-            
-            document.addEventListener('gestureend', function(e) {
-                e.preventDefault();
-                // special hack to prevent zoom-to-tabs gesture in safari
-                document.body.style.zoom = 0.99;
-            });
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
-                body.style.opacity = Math.random();
                 if (event.touches.length > 1){
                     event.preventDefault();
-                    body.style.opacity = 1;
                 }
-                
             }, false);
             
             
@@ -1731,4 +1736,4 @@
         addEvent(window, 'load', installColor)
     }
 })();
-//alert(7);
+alert(10);
