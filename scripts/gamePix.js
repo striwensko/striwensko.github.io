@@ -51,7 +51,7 @@
              -khtml-user-select: none; /* Konqueror HTML */
                -moz-user-select: none; /* Firefox */
                 -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; /
+                    user-select: none; 
         }
         body *{
             -webkit-touch-callout: none; /* iOS Safari */
@@ -59,7 +59,7 @@
              -khtml-user-select: none; /* Konqueror HTML */
                -moz-user-select: none; /* Firefox */
                 -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; /
+                    user-select: none; 
         }
         .catalog{
             position: fixed;
@@ -671,16 +671,16 @@
         }
         SVG_Loader.prototype.update = function(percent){
             //console.log("RENDER PERCENT", percent)
-            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="74" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 12;"></circle>';
+            var html = '<svg width="160" height="160"><circle cx="80" cy="80" r="76" style="fill: transparent; stroke: rgba(255, 255, 255, 0.5); stroke-width: 8;"></circle>';
             
             var angle = (Math.min(percent, 0.5) * 360) * Math.PI / 180
             var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
-            var pointB = {x:Math.sin(angle) * 68, y: -Math.cos(angle) * 68}
+            var pointB = {x:Math.sin(angle) * 72, y: -Math.cos(angle) * 72}
 
             var path = 'M 0 -80';
             path += 'A 80 80 0 0 1 ' + pointA.x + ' ' + pointA.y;
             path += 'L ' + pointB.x + ' ' + pointB.y;
-            path += 'A 68 68 0 0 0 0 -68';
+            path += 'A 72 72 0 0 0 0 -72';
             path += 'L 0 -80Z';
             
             html += '<path transform="translate(80,80)" d="' + path + '" fill="' + BRAND_COLOR + '"></path>'
@@ -689,12 +689,12 @@
             if (percent > 0.5){
                 var angle = (percent * 360) * Math.PI / 180
                 var pointA = {x:Math.sin(angle) * 80, y: -Math.cos(angle) * 80}
-                var pointB = {x:Math.sin(angle) * 68, y: -Math.cos(angle) * 68}
+                var pointB = {x:Math.sin(angle) * 72, y: -Math.cos(angle) * 72}
 
                 var path = 'M 0 80';
                 path += 'A 80 80 0 0 1 ' + pointA.x + ' ' + pointA.y;
                 path += 'L ' + pointB.x + ' ' + pointB.y;
-                path += 'A 68 68 0 0 0 0 68';
+                path += 'A 72 72 0 0 0 0 72';
                 path += 'L 0 80Z';
     
                 html += '<path transform="translate(80,80)" d="' + path + '" fill="' + BRAND_COLOR + '"></path>'
@@ -1540,7 +1540,7 @@
 
                 // request fullscreen in case device is mobile
                 var elem = document.body;
-                if (false && !mobilecheck()){
+                if (!mobilecheck()){
 
                 }
                 else if (elem.requestFullscreen) {
