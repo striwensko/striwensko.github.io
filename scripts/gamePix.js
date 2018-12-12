@@ -1062,8 +1062,12 @@
             
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
-                if (event.touches.length > 1){ event.preventDefault(); }
                 body.style.opacity = Math.random();
+                if (event.touches.length > 1){
+                    event.preventDefault();
+                    body.style.opacity = 1;
+                }
+                
             }, false);
             
             
