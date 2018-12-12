@@ -1067,6 +1067,23 @@
                 event.preventDefault();
                 event.stopPropagation();
             }, false);
+            document.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+                // special hack to prevent zoom-to-tabs gesture in safari
+                document.body.style.zoom = 0.99;
+            });
+            
+            document.addEventListener('gesturechange', function(e) {
+                e.preventDefault();
+                // special hack to prevent zoom-to-tabs gesture in safari
+                document.body.style.zoom = 0.99;
+            });
+            
+            document.addEventListener('gestureend', function(e) {
+                e.preventDefault();
+                // special hack to prevent zoom-to-tabs gesture in safari
+                document.body.style.zoom = 0.99;
+            });
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
                 body.style.opacity = Math.random();
