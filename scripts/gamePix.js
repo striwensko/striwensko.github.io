@@ -17,9 +17,11 @@
         return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
     };
 
+    // Get variables from the url used to embed the plugin
     var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 110880;
     var debug = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).debug || false;
 
+    // SVG Icons
     var SVG = {};
     SVG.close = '<svg var="close-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -3 20 20" version="1.1"><defs><path d="M9.16666667,9.16666667 L9.16666667,3.3278314 C9.16666667,2.87063274 9.53655402,2.5 10,2.5 C10.4602373,2.5 10.8333333,2.87078857 10.8333333,3.3278314 L10.8333333,9.16666667 L16.6721686,9.16666667 C17.1293673,9.16666667 17.5,9.53655402 17.5,10 C17.5,10.4602373 17.1292114,10.8333333 16.6721686,10.8333333 L10.8333333,10.8333333 L10.8333333,16.6721686 C10.8333333,17.1293673 10.463446,17.5 10,17.5 C9.53976271,17.5 9.16666667,17.1292114 9.16666667,16.6721686 L9.16666667,10.8333333 L3.3278314,10.8333333 C2.87063274,10.8333333 2.5,10.463446 2.5,10 C2.5,9.53976271 2.87078857,9.16666667 3.3278314,9.16666667 L9.16666667,9.16666667 Z" id="path-1"/></defs><g id="Mobile" stroke="none" stroke-width="1" fill-rule="evenodd"><g id="Overlay" transform="translate(-314.000000, -326.000000)"><g id="Shape-/-Icon" transform="translate(300.000000, 310.000000)"><g id="Icon-/-Close" transform="translate(14.000000, 14.000000)"><mask id="mask-2" fill="white"><use xlink:href="#path-1"/></mask><use id="Close" fill-rule="evenodd" transform="translate(10.000000, 10.000000) rotate(45.000000) translate(-10.000000, -10.000000) " xlink:href="#path-1"/></g></g></g></g></svg>';
     SVG.plus = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" version="1.1"><path d="M11,11 L11,6.00684547 C11,5.45078007 11.4438648,5 12,5 C12.5522847,5 13,5.44994876 13,6.00684547 L13,11 L17.9931545,11 C18.5492199,11 19,11.4438648 19,12 C19,12.5522847 18.5500512,13 17.9931545,13 L13,13 L13,17.9931545 C13,18.5492199 12.5561352,19 12,19 C11.4477153,19 11,18.5500512 11,17.9931545 L11,13 L6.00684547,13 C5.45078007,13 5,12.5561352 5,12 C5,11.4477153 5.44994876,11 6.00684547,11 L11,11 Z" id="path-1"/></svg>'
@@ -33,6 +35,7 @@
     SVG.adventure = '<svg var="icon" width="24px" height="24px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill-rule="evenodd" d="M7.11380597,11.3434624 L8.13921235,12.3688687 C8.36508186,12.5947383 8.73204145,12.5946457 8.95843235,12.3682548 C9.18640163,12.1402856 9.18509809,11.7750866 8.95904627,11.5490348 L8.34355687,10.9335454 L13.8789146,5.39818773 C13.9896791,5.28742317 14.0825069,5.06430168 14.0826455,4.90343766 L14.0847228,2.49177434 C14.0849999,2.17009056 13.8258918,1.91276811 13.5059921,1.91304367 L11.0943288,1.91512102 C10.9317234,1.91526109 10.7119576,2.00647302 10.5995787,2.11885192 L5.06422108,7.65420956 L4.44873169,7.03872023 C4.22286215,6.81285066 3.85590255,6.81294323 3.62951166,7.03933414 C3.40154241,7.26730336 3.4028459,7.63250232 3.62889773,7.85855414 L4.6543041,8.88396053 L2.19464442,11.3436202 C1.74234975,11.7959149 1.74163745,12.5299655 2.19394679,12.9822749 L3.01549164,13.8038197 C3.46625787,14.2545859 4.20145165,14.2558167 4.65414627,13.8031221 L7.11380597,11.3434624 Z M6.29388449,10.5235409 L5.47413805,9.7037945 L5.06893265,10.1089999 L5.27073307,11.5466996 C5.62093637,11.196436 5.9837459,10.8336406 6.29388449,10.5235409 Z M4.04225469,11.1356778 L4.2441214,12.5738498 C3.99486568,12.8233981 3.83501625,12.9836764 3.83532559,12.9839858 C3.83532559,12.9839858 3.01460939,12.1633232 3.01447837,12.1634542 L4.04225469,11.1356778 Z M7.11380597,9.7037945 L9.98511143,6.83248903 C10.2090455,6.60855491 10.2096157,6.24093258 9.98322482,6.01454168 C9.75525555,5.78657244 9.39062638,5.78730612 9.16527746,6.01265507 L6.29397201,8.88396053 L5.88405503,8.47404354 L11.2841933,3.07390528 L12.9293963,3.07296106 L12.9238367,4.72125046 L7.52422759,10.1142161 L7.11380597,9.7037945 Z" id="path-31"></path></svg>';
     SVG.all = '<svg var="icon" width="24px" height="24px" viewBox="2 0 16 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M10,4.44452319 C10.5816565,4.44452319 10.8391464,4.38356071 11.4420906,4.1588278 C11.4655065,4.15009678 11.4655065,4.15009678 11.489197,4.14126082 C12.2503042,3.85745498 12.7026825,3.74999997 13.4504361,3.74999997 C15.2646074,3.74999997 16.9299393,5.53328272 17.6188139,7.70686049 C18.1473999,9.37468652 18.2885255,10.442977 18.3332034,12.7912097 C18.2890755,15.0722416 17.31736,16.2387385 15.5514673,16.249988 C14.458455,16.2435532 13.7027561,15.7523279 13.0042828,14.8600236 C12.8905148,14.7146842 12.5665599,14.2686604 12.5657225,14.2675436 C11.8467793,13.3085845 11.1034722,12.7853269 10.0021584,12.7777785 C8.89653159,12.7853242 8.15322253,13.308582 7.43427747,14.2675436 C7.43344013,14.2686604 7.10948522,14.7146842 6.99571719,14.8600236 C6.29724395,15.7523279 5.54154494,16.2435532 4.43999999,16.2499858 C2.68264005,16.2387385 1.71092448,15.0722416 1.66679521,12.7644147 C1.71147457,10.442977 1.85260006,9.37468652 2.38118615,7.70686049 C3.07006074,5.53328272 4.73539258,3.74999997 6.54956392,3.74999997 C7.29731752,3.74999997 7.74969582,3.85745498 8.51080295,4.14126082 C8.53449353,4.15009678 8.53449353,4.15009678 8.55790938,4.1588278 C9.16085361,4.38356071 9.41834347,4.44452319 10,4.44452319 Z M9.99997854,5.83340428 C9.30415632,5.83340428 8.81974819,5.73864981 8.07283364,5.46025544 C8.04906307,5.45139216 8.04906307,5.45139216 8.02554477,5.44262044 C7.40604972,5.21161969 7.09985786,5.13888886 6.54956392,5.13888886 C5.4700076,5.13888886 4.23181388,6.46478047 3.70517175,8.12647282 C3.22218514,9.65042069 3.09774465,10.5924092 3.05542561,12.7643458 C3.08600815,14.3451981 3.51078456,14.8551214 4.44035616,14.8611231 C5.03503894,14.8576222 5.43969878,14.594582 5.90204838,14.0039273 C5.9973926,13.8821244 6.30888159,13.4532639 6.32301281,13.434415 C7.27615625,12.163069 8.36045323,11.3998777 9.99568403,11.3889192 C11.6395389,11.3998722 12.7238403,12.1630645 13.6769872,13.434415 C13.6911184,13.4532639 14.0026074,13.8821244 14.0979516,14.0039273 C14.5603012,14.594582 14.9649611,14.8576222 15.5511111,14.8611254 C16.4892154,14.8551214 16.9139918,14.3451981 16.9445731,12.7911409 C16.9022554,10.5924092 16.7778148,9.65042069 16.2948282,8.12647282 C15.7681861,6.46478047 14.5299924,5.13888886 13.4504361,5.13888886 C12.9001422,5.13888886 12.5939503,5.21161969 11.9744552,5.44262044 C11.950937,5.45139216 11.950937,5.45139216 11.9271664,5.46025544 C11.1802518,5.73864981 10.6958008,5.83340428 9.99997854,5.83340428 Z M13.4722222,8.26388888 C13.0886912,8.26388888 12.7777778,7.95297551 12.7777778,7.56944443 C12.7777778,7.18591335 13.0886912,6.87499998 13.4722222,6.87499998 C13.8557533,6.87499998 14.1666667,7.18591335 14.1666667,7.56944443 C14.1666667,7.95297551 13.8557533,8.26388888 13.4722222,8.26388888 Z M13.4722222,11.0416667 C13.0886912,11.0416667 12.7777778,10.7307533 12.7777778,10.3472222 C12.7777778,9.96369118 13.0886912,9.65277778 13.4722222,9.65277778 C13.8557533,9.65277778 14.1666667,9.96369118 14.1666667,10.3472222 C14.1666667,10.7307533 13.8557533,11.0416667 13.4722222,11.0416667 Z M14.8611111,9.65277778 C14.4775801,9.65277778 14.1666667,9.34186437 14.1666667,8.95833333 C14.1666667,8.57480225 14.4775801,8.26388888 14.8611111,8.26388888 C15.2446422,8.26388888 15.5555556,8.57480225 15.5555556,8.95833333 C15.5555556,9.34186437 15.2446422,9.65277778 14.8611111,9.65277778 Z M12.0833333,9.65277778 C11.6998023,9.65277778 11.3888889,9.34186437 11.3888889,8.95833333 C11.3888889,8.57480225 11.6998023,8.26388888 12.0833333,8.26388888 C12.4668644,8.26388888 12.7777778,8.57480225 12.7777778,8.95833333 C12.7777778,9.34186437 12.4668644,9.65277778 12.0833333,9.65277778 Z M6.52777776,11.0416667 C5.37718453,11.0416667 4.44444442,10.1089265 4.44444442,8.95833333 C4.44444442,7.80774009 5.37718453,6.87499998 6.52777776,6.87499998 C7.678371,6.87499998 8.6111111,7.80774009 8.6111111,8.95833333 C8.6111111,10.1089265 7.678371,11.0416667 6.52777776,11.0416667 Z M6.52777776,9.65277778 C6.91130884,9.65277778 7.22222221,9.34186437 7.22222221,8.95833333 C7.22222221,8.57480225 6.91130884,8.26388888 6.52777776,8.26388888 C6.14424668,8.26388888 5.83333331,8.57480225 5.83333331,8.95833333 C5.83333331,9.34186437 6.14424668,9.65277778 6.52777776,9.65277778 Z" id="path-1"></path></svg>';
 
+    // Stylesheet for 4 button menu and games page
     var stylesheet = `
         <style type="text/css">
 
@@ -509,6 +512,7 @@
     </style>`;
 
 
+    // Stylesheet for close game screen
     var stylesheetClose = `
         <style type="text/css">
         html, body{
@@ -641,14 +645,17 @@
     </style>`;
     
     function start(){
+        // Replace brand color in css
         var BRAND_COLOR = '#99D704';
         stylesheetClose = stylesheetClose.replace(/\$brand-color/gim, BRAND_COLOR);
         stylesheet = stylesheet.replace(/\$brand-color/gim, BRAND_COLOR);
         
+        // Percent of game loaded
         var LOADING_PERCENT = 0;
+        // Game url
         var GAME_URL = '';
 
-        
+        // SVG Loader Circle for loading Screen
         function SVG_Loader(){
             this.holder = document.createElement('div');
             this.holder.style.paddingBottom = '10px';
@@ -692,6 +699,8 @@
             return this.value;
         }
 
+
+        // Iframe for menu and cat page
         var iframe = document.createElement('iframe');
         iframe.setAttribute('src', 'about:blank');
         iframe.style.position = 'fixed';
@@ -710,28 +719,7 @@
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
-
-        /*var iframeGame = document.createElement('iframe');
-        iframeGame.setAttribute('src', 'about:blank');
-        iframeGame.style.position = 'fixed';
-        iframeGame.style.top = '50px';
-        iframeGame.style.left = 0;
-        iframeGame.style.right = 0;
-        iframeGame.style.bottom = 0;
-        iframeGame.id = 'game-frame';
-        //iframeGame.setAttribute('seamless', 'seamless');
-        iframeGame.setAttribute('name', window.location.href);
-        iframeGame.setAttribute('scrolling', 'no');
-        iframeGame.className = 'iframeGame';
-
-        
-        iframeGame.style.display = "block";
-        iframeGame.style.border =  0;
-        
-        iframeGame.style.width = '100%';
-        iframeGame.style.height= 'calc(100% - 50px)';
-        iframeGame.style.zIndex = 1000001;
-        iframeGame.style.display = 'none';*/
+        // Game Iframe
         var iframeGame = document.createElement('iframe');
         iframeGame.id = 'game-frame';
         iframeGame.setAttribute('src', 'about:blank');
@@ -745,7 +733,7 @@
         document.body.appendChild(iframeGame);
         
         
-
+        // Div for close game screen
         var closeIframe = document.createElement('div');
         closeIframe.style.position = 'fixed';
         closeIframe.style.top = '0px';
@@ -767,6 +755,7 @@
         window['globalIframe'] = iframeGame;
 
 
+        // Start rendering until we have the document object available in the iframe
         var inter = window.setInterval(function() {
             // put inside function 
             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -778,6 +767,7 @@
             }
         },100);
 
+        // Render the ui
         function renderUI(){
             var UI = {};
 
@@ -831,6 +821,8 @@
                 blurEffect.play();
             }
             
+            // In case the catalog screen is visible adjust categories menu so half of a cat is shown
+            // on devices which resolution need to scroll to view all categories
             var WIDTH = '';
             setInterval(resize, 300);
             function resize(){
@@ -858,15 +850,6 @@
                                 categories[iCat].html.style.margin = '0 ' + margin + 'px';
                             }
                             UI['categories'].style.width = 9 * (40 + 2 * margin) ;
-                            //0 12px
-                            /*
-                            if (cols % 1 > 0.5){
-                                UI['categories-menu'].style.width = (Math.floor(cols) * 64 + 32) + 'px';
-                                UI['catalog-logo'].style.maxWidth = (Math.floor(cols) * 64 + 32) + 'px';
-                            } else {
-                                UI['categories-menu'].style.width = (Math.floor(cols - 1) * 64 + 32) + 'px';
-                                UI['catalog-logo'].style.maxWidth = (Math.floor(cols - 1) * 64 + 32) + 'px';
-                            }*/
                         } else {
                             var width = UI.catalog.children[0].getBoundingClientRect().width;
                             var cols = Math.floor(width / (160 + 16))
@@ -876,8 +859,7 @@
                     }
                 }
             }
-            //<meta name="viewport" content="user-scalable=no"/>
-
+            
             // Open game corner Button
             var html = ''
             html += '<div var="button" style="display: none;width:48px;height:48px;border-radius:48px;top:50%;right:0; background-color:' + BRAND_COLOR +';position: fixed;margin-top: -24px;margin-right: -24px;z-index:1000001;box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);cursor: pointer; color: #0099D7; transition:color 0.25s linear; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><b var="button.icon">' + SVG.close + '</b><b var="button.gamePad">' + SVG.all + '</b></div>';
@@ -910,6 +892,7 @@
             font.setAttribute('rel', 'stylesheet');
             headClose.appendChild(font);
 
+            // Create elements for close screen
             var UI_Close = {};
             var html = '';
             html += '<div class="loader-screen" var="loader-screen">';
@@ -921,12 +904,10 @@
             //html += '    <b class="close" var="close">Back to Website</b>'
             html += '  </div>';
             html += '</div>'
-            
-
             bodyClose.innerHTML = stylesheetClose;
             bodyClose.appendChild(Browser.DOM(html, UI_Close));
             
-
+            // Resume game
             UI_Close.play.onclick = function(){
                 if (closeIframe.effect.position !== closeIframe.effect.duration){
                     return false;
@@ -935,14 +916,26 @@
                 closeIframe.hide();
                 resumeGame();
             }
+            // Return to catalog screen
             UI_Close.catalog.onclick = function(){
                 if (closeIframe.effect.position !== closeIframe.effect.duration){
                     return false;
                 }
                 closeIframe.mode = 'catalog';
                 closeIframe.hide();
+
+                if (document.body.exitFullscreen) {
+                    document.body.exitFullscreen();
+                } else if (document.body.mozCancelFullScreen) { /* Firefox */
+                    document.body.mozCancelFullScreen();
+                } else if (document.body.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    document.body.webkitExitFullscreen();
+                } else if (document.body.msExitFullscreen) { /* IE/Edge */
+                    document.body.msExitFullscreen();
+                }
             }
             
+            // Close Screen Animation
             closeIframe.effect = new TimeLine(700, 300);
             closeIframe.effect.addEventListener(EVENT.CHANGE, 'render', closeIframe.effect);
             closeIframe.effect.render = function(){
@@ -1006,17 +999,19 @@
                     }
                 }
             }
+            // Show close screen
             closeIframe.show = function(){
                 closeIframe.mode = '';
                 this.effect.direction = 1;
                 this.effect.play();
             }
+            // Hide close Screen
             closeIframe.hide = function(){
                 this.effect.direction = -1;
                 this.effect.play();
             }
 
-            // Games Iframe
+            // Add font to menu and games page
             var body = (iframe.contentDocument || iframe.contentWindow.document).body;
             var head = (iframe.contentDocument || iframe.contentWindow.document).head;
             var font = document.createElement('link');
@@ -1024,6 +1019,7 @@
             font.setAttribute('rel', 'stylesheet');
             head.appendChild(font);
 
+            // Block resizing
             var meta = document.createElement('meta');
             meta.setAttribute('name', 'viewport');
             meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
@@ -1034,29 +1030,6 @@
             meta.setAttribute('content', 'true');
             body.appendChild(meta);
 
-            /*
-            var children = document.head.children;
-            var injectNoScale = false;
-            for (var iChild = 0; iChild < children.length; iChild++){
-                console.log(children[iChild].tagName.toUpperCase(), children[iChild])
-                if (children[iChild].tagName.toUpperCase() == 'META'){
-                    console.log(children[iChild].tagName.toUpperCase())
-                    if (children[iChild].getAttribute('name') == 'viewport'){
-                        var content = children[iChild].getAttribute('content');
-                        console.log(content, content.search('user-scalable'))
-                        if (content.search('user-scalable') == -1){
-                            children[iChild].setAttribute('content', content + ', user-scalable=no');
-                            injectNoScale = true;
-                        }
-                    }
-                }
-            }
-            if (!injectNoScale){
-                var meta = document.createElement('meta');
-                meta.setAttribute('name', 'viewport');
-                meta.setAttribute('content', 'user-scalable=no');
-                document.head.appendChild(meta);
-            }*/
             
             document.addEventListener('touchmove', function (event) {
                 if (iframe.style.display !== 'none'){
@@ -1070,12 +1043,12 @@
             }, false);
             
             
-            
+            // Listen to the progress of the game loading
             var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
             var eventer = window[eventMethod];
             var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
             eventer(messageEvent, function(e){
-                console.log(e);
+                //console.log(e);
                 if (e.data.type == 'loading') {
                     console.log("PERCENT LOADED " + e.data.percentage)
                     if (LOADING_PERCENT == 0){
@@ -1098,12 +1071,14 @@
                 }
             });
 
+            // Check if the device is mobile, used to know if we should request fullscreen mode
             var mobilecheck = function() {
                 var check = false;
                 (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
                 return check;
             };
     
+            // Animation of the 4 button menu
             var timeLine = new TimeLine(500, 33);
             timeLine.direction = -1;
             timeLine.addEventListener(EVENT.CHANGE, 'onRender', timeLine);
@@ -1136,6 +1111,8 @@
                     items[iItem].htmlIcon.style.display = (this.position < 300 ? 'none' : '');
                 }
             }
+
+            // Shake effect of the button when gamecorner is unused
             UI.button.timeLine = new TimeLine(Infinity);
             UI.button.timeLine.addEventListener(EVENT.CHANGE, 'render', UI.button.timeLine);
             UI.button.PREV_CYCLE = - 5000;
@@ -1179,11 +1156,9 @@
                 }
                 
             }
-            
             UI.button.timeLine.play();
-            UI.button.show = function(){
-
-            }
+            
+            // Open/Close game corner
             UI.button.onclick = function(){
                 timeLine.direction = -(timeLine.direction);
                 timeLine.play();
@@ -1191,13 +1166,13 @@
                     PREVIOUS_OVERFLOW = document.body.style.overflow;
                     var opacity = UI.button.gamePad.style.opacity;
                     UI.button.HIDE_GAME_PAGE = UI.button.timeLine.position - (1 - opacity) * 200;
-                    console.log(opacity);
                     UI.button.startX = 0;
                 }
                 blurEffect.blur({elements:['*'], delay: 0, direction: timeLine.direction})
             }
             var PREVIOUS_OVERFLOW = '';
     
+            // effect to show catalog
             var catalogShowEffect = new TimeLine(1200, 33);
             catalogShowEffect.direction = -1;
             catalogShowEffect.addEventListener(EVENT.CHANGE, 'onRender', catalogShowEffect);
@@ -1226,6 +1201,7 @@
                 }
             };
     
+            // effect to close catalog
             var catalogCloseEffect = new TimeLine(500, 33);
             catalogCloseEffect.direction = -1;
             catalogCloseEffect.addEventListener(EVENT.CHANGE, 'onRender', catalogCloseEffect);
@@ -1269,10 +1245,12 @@
             html += '  <b var="close-bar.button">' + SVG.close + '</b>';
             html += '</div>';
             body.appendChild(Browser.DOM(html, UI));
+            // Hide logo when scrolling through the games
             UI.catalog.onscroll = function(){
                 var logoHeight = UI['catalog-logo'].offsetHeight - 60 + 20;
                 UI['catalog-logo-header'].style.height = (40 + logoHeight - Math.min(Math.max(UI.catalog.scrollTop, 0), logoHeight)) + 'px';
             }
+            // Effect to animate gameboxes when showing the games page
             UI.catalog.effect = new TimeLine(1500, 33);
             UI.catalog.effect.addEventListener(EVENT.CHANGE, 'render', UI.catalog.effect);
             UI.catalog.effect.render = function(){
@@ -1309,6 +1287,7 @@
                 this.effect.render();
 
             }
+            // Close catalog
             UI['catalog-close-button'].onclick = function(){
                 catalogCloseEffect.position = catalogCloseEffect.duration;
                 catalogCloseEffect.direction = -1;
@@ -1318,16 +1297,21 @@
 
                 blurEffect.blur({elements:['*'], delay: 0, direction: -1})
             }
+            // Add brand logo to catalog page, and loading screen
             UI['catalog-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png'
             UI['brand-logo'].src = 'https://cdn.gamepix.com/logo/' + SID + '/' + SID +'.png';
 
+            // Create loading circle component for the loading screen
             var loader = new SVG_Loader();
             UI['loader-screen'].insertBefore(loader.holder, UI['loader-screen'].children[0]);
             
     
+            // Store all the games info
             var items = [];
+            // Contains the catalog for each category
             var CATALOG = {};
     
+            // List the categories
             var categories = [
                 {name: 'All', icon: SVG.all, color: '#4666E2', items: []},
                 {name: 'Adventure', icon: SVG.adventure, color: '#04BD68', items: []},
@@ -1339,6 +1323,7 @@
                 {name: 'Girls', icon: SVG.girls, color: '#ED80F3', items: []},
                 {name: 'Puzzles', icon: SVG.puzzles, color: '#E20074', items: []}
             ]
+            // Create button for each category in category menu
             for (var iCat = 0; iCat < categories.length; iCat++){
                 CATALOG[categories[iCat].name] = categories[iCat];
                 var _UI = {};
@@ -1382,6 +1367,7 @@
                 //_UI.icon.style.fill = categories[iCat].color;
             }
     
+            // Show loader screen animation
             var showLoaderAnimation = new TimeLine(600, 33);
             showLoaderAnimation.addEventListener(EVENT.CHANGE, 'render', showLoaderAnimation);
             showLoaderAnimation.render = function(){
@@ -1433,6 +1419,8 @@
                     }
                 }
             }
+
+            // Show game animation
             var showGameAnimation = new TimeLine(500, 33);
             showGameAnimation.addEventListener(EVENT.CHANGE, 'render', showGameAnimation);
             showGameAnimation.render = function(){
@@ -1454,12 +1442,13 @@
                 UI['close-bar'].style.display = '';
                 UI['close-bar'].style.opacity = 0;
                 showGameAnimation.render();
-                //iframeGame.style.top = ''
             }
+            // Pause game and show close game screen
             UI['close-bar'].button.onclick = function(){
                 closeIframe.show();
                 pauseGame();
             }
+            // Back to catalog page from loading screen
             UI.loader.back.onclick = function(){
                 showLoaderAnimation.direction = -1;
                 showLoaderAnimation.play();
@@ -1468,6 +1457,8 @@
                 timeLineLoader.stop();
             }
     
+            // Animates loading circle while waiting for the game to report a percent in case 15s
+            // have passed i'll just show the game
             var timeLineLoader = new TimeLine( 15000, 33);
             timeLineLoader.addEventListener(EVENT.CHANGE, 'render', timeLineLoader);
             timeLineLoader.render = function(){
@@ -1482,49 +1473,44 @@
                 }
             }
 
-            //closeIframe.
-            //alert("6.1");
+            // open the game
             function openGame(data, mode){
-                // mode = [menu, catalog]
-                //iframeGame.style.display = '';
+                
                 
                 LOADING_PERCENT = 0;
+                // in the debug mode use a different url
                 if (debug) {
                     data.url = data.url.replace('https://games.gamepix.com', 'https://gpx-api-dev-e-us-w-wa.azurewebsites.net');
                 }
+                // Add url to iframe to load game
                 iframeGame.setAttribute('src', data.url);
 
-
-                //https://gpx-api-dev-e-us-w-wa.azurewebsites.net/play/${GID}?sid=110880
-    
+                // Add title and game image to loading and close screen
                 UI.loader.gameLogo.src = data.thumbnailUrl;
                 UI.loader.title.innerHTML = data.title;
 
                 UI_Close.loader.gameLogo.src = data.thumbnailUrl;
                 UI_Close.loader.title.innerHTML = data.title;
-
-                /*loader.update(0);
-                UI['loader-screen'].style.display = '';
-                UI['loader-screen'].style.opacity = 1;
-                UI.catalog.style.display = 'none';
-                return false;*/
-    
+                
+                // Show loader screen
                 showLoaderAnimation.mode = mode;
                 showLoaderAnimation.position = 0;
                 showLoaderAnimation.direction = 1;
                 showLoaderAnimation.play();
     
+                // Set loading bar to 0 and set opacity 0 so loading isnt blocked
+                // for iframe not being visible
                 showGameAnimation.position = 0;
-                
                 loader.update(0);
                 iframeGame.style.display = '';
                 iframeGame.style.opacity = 0;
-                //iframeGame.style.top = '100%';
                 
+                // Start animating loading circle
                 timeLineLoader.position = 0;
                 timeLineLoader.play();
                 console.log("LOAD GAME", data)
 
+                // request fullscreen in case device is mobile
                 var elem = document.body;
                 if (!mobilecheck()){
 
@@ -1539,18 +1525,21 @@
                     elem.msRequestFullscreen();
                 }
             }
+            // pause game
             function pauseGame () {
                 globalIframe.contentWindow.postMessage({ message: 'pause' }, GAME_URL);
             }
+            // resume game
             function resumeGame () {
                 globalIframe.contentWindow.postMessage({ message: 'resume' }, GAME_URL);
             }
             
+            // load game catalog
             var json = new JSON_Loader();
             json.load('https://games.gamepix.com/games?sid=' + SID)
             json.addEventListener(EVENT.COMPLETE, 'onData', json);
             json.onData = function(){
-                
+                // register game in the proper category
                 for (var iData = 0; iData < this.data.data.length; iData++){
                     CATALOG.All.items.push(this.data.data[iData]);
                     var categories = this.data.data[iData].categories;
@@ -1558,6 +1547,7 @@
                         var category = categories[iCat];
                         CATALOG[category].items.push(this.data.data[iData]);
                     }
+                    // Create ui to show game on games page
                     var html = '';
                     html += '<div class="game-item">';
                     html += '  <i var="img"></i>';
@@ -1597,7 +1587,7 @@
                 items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
                 items.push(this.data.data[Math.floor(this.data.data.length * Math.random())])
 
-
+                // Render the 3 games items for the menu screen 
                 for (var iItem = 0; iItem < items.length; iItem++){
                     var itemUI = {};
                     var html = '';
@@ -1629,6 +1619,7 @@
                     body.appendChild(item);
                 }
             
+                // Add more games icon
                 var itemUI = {};
                 var html = '';
                 html += '<div class="plus-game-icon">'
@@ -1637,7 +1628,6 @@
                 html += '</div>'
                 var item = Browser.DOM(html, itemUI)
                 item.onclick = function(){
-                    //UI['catalog-container'].style.display = '';
                     ALL_CAT_BUTTON.onclick();
                     catalogShowEffect.direction = -1;
                     catalogShowEffect.position = catalogShowEffect.duration;
@@ -1653,8 +1643,10 @@
                 items.push({htmlIcon:item});
                 item.UI = itemUI;
                 body.appendChild(item);
+                // Render initial state of the app
                 timeLine.onRender();
 
+                // Show game corner button
                 UI.button.style.display = '';
             }
     
