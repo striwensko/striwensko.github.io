@@ -1059,7 +1059,10 @@
                     if (event.touches.length > 1){ event.preventDefault(); }
                 }
             }, false);
-            
+            document.addEventListener("gesturestart", function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }, false);
 
             (iframe.contentDocument || iframe.contentWindow.document).addEventListener('touchmove', function (event) {
                 body.style.opacity = Math.random();
@@ -1707,4 +1710,4 @@
         addEvent(window, 'load', installColor)
     }
 })();
-alert(1);
+alert(2);
