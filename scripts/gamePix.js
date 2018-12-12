@@ -923,6 +923,16 @@
                 closeIframe.mode = 'play';
                 closeIframe.hide();
                 resumeGame();
+
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
+                }
             }
             // Return to catalog screen
             UI_Close.catalog.onclick = function(){
@@ -932,14 +942,14 @@
                 closeIframe.mode = 'catalog';
                 closeIframe.hide();
 
-                if (document.body.exitFullscreen) {
-                    document.body.exitFullscreen();
-                } else if (document.body.mozCancelFullScreen) { /* Firefox */
-                    document.body.mozCancelFullScreen();
-                } else if (document.body.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-                    document.body.webkitExitFullscreen();
-                } else if (document.body.msExitFullscreen) { /* IE/Edge */
-                    document.body.msExitFullscreen();
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
                 }
             }
             
@@ -1463,6 +1473,16 @@
                 showLoaderAnimation.gameOpen = false;
                 iframeGame.setAttribute('src', 'about:blank');
                 timeLineLoader.stop();
+
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
+                }
             }
     
             // Animates loading circle while waiting for the game to report a percent in case 15s
@@ -1520,7 +1540,7 @@
 
                 // request fullscreen in case device is mobile
                 var elem = document.body;
-                if (!mobilecheck()){
+                if (false && !mobilecheck()){
 
                 }
                 else if (elem.requestFullscreen) {
