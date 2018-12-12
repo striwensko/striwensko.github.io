@@ -1731,4 +1731,4 @@
         addEvent(window, 'load', installColor)
     }
 })();
-alert(5);
+alert(6);
