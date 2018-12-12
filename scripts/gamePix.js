@@ -1059,6 +1059,10 @@
                     if (event.touches.length > 1){ event.preventDefault(); }
                 }
             }, false);
+            document.addEventListener('touchstart', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }, false);
             document.addEventListener("gesturestart", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -1710,4 +1714,4 @@
         addEvent(window, 'load', installColor)
     }
 })();
-alert(2);
+alert(4);
