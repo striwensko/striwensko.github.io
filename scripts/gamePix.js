@@ -1046,12 +1046,12 @@
             var meta = document.createElement('meta');
             meta.setAttribute('name', 'viewport');
             meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-            body.appendChild(meta);
+            head.appendChild(meta);
 
             var meta = document.createElement('meta');
             meta.setAttribute('name', 'HandheldFriendly');
             meta.setAttribute('content', 'true');
-            body.appendChild(meta);
+            head.appendChild(meta);
 
             
             document.addEventListener('touchmove', function (event) {
@@ -1731,4 +1731,4 @@
         addEvent(window, 'load', installColor)
     }
 })();
-alert(6);
+alert(7);
