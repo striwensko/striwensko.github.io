@@ -20,6 +20,7 @@
     // Get variables from the url used to embed the plugin
     var SID = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).SID || 110880;
     var debug = (Browser.urlParams((document.currentScript && document.currentScript.src) || '')).debug || false;
+    var USE_CANVAS_EFFECT = false;
 
     // SVG Icons
     var SVG = {};
@@ -36,623 +37,13 @@
     SVG.all = '<svg var="icon" width="24px" height="24px" viewBox="2 0 16 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M10,4.44452319 C10.5816565,4.44452319 10.8391464,4.38356071 11.4420906,4.1588278 C11.4655065,4.15009678 11.4655065,4.15009678 11.489197,4.14126082 C12.2503042,3.85745498 12.7026825,3.74999997 13.4504361,3.74999997 C15.2646074,3.74999997 16.9299393,5.53328272 17.6188139,7.70686049 C18.1473999,9.37468652 18.2885255,10.442977 18.3332034,12.7912097 C18.2890755,15.0722416 17.31736,16.2387385 15.5514673,16.249988 C14.458455,16.2435532 13.7027561,15.7523279 13.0042828,14.8600236 C12.8905148,14.7146842 12.5665599,14.2686604 12.5657225,14.2675436 C11.8467793,13.3085845 11.1034722,12.7853269 10.0021584,12.7777785 C8.89653159,12.7853242 8.15322253,13.308582 7.43427747,14.2675436 C7.43344013,14.2686604 7.10948522,14.7146842 6.99571719,14.8600236 C6.29724395,15.7523279 5.54154494,16.2435532 4.43999999,16.2499858 C2.68264005,16.2387385 1.71092448,15.0722416 1.66679521,12.7644147 C1.71147457,10.442977 1.85260006,9.37468652 2.38118615,7.70686049 C3.07006074,5.53328272 4.73539258,3.74999997 6.54956392,3.74999997 C7.29731752,3.74999997 7.74969582,3.85745498 8.51080295,4.14126082 C8.53449353,4.15009678 8.53449353,4.15009678 8.55790938,4.1588278 C9.16085361,4.38356071 9.41834347,4.44452319 10,4.44452319 Z M9.99997854,5.83340428 C9.30415632,5.83340428 8.81974819,5.73864981 8.07283364,5.46025544 C8.04906307,5.45139216 8.04906307,5.45139216 8.02554477,5.44262044 C7.40604972,5.21161969 7.09985786,5.13888886 6.54956392,5.13888886 C5.4700076,5.13888886 4.23181388,6.46478047 3.70517175,8.12647282 C3.22218514,9.65042069 3.09774465,10.5924092 3.05542561,12.7643458 C3.08600815,14.3451981 3.51078456,14.8551214 4.44035616,14.8611231 C5.03503894,14.8576222 5.43969878,14.594582 5.90204838,14.0039273 C5.9973926,13.8821244 6.30888159,13.4532639 6.32301281,13.434415 C7.27615625,12.163069 8.36045323,11.3998777 9.99568403,11.3889192 C11.6395389,11.3998722 12.7238403,12.1630645 13.6769872,13.434415 C13.6911184,13.4532639 14.0026074,13.8821244 14.0979516,14.0039273 C14.5603012,14.594582 14.9649611,14.8576222 15.5511111,14.8611254 C16.4892154,14.8551214 16.9139918,14.3451981 16.9445731,12.7911409 C16.9022554,10.5924092 16.7778148,9.65042069 16.2948282,8.12647282 C15.7681861,6.46478047 14.5299924,5.13888886 13.4504361,5.13888886 C12.9001422,5.13888886 12.5939503,5.21161969 11.9744552,5.44262044 C11.950937,5.45139216 11.950937,5.45139216 11.9271664,5.46025544 C11.1802518,5.73864981 10.6958008,5.83340428 9.99997854,5.83340428 Z M13.4722222,8.26388888 C13.0886912,8.26388888 12.7777778,7.95297551 12.7777778,7.56944443 C12.7777778,7.18591335 13.0886912,6.87499998 13.4722222,6.87499998 C13.8557533,6.87499998 14.1666667,7.18591335 14.1666667,7.56944443 C14.1666667,7.95297551 13.8557533,8.26388888 13.4722222,8.26388888 Z M13.4722222,11.0416667 C13.0886912,11.0416667 12.7777778,10.7307533 12.7777778,10.3472222 C12.7777778,9.96369118 13.0886912,9.65277778 13.4722222,9.65277778 C13.8557533,9.65277778 14.1666667,9.96369118 14.1666667,10.3472222 C14.1666667,10.7307533 13.8557533,11.0416667 13.4722222,11.0416667 Z M14.8611111,9.65277778 C14.4775801,9.65277778 14.1666667,9.34186437 14.1666667,8.95833333 C14.1666667,8.57480225 14.4775801,8.26388888 14.8611111,8.26388888 C15.2446422,8.26388888 15.5555556,8.57480225 15.5555556,8.95833333 C15.5555556,9.34186437 15.2446422,9.65277778 14.8611111,9.65277778 Z M12.0833333,9.65277778 C11.6998023,9.65277778 11.3888889,9.34186437 11.3888889,8.95833333 C11.3888889,8.57480225 11.6998023,8.26388888 12.0833333,8.26388888 C12.4668644,8.26388888 12.7777778,8.57480225 12.7777778,8.95833333 C12.7777778,9.34186437 12.4668644,9.65277778 12.0833333,9.65277778 Z M6.52777776,11.0416667 C5.37718453,11.0416667 4.44444442,10.1089265 4.44444442,8.95833333 C4.44444442,7.80774009 5.37718453,6.87499998 6.52777776,6.87499998 C7.678371,6.87499998 8.6111111,7.80774009 8.6111111,8.95833333 C8.6111111,10.1089265 7.678371,11.0416667 6.52777776,11.0416667 Z M6.52777776,9.65277778 C6.91130884,9.65277778 7.22222221,9.34186437 7.22222221,8.95833333 C7.22222221,8.57480225 6.91130884,8.26388888 6.52777776,8.26388888 C6.14424668,8.26388888 5.83333331,8.57480225 5.83333331,8.95833333 C5.83333331,9.34186437 6.14424668,9.65277778 6.52777776,9.65277778 Z" id="path-1"></path></svg>';
 
     // Stylesheet for 4 button menu and games page
-    var stylesheet = `
-        <style type="text/css">
-
-        html, body{
-            font-family:'Roboto', sans-serif;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-             -khtml-user-select: none; /* Konqueror HTML */
-               -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; 
-                    -webkit-tap-highlight-color: transparent;
-        }
-        body *{
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-             -khtml-user-select: none; /* Konqueror HTML */
-               -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; 
-                    -webkit-tap-highlight-color: transparent;
-        }
-        .catalog{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-        .catalog > b{
-            color: #fff;
-            position: absolute;
-            top: 9px;
-            right: 9px;
-            cursor: pointer;
-        }
-        .catalog > b svg{
-            width: 32px;
-            fill: #fff;
-            margin-top: -3px;
-        }
-        .catalog .header{
-            padding: 10px 20px;
-            padding-top: 0px;
-            padding-bottom: 0px;
-        }
-        .catalog .header .catalog-logo-header{
-            display: block;
-            max-width: 100%;
-            margin: 0 auto;
-            overflow:hidden;
-        }
-        .catalog .header .catalog-logo-header img{
-            display: block;
-            max-width: 100%;
-            margin: 0 auto;
-            max-height: 100px;
-            padding-top: 40px;
-            padding-bottom: 20px;
-        }
-        .catalog .header .categories-menu{
-            margin: 0 auto;
-        }
-        .catalog .header .categories-menu > b:first-child{
-            margin-top: 0px;
-        }
-        .catalog .header .categories-menu > .categories-bar{
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .catalog .header .categories-menu > b{
-            width: 100%;
-            height: 1px;
-            background-color: #777;
-            display: block;
-        }
-        
-        .catalog .header ul,
-        .catalog .header ul li{
-            display: block;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            color: #fff;
-            font-size: 12px;
-        }
-        .catalog .header ul{
-            width: 552px;
-            margin: 0 auto;
-        }
-        .catalog .header ul{
-            padding: 13px 0 3px 0;
-            border-left: 0;
-        }
-        .catalog .header ul li{
-            width: 40px;
-            height: 40px;
-            float: left;
-            padding-bottom: 30px;
-            line-height: 30px;
-            margin: 0 12px;
-            position: relative;
-            display: block;
-        }
-        .catalog .header ul li:first-child{
-            margin-left: 0 !important;
-        }
-        .catalog .header ul li:last-child{
-            margin-right: 0 !important;
-        }
-        .catalog .header ul:after{
-            display: block;
-            clear: both;
-            content: '';
-        }
-        .catalog .header ul li u{
-            display: block;
-            position: relative;
-            cursor: pointer;
-        }
-        .catalog .header ul li i{
-            border: 1px solid #000;
-            border-radius: 40px;
-            width: 40px;
-            height: 40px;
-            position: relative;
-            box-sizing: border-box;
-            display: block;
-            cursor: pointer;
-        }
-        .catalog .header ul li span{
-            top: 40px;
-            left: 50%;
-            transform: translate(-50%, 0);
-            position: absolute;
-        }
-        .catalog .header ul li span b{
-            font-weight: normal;
-            display: block;
-            cursor: pointer;
-        }
-
-
-        .catalog .header ul li u svg{
-            fill: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .catalog .header ul li.All i{
-            border: 1px solid #4666E2
-        }
-        .catalog .header ul li.All.selected i{
-            background-color: #4666E2
-        }
-        .catalog .header ul li.Adventure i{
-            border: 1px solid #04BD68
-        }
-        .catalog .header ul li.Adventure.selected i{
-            background-color: #04BD68
-        }
-        .catalog .header ul li.Arcade i{
-            border: 1px solid #FFC11C
-        }
-        .catalog .header ul li.Arcade.selected i{
-            background-color: #FFC11C
-        }
-        .catalog .header ul li.Sports i{
-            border: 1px solid #4666E2
-        }
-        .catalog .header ul li.Sports.selected i{
-            background-color: #4666E2
-        }
-        .catalog .header ul li.Strategy i{
-            border: 1px solid #8736FD
-        }
-        .catalog .header ul li.Strategy.selected i{
-            background-color: #8736FD
-        }
-        .catalog .header ul li.Classics i{
-            border: 1px solid #1BBCEA
-        }
-        .catalog .header ul li.Classics.selected i{
-            background-color: #1BBCEA
-        }
-
-        .catalog .header ul li.Casino i{
-            border: 1px solid #F77D38
-        }
-        .catalog .header ul li.Casino.selected i{
-            background-color: #F77D38
-        }
-        .catalog .header ul li.Girls i{
-            border: 1px solid #ED80F3
-        }
-        .catalog .header ul li.Girls.selected i{
-            background-color: #ED80F3
-        }
-        .catalog .header ul li.Puzzles i{
-            border: 1px solid #E20074
-        }
-        .catalog .header ul li.Puzzles.selected i{
-            background-color: #E20074
-        }
-
-        .catalog .header ul li b{
-            line-height: 30px;
-            text-align: center;
-
-        }
-        @media only screen and (min-width:900px)
-        {
-            .catalog .header ul li span{
-                top: 56px;
-            }
-            .catalog .header ul{
-                width: 696px;
-            }
-            .catalog .header ul li{
-                width: 56px;
-                height: 56px;
-            }
-            .catalog .header ul li i{
-                width: 56px;
-                height: 56px;
-            }
-            .catalog .header ul li u svg{
-                width:36px;
-                height: 30px;
-            }
-        }
-        .catalog .catalog-list{
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-            flex: 1;
-            overflow-x: hidden;
-        }
-        .catalog .catalog-list .game-item{
-            width: 160px;
-            display: inline-block;
-            margin: 8px;
-            cursor: pointer;
-        }
-        
-        
-        @media only screen and (max-width:750px)
-        {
-            .catalog .catalog-list{
-                padding: 0 12px;
-            }
-            .catalog .catalog-list .game-item{
-                width: calc(25% - 16px);
-                display: inline-block;
-                margin: 8px;
-            }
-        }
-        @media only screen and (max-width:600px)
-        {
-            .catalog .catalog-list{
-                padding: 0 12px;
-            }
-            .catalog .catalog-list .game-item{
-                width: calc(33% - 16px);
-                display: inline-block;
-                margin: 8px;
-            }
-        }
-        @media only screen and (max-width:400px)
-        {
-            .catalog .catalog-list{
-                padding: 0 12px;
-            }
-            .catalog .catalog-list .game-item{
-                width: calc(50% - 16px);
-                display: inline-block;
-                margin: 8px;
-            }
-        }
-        
-        .catalog .catalog-list .game-item i{
-            width: 100%;
-            display: block;
-            border-radius: 29px 29px 0 0;
-            overflow: hidden;
-            padding-top: 80%;
-            background-size: cover;
-            background-color: #3e5260;
-        }
-        .catalog .catalog-list .game-item span{
-            background-color: #2A3740;
-            display: block;
-            border-radius: 0 0 15px 15px;
-            color: #fff;
-            padding: 5px 10px;
-            text-align: left;
-        }
-        .catalog .catalog-list .game-item span *{
-            display: block;
-        }
-        .catalog .catalog-list .game-item span b{
-            line-height: 20px;
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: normal;
-            padding-top: 5px;
-        }
-        .catalog .catalog-list .game-item span u{
-            line-height: 20px;
-            font-size: 12px;
-            text-decoration: none;
-            opacity: 0.5;
-            padding-bottom: 5px;
-        }
-        .game-icon, 
-        .plus-game-icon{
-            position:absolute;
-            top: 50%;
-            right: 48px;
-            cursor:pointer;
-        }
-        .game-icon img{
-            width: 48px;
-            height: 48px;
-            border-radius: 48px;
-            overflow: hidden;
-            position: absolute;
-            top: -24px;
-            right: -24px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .game-icon span,
-        .plus-game-icon span{
-            position: absolute;
-            line-height: 40px;
-            font-size: 16px;
-            color: #fff;
-            margin-top: -20px;
-            top: 0;
-            right: 45px;
-            white-space: nowrap;
-            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .plus-game-icon b{
-            width: 48px;
-            height: 48px;
-            border-radius: 48px;
-            overflow: hidden;
-            position: absolute;
-            top: -24px;
-            right: -24px;
-            box-sizing:border-box;
-            border: 2px solid #fff;
-            background-color: rgba(0, 0, 0, 0.1);
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-            color: #fff;
-        }
-        .plus-game-icon svg{
-            width: 26px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            fill: #fff;
-        }
-
-        .loader-screen{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            text-align: center;
-            color: #fff;
-            padding: 20px;
-            padding-top: 85px;
-            box-sizing: border-box;
-        }
-        .loader-screen > i{
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            padding-left: 20px;
-            cursor: pointer;
-            font-style: normal;
-        }
-        .loader-screen > i:after{
-            display: block;
-            content: '';
-            border-top: 2px solid #fff;
-            border-left: 2px solid #fff;
-            width: 8px;
-            height: 8px;
-            left: 3px;
-            top: 4px;
-            transform: rotate(-45deg);
-            position: absolute;
-        }
-        .loader-screen > img{
-            position: absolute;
-            width: 84px;
-            height: 84px;
-            display: block;
-            margin: 0 auto;
-            overflow: hidden;
-            margin-bottom: 48px;
-            top: 123px;
-            left: 50%;
-            margin-left: -42px;
-            border-radius: 4px;
-        }
-        .loader-screen b{
-            font-weight: normal;
-            font-size: 24px;
-        }
-        
-        .loader-screen div.brand{
-            position: absolute;
-            bottom: 0;
-            padding: 20px;
-            border-top: 1px solid #777;
-            left: 20px;
-            right: 20px;
-        }
-        .loader-screen div.brand img{
-            display: block;
-            margin: 0 auto;
-            max-width: 100%;
-            max-height: 100px;
-        }
-        .close-bar{
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background-color: #000;
-        }
-        .close-bar > b {
-            color: #fff;
-            position: absolute;
-            top: 0px;
-            right: 0;
-            cursor: pointer;
-            cursor: pointer;
-            padding-top: 5px;
-            background-color: transparent;
-        }
-        .close-bar > b svg{
-            width: 32px;
-            fill: #fff;
-            margin-top: -8px;
-            padding: 4px;
-        }
-        @media only screen and (max-height:650px){
-            
-        }
-        @media only screen and (max-height:479px){
-            .loader-screen div.brand{
-                display: none;
-            }
-        }
-        @media only screen and (max-height:600px) and (orientation : landscape){
-            .close-bar{
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 40px;
-                bottom: 0px;
-                height: auto;
-                background-color: #000;
-            }
-        }
-    </style>`;
-
+    var stylesheet = "<style type='text/css'> html, body{ font-family:'Roboto', sans-serif; width: 100%; height: 100%; overflow: hidden; margin: 0; padding: 0; -webkit-touch-callout: none; /* iOS Safari */ -webkit-user-select: none; /* Safari */ -khtml-user-select: none; /* Konqueror HTML */ -moz-user-select: none; /* Firefox */ -ms-user-select: none; /* Internet Explorer/Edge */ user-select: none; -webkit-tap-highlight-color: transparent; } body *{ -webkit-touch-callout: none; /* iOS Safari */ -webkit-user-select: none; /* Safari */ -khtml-user-select: none; /* Konqueror HTML */ -moz-user-select: none; /* Firefox */ -ms-user-select: none; /* Internet Explorer/Edge */ user-select: none; -webkit-tap-highlight-color: transparent; } .catalog{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; text-align: center; } .catalog > b{ color: #fff; position: absolute; top: 9px; right: 9px; cursor: pointer; } .catalog > b svg{ width: 32px; fill: #fff; margin-top: -3px; } .catalog .header{ padding: 10px 20px; padding-top: 0px; padding-bottom: 0px; } .catalog .header .catalog-logo-header{ display: block; max-width: 100%; margin: 0 auto; overflow:hidden; } .catalog .header .catalog-logo-header img{ display: block; max-width: 100%; margin: 0 auto; max-height: 100px; padding-top: 40px; padding-bottom: 20px; } .catalog .header .categories-menu{ margin: 0 auto; } .catalog .header .categories-menu > b:first-child{ margin-top: 0px; } .catalog .header .categories-menu > .categories-bar{ overflow-x: auto; -webkit-overflow-scrolling: touch; } .catalog .header .categories-menu > b{ width: 100%; height: 1px; background-color: #777; display: block; } .catalog .header ul, .catalog .header ul li{ display: block; list-style: none; padding: 0; margin: 0; color: #fff; font-size: 12px; } .catalog .header ul{ width: 552px; margin: 0 auto; } .catalog .header ul{ padding: 13px 0 3px 0; border-left: 0; } .catalog .header ul li{ width: 40px; height: 40px; float: left; padding-bottom: 30px; line-height: 30px; margin: 0 12px; position: relative; display: block; } .catalog .header ul li:first-child{ margin-left: 0 !important; } .catalog .header ul li:last-child{ margin-right: 0 !important; } .catalog .header ul:after{ display: block; clear: both; content: ''; } .catalog .header ul li u{ display: block; position: relative; cursor: pointer; } .catalog .header ul li i{ border: 1px solid #000; border-radius: 40px; width: 40px; height: 40px; position: relative; box-sizing: border-box; display: block; cursor: pointer; } .catalog .header ul li span{ top: 40px; left: 50%; transform: translate(-50%, 0); position: absolute; } .catalog .header ul li span b{ font-weight: normal; display: block; cursor: pointer; } .catalog .header ul li u svg{ fill: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); } .catalog .header ul li.All i{ border: 1px solid #4666E2 } .catalog .header ul li.All.selected i{ background-color: #4666E2 } .catalog .header ul li.Adventure i{ border: 1px solid #04BD68 } .catalog .header ul li.Adventure.selected i{ background-color: #04BD68 } .catalog .header ul li.Arcade i{ border: 1px solid #FFC11C } .catalog .header ul li.Arcade.selected i{ background-color: #FFC11C } .catalog .header ul li.Sports i{ border: 1px solid #4666E2 } .catalog .header ul li.Sports.selected i{ background-color: #4666E2 } .catalog .header ul li.Strategy i{ border: 1px solid #8736FD } .catalog .header ul li.Strategy.selected i{ background-color: #8736FD } .catalog .header ul li.Classics i{ border: 1px solid #1BBCEA } .catalog .header ul li.Classics.selected i{ background-color: #1BBCEA } .catalog .header ul li.Casino i{ border: 1px solid #F77D38 } .catalog .header ul li.Casino.selected i{ background-color: #F77D38 } .catalog .header ul li.Girls i{ border: 1px solid #ED80F3 } .catalog .header ul li.Girls.selected i{ background-color: #ED80F3 } .catalog .header ul li.Puzzles i{ border: 1px solid #E20074 } .catalog .header ul li.Puzzles.selected i{ background-color: #E20074 } .catalog .header ul li b{ line-height: 30px; text-align: center; } @media only screen and (min-width:900px) { .catalog .header ul li span{ top: 56px; } .catalog .header ul{ width: 696px; } .catalog .header ul li{ width: 56px; height: 56px; } .catalog .header ul li i{ width: 56px; height: 56px; } .catalog .header ul li u svg{ width:36px; height: 30px; } } .catalog .catalog-list{ overflow-y: scroll; -webkit-overflow-scrolling: touch; flex: 1; overflow-x: hidden; } .catalog .catalog-list .game-item{ width: 160px; display: inline-block; margin: 8px; cursor: pointer; } @media only screen and (max-width:750px) { .catalog .catalog-list{ padding: 0 12px; } .catalog .catalog-list .game-item{ width: calc(25% - 16px); display: inline-block; margin: 8px; } } @media only screen and (max-width:600px) { .catalog .catalog-list{ padding: 0 12px; } .catalog .catalog-list .game-item{ width: calc(33% - 16px); display: inline-block; margin: 8px; } } @media only screen and (max-width:400px) { .catalog .catalog-list{ padding: 0 12px; } .catalog .catalog-list .game-item{ width: calc(50% - 16px); display: inline-block; margin: 8px; } } .catalog .catalog-list .game-item i{ width: 100%; display: block; border-radius: 29px 29px 0 0; overflow: hidden; padding-top: 80%; background-size: cover; background-color: #3e5260; } .catalog .catalog-list .game-item span{ background-color: #2A3740; display: block; border-radius: 0 0 15px 15px; color: #fff; padding: 5px 10px; text-align: left; } .catalog .catalog-list .game-item span *{ display: block; } .catalog .catalog-list .game-item span b{ line-height: 20px; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: normal; padding-top: 5px; } .catalog .catalog-list .game-item span u{ line-height: 20px; font-size: 12px; text-decoration: none; opacity: 0.5; padding-bottom: 5px; } .game-icon, .plus-game-icon{ position:absolute; top: 50%; right: 48px; cursor:pointer; } .game-icon img{ width: 48px; height: 48px; border-radius: 48px; overflow: hidden; position: absolute; top: -24px; right: -24px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); } .game-icon span, .plus-game-icon span{ position: absolute; line-height: 40px; font-size: 16px; color: #fff; margin-top: -20px; top: 0; right: 45px; white-space: nowrap; text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); } .plus-game-icon b{ width: 48px; height: 48px; border-radius: 48px; overflow: hidden; position: absolute; top: -24px; right: -24px; box-sizing:border-box; border: 2px solid #fff; background-color: rgba(0, 0, 0, 0.1); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); color: #fff; } .plus-game-icon svg{ width: 26px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); fill: #fff; } .loader-screen{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; text-align: center; color: #fff; padding: 20px; padding-top: 85px; box-sizing: border-box; } .loader-screen > i{ position: absolute; top: 15px; left: 15px; padding-left: 20px; cursor: pointer; font-style: normal; } .loader-screen > i:after{ display: block; content: ''; border-top: 2px solid #fff; border-left: 2px solid #fff; width: 8px; height: 8px; left: 3px; top: 4px; transform: rotate(-45deg); position: absolute; } .loader-screen > img{ position: absolute; width: 84px; height: 84px; display: block; margin: 0 auto; overflow: hidden; margin-bottom: 48px; top: 123px; left: 50%; margin-left: -42px; border-radius: 4px; } .loader-screen b{ font-weight: normal; font-size: 24px; } .loader-screen div.brand{ position: absolute; bottom: 0; padding: 20px; border-top: 1px solid #777; left: 20px; right: 20px; } .loader-screen div.brand img{ display: block; margin: 0 auto; max-width: 100%; max-height: 100px; } .close-bar{ position: absolute; top: 0; left: 0; right: 0; height: 40px; background-color: #000; } .close-bar > b { color: #fff; position: absolute; top: 0px; right: 0; cursor: pointer; cursor: pointer; padding-top: 5px; background-color: transparent; } .close-bar > b svg{ width: 32px; fill: #fff; margin-top: -8px; padding: 4px; } @media only screen and (max-height:650px){ } @media only screen and (max-height:479px){ .loader-screen{ padding-top: 55px; } .loader-screen > img{ top: 93px; } .loader-screen div.brand{ display: none; } } @media only screen and (max-height:600px) and (orientation : landscape){ .close-bar{ position: absolute; top: 0; left: 0; width: 40px; bottom: 0px; height: auto; background-color: #000; } } </style>";
+    // unescape(escape(stylesheet).replace(/\%0A/gim, ' '))
+    // unescape(escape(stylesheet).replace(/\%0A/gim, ' ')).replace(/ {2,}/gim, ' ')
 
     // Stylesheet for close game screen
-    var stylesheetClose = `
-        <style type="text/css">
-        html, body{
-            font-family:'Roboto', sans-serif;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-             -khtml-user-select: none; /* Konqueror HTML */
-               -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; /
-        }
-        #game-frame{
-            width: 1px;
-            min-width: 100%;
-            *width: 100%;
-            height: 1px;
-            min-height: calc(100% - 40px);
-            *height: calc(100% - 40px);
-            position: fixed;
-            left: 0;
-            top: 40px;
-        }
-        @media only screen and (max-height:600px) and (orientation : landscape){
-            #game-frame{
-                width: 1px;
-                min-width: calc(100% - 40px);
-                *width: calc(100% - 40px);
-                height: 1px;
-                min-height: 100%;
-                *height: 100%;
-                position: fixed;
-                left: 40px;
-                top: 0;
-            }
-        }
-        .gamePix {
-            font-family:'Roboto', sans-serif;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
-        .gamePix .loader-screen{
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            text-align: center;
-            color: #fff;
-            padding: 20px;
-            padding-top: 255px;
-            box-sizing: border-box;
-        }
-        .gamePix .loader-screen > img{
-            position: absolute;
-            width: 84px;
-            height: 84px;
-            display: block;
-            margin: 0 auto;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 48px;
-            top: 123px;
-            left: 50%;
-            margin-left: -42px;
-        }
-        .gamePix .loader-screen > b{
-            font-weight: normal;
-            font-size: 24px;
-        }
-        
-        .gamePix .loader-screen div.buttons{
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-            width: 100%;
-        }
-        .gamePix .loader-screen div.buttons b{
-            display: block;
-            margin: 0 auto;
-            font-size: 14px;
-
-        }
-        
-        .gamePix .loader-screen div.buttons b.play{
-            background-color: $brand-color;
-            color: #fff;
-            border: 1px solid $brand-color;
-            border-radius: 5px;
-            line-height: 45px;
-            width: 260px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .gamePix .loader-screen div.buttons b.catalog{
-            color: #fff;
-            border: 1px solid $brand-color;
-            border-radius: 5px;
-            line-height: 45px;
-            width: 260px;
-            text-align: center;
-            margin-top: 15px;
-            cursor: pointer;
-        }
-        .gamePix .loader-screen div.buttons b.close{
-            line-height: 30px;
-            width: 260px;
-            margin-top: 15px;
-            text-decoration: underline;
-            text-align: center;
-            cursor: pointer;
-        }
-        
-        @media only screen and (max-height:479px)
-        {
-            .gamePix .loader-screen > img{
-                display: none;
-            }
-            .gamePix .loader-screen > b{
-                display: none;
-            }
-        }
-    </style>`;
+    
+    var stylesheetClose = "<style type='text/css'> #game-frame{ font-family:'Roboto', sans-serif; width: 1px; min-width: 100%; *width: 100%; height: 1px; min-height: calc(100% - 40px); *height: calc(100% - 40px); position: fixed; left: 0; top: 40px; -webkit-touch-callout: none; /* iOS Safari */ -webkit-user-select: none; /* Safari */ -khtml-user-select: none; /* Konqueror HTML */ -moz-user-select: none; /* Firefox */ -ms-user-select: none; /* Internet Explorer/Edge */ user-select: none; } @media only screen and (max-height:600px) and (orientation : landscape){ #game-frame{ width: 1px; min-width: calc(100% - 40px); *width: calc(100% - 40px); height: 1px; min-height: 100%; *height: 100%; position: fixed; left: 40px; top: 0; } } .gamePix { font-family:'Roboto', sans-serif; width: 100%; height: 100%; overflow: hidden; margin: 0; padding: 0; } .gamePix .loader-screen{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; text-align: center; color: #fff; padding: 20px; padding-top: 255px; box-sizing: border-box; } .gamePix .loader-screen > img{ position: absolute; width: 84px; height: 84px; display: block; margin: 0 auto; border-radius: 4px; overflow: hidden; margin-bottom: 48px; top: 123px; left: 50%; margin-left: -42px; } .gamePix .loader-screen > b{ font-weight: normal; font-size: 24px; } .gamePix .loader-screen div.buttons{ position: absolute; bottom: 50px; left: 0; width: 100%; } .gamePix .loader-screen div.buttons b{ display: block; margin: 0 auto; font-size: 14px; } .gamePix .loader-screen div.buttons b.play{ background-color: $brand-color; color: #fff; border: 1px solid $brand-color; border-radius: 5px; line-height: 45px; width: 260px; text-align: center; cursor: pointer; } .gamePix .loader-screen div.buttons b.catalog{ color: #fff; border: 1px solid $brand-color; border-radius: 5px; line-height: 45px; width: 260px; text-align: center; margin-top: 15px; cursor: pointer; } .gamePix .loader-screen div.buttons b.close{ line-height: 30px; width: 260px; margin-top: 15px; text-decoration: underline; text-align: center; cursor: pointer; } @media only screen and (max-height:479px) { .gamePix .loader-screen div.buttons{ bottom: auto; top: 50%; transform: translate(0, -50%); } .gamePix .loader-screen > img{ display: none; } .gamePix .loader-screen > b{ display: none; } } </style>";
     var BRAND_COLOR;
 
     function start(){
@@ -665,6 +56,7 @@
         var LOADING_PERCENT = 0;
         // Game url
         var GAME_URL = '';
+        
 
         // SVG Loader Circle for loading Screen
         function SVG_Loader(){
@@ -730,6 +122,8 @@
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
+        
+        
         // Game Iframe
         var iframeGame = document.createElement('iframe');
         iframeGame.id = 'game-frame';
@@ -779,10 +173,10 @@
         },100);
 
         
-
+        var UI = {};
         // Render the ui
         function renderUI(){
-            var UI = {};
+            
 
             /*
             *  Effects
@@ -839,6 +233,7 @@
             var WIDTH = '';
             setInterval(resize, 300);
             function resize(){
+                
                 if (UI['catalog-container'].style.display == ''){
                     var _width = Browser.getSize().width;
                     
@@ -989,9 +384,11 @@
                     TimeLine.applyMatrix(UI.button, {x: 24 * this.getTime(100, 200)});
                     
                     
-                    iframe.style.opacity = this.getTime(200, 500)
+                    iframe.style.opacity = this.getTime(200, 500);
+                    UI.canvas && (UI.canvas.style.opacity = this.getTime(200, 500));
                     iframeGame.style.opacity = this.getTime(200, 500)
                     iframe.style.display = (this.position > 200 ? '': 'none');
+                    UI.canvas && (UI.canvas.style.display = (this.position > 200 ? '': 'none'));
                     if (this.position == 0 && this.direction == -1){
                         document.body.style.overflow = PREVIOUS_OVERFLOW;
                     }
@@ -1057,12 +454,12 @@
             var children = document.head.children;
             var injectNoScale = false;
             for (var iChild = 0; iChild < children.length; iChild++){
-                console.log(children[iChild].tagName.toUpperCase(), children[iChild])
+                //console.log(children[iChild].tagName.toUpperCase(), children[iChild])
                 if (children[iChild].tagName.toUpperCase() == 'META'){
-                    console.log(children[iChild].tagName.toUpperCase())
+                    //console.log(children[iChild].tagName.toUpperCase())
                     if (children[iChild].getAttribute('name') == 'viewport'){
                         var content = children[iChild].getAttribute('content');
-                        console.log(content, content.search('user-scalable'))
+                        //console.log(content, content.search('user-scalable'))
                         if (content.search('maximum-scale=1.0') == -1){
                             children[iChild].setAttribute('content', content + ', maximum-scale=1.0');
                             injectNoScale = true;
@@ -1142,6 +539,11 @@
             timeLine.onRender = function(){
                 iframe.style.display = (this.position > 0 ? '' : 'none');
                 iframe.style.opacity = (this.getTime(100, 200));
+
+                UI.canvas && (UI.canvas.style.display = (this.position > 0 ? '' : 'none'));
+                UI.canvas && (UI.canvas.style.opacity = (this.getTime(100, 200)));
+
+
                 UI.button.icon.style.opacity = this.getTime(300, 200)
                 
                 if (this.direction == -1){
@@ -1224,6 +626,8 @@
                     var opacity = UI.button.gamePad.style.opacity;
                     UI.button.HIDE_GAME_PAGE = UI.button.timeLine.position - (1 - opacity) * 200;
                     UI.button.startX = 0;
+
+                    createSnapShot();
                 }
                 blurEffect.blur({elements:['*'], delay: 0, direction: timeLine.direction})
             }
@@ -1264,11 +668,17 @@
             catalogCloseEffect.addEventListener(EVENT.CHANGE, 'onRender', catalogCloseEffect);
             catalogCloseEffect.onRender = function(){
                 TimeLine.applyMatrix(UI.button, {x: 24 * (this.getTime(0, 200))});
-                iframe.style.display = (this.position > 0 ? '' : 'none');
+                
                 if (this.position == 0 && this.direction == -1){
                     document.body.style.overflow = PREVIOUS_OVERFLOW;
                 }
+                
                 iframe.style.opacity = (this.getTime(300, 200));
+                iframe.style.display = (this.position > 0 ? '' : 'none');
+
+                UI.canvas && (UI.canvas.style.opacity = (this.getTime(300, 200)));
+                UI.canvas && (UI.canvas.style.display = (this.position > 0 ? '' : 'none'));
+
                 UI['catalog-container'].style.display = (this.position > 0 ? '' : 'none');
             }
             body.innerHTML = stylesheet;
@@ -1721,6 +1131,38 @@
     
         }
         
+        function createSnapShot(){
+            if (!USE_CANVAS_EFFECT){
+                return false;
+            }
+            var size = Browser.getSize();
+            html2canvas(document.body, {
+                ignoreElements:function(element){
+                    if (UI.button == element || UI.canvas == element || closeIframe == element ||
+                        iframe == element || iframeGame == element ){
+                        return true;
+                    }
+                    return false;
+                },
+                canvas: UI.canvas,
+                windowWidth: size.width,
+                windowHeight: size.height,
+                width: size.width,
+                height: size.height,
+                scrollY: function(element){
+                    document.body.scrollTop || document.documentElement.scrollTop
+                }
+            }).then(function(canvas) {
+                
+                canvas.style.position = 'fixed';
+                canvas.style.top = '0';
+                canvas.style.left = '0';
+                canvas.style.transformOrigin = '0 0';
+                canvas.style.filter = 'blur(' + 20 + 'px)'
+                UI.canvas = canvas;
+                document.body.appendChild(canvas);
+            });
+        }
 
 
         
@@ -1728,12 +1170,32 @@
 
     function installColor(){
         BRAND_COLOR = '#99D704';
-        start();
+        // use canvas effect set to false as i'll print screen without scrolling the page 
+        // so is likely this wont work unless there arent nay image from external domain
+        // and hs problems with position fixed elements as well when an element like the page is scrolled
+        USE_CANVAS_EFFECT = false;
+        loadHtml2Canvas();
     }
+    function loadHtml2Canvas(){
+        if (USE_CANVAS_EFFECT){
+            var script = document.createElement('script');
+            script.setAttribute('src', 'https://html2canvas.hertzen.com/dist/html2canvas.min.js')
+            script.onload = function(){
+                start();
+            }
+            document.head.appendChild(script);
+        } else {
+            start();
+        }
+        
+    }
+
     if (document.body){
         installColor();
     } else {
         addEvent(window, 'load', installColor)
     }
 })();
-alert(10);
+/*
+
+*/
