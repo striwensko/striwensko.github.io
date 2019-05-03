@@ -86,11 +86,12 @@ body, html{
     transform: translate(-50%, -50%);
     height: 16px;
 }
-.walmart .content{
+.walmart > .content{
     display: block;
     flex: 1;
     overflow: auto;
     background-color: #f5f5f5;
+    -webkit-overflow-scrolling: touch;
 }
 .walmart .content b.loader{
     width: 40px;
