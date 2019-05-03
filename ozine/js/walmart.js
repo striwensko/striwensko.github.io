@@ -230,6 +230,7 @@ Walmart.Product = function(){
   html += '      </div>';
   html += '      <div class="right">';
   html += '        <p var="description"></p>';
+  html += '        <i var="price" class="price"></i>'
   html += '        <span class="counter">'
   html += '          <u var="buttons.minus">' + SVG.minusIcon +'</u>';
   html += '          <b var="qty">0</b>';
@@ -296,8 +297,9 @@ Walmart.Product.prototype.onState = function(state){
   this.UI.loader.style.display = (this.state.loading ? '' : 'none');
   this.UI.content.style.display = (this.state.loading ? 'none' : '');
   this.holder.style.display = (this.state.mode === 'product' ? '' : 'none');
-  if (state.title){
+  if (state.product){
     this.UI.title.innerHTML = state.title;
+    this.UI.price.innerHTML = '$' + state.product.salePrice.toFixed(2);
   }
   if (state.description){
     this.UI.description.innerHTML = state.description;
