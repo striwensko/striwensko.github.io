@@ -13,7 +13,7 @@ Walmart = function(){
   var html = '';
   html += '<div class="walmart">';
   html += '  <div class="header">';
-  html += '    <img src="images/walmart.png"/>';
+  html += '    <img var="logo" src="images/walmart.png"/>';
   html += '    <input ref="search" type="text"/>';
   html += '    <b ref="buttons.search">' + SVG.search + '</b>';
   html += '    <i var="buttons.shoppingCart">' + SVG.shoppingCart + '<b var="shopping.qty"></b></i>';
@@ -34,6 +34,9 @@ Walmart = function(){
   this.UI.buttons.shoppingCart.onclick = function(){
     Walmart.Data.setState('ShoppingCart', {show: true});
   }
+  this.UI.logo.onclick = function(){
+    Walmart.Data.setState('mode', {mode: 'catalog'});
+  }
   this.json = new JSON_Loader();
   this.json.addEventListener(Event.COMPLETE, 'onData', this);
   this.UI.content.appendChild(new Walmart.Catalog().holder);
@@ -50,13 +53,20 @@ Walmart = function(){
       self.UI.shopping.qty.innerHTML = (state.qty ? state.qty : '');
     }
   })
-
-  this.UI.search.value = 'Cereal';
-  this.UI.buttons.search.onclick();
+  this.setState({ trending:true })
 }
 Walmart.prototype.onData = function(event){
   console.log(event.currentTarget.data);
-  Walmart.Data.setState('catalog', {loading: false, items: event.currentTarget.data.items, totalResults:event.currentTarget.data.totalResults});
+  var data = event.currentTarget.data;
+  var totalResults = data.totalResults ? data.totalResults : data.items.length;
+  Walmart.Data.setState('catalog', {loading: false, items: data.items, totalResults:totalResults});
+}
+Walmart.prototype.loadTrending = function(){
+  var proxy = 'https://cors-anywhere.herokuapp.com/';
+  var url = proxy + 'http://api.walmartlabs.com/v1/trends?format=json&apiKey=gg92a94g25xvwgpk6n9rbjma';
+  this.json.load(url);
+  Walmart.Data.setState('catalog', {loading: true});
+  Walmart.Data.setState('mode', {mode: 'catalog'});
 }
 Walmart.prototype.load = function(){
   var proxy = 'https://cors-anywhere.herokuapp.com/';
@@ -69,7 +79,9 @@ Walmart.prototype.load = function(){
   Walmart.Data.setState('mode', {mode: 'catalog'});
 }
 Walmart.prototype.onState = function(state){
-  if (state.query){
+  if (state.trending){
+    this.loadTrending();
+  } else if (state.query){
     this.load();
     Walmart.Data.setState('catalog', {reset: true});
   } else if (state.page){
@@ -161,7 +173,7 @@ Walmart.Catalog = function(){
 }
 Walmart.Catalog.prototype.onState = function(state){
   this.UI.loader.style.display = (this.state.loading ? '' : 'none');
-  this.UI.buttons.more.style.display = (!this.state.loading && this.state.items.length > 0 && this.state.page < Math.ceil(this.state.totalResults / Walmart.PAGE_SIZE) ? '' : 'none');
+  this.UI.buttons.more.style.display = (!this.state.loading && this.state.items.length > 0 && (this.state.page  + 1) < Math.ceil(this.state.totalResults / Walmart.PAGE_SIZE) ? '' : 'none');
   if (state.items){
     for (var iItem = 0; iItem < state.items.length; iItem++){
       this.UI.list.appendChild(this.createItem(state.items[iItem]));

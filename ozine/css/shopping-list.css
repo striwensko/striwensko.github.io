@@ -19,6 +19,7 @@ body, html{
     position: absolute;
     top: 10px;
     left: 5px;
+    cursor: pointer;
 }
 .walmart .header input{
     line-height: 36px;
@@ -423,11 +424,12 @@ body, html{
     position: relative;
     /* bottom: 10px; */
     /* right: 10px; */
-    background-color: #F8F9FA;
+    background-color: #FFB718;
     line-height: 36px;
     padding: 0 36px;
     border-radius: 36px;
     display: inline-block;
+    margin-top: 20px;
 }
 .walmart .product span.counter b{
     font-weight: normal;
@@ -457,5 +459,5 @@ body, html{
     height: 12px;
 }
 .walmart .product span.counter u:hover{
-    color: #FFC94A;
+    color: #ffff;
 }
