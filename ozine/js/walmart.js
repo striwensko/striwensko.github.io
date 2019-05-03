@@ -50,6 +50,9 @@ Walmart = function(){
       self.UI.shopping.qty.innerHTML = (state.qty ? state.qty : '');
     }
   })
+
+  this.UI.search.value = 'Cereal';
+  this.UI.buttons.search.onclick();
 }
 Walmart.prototype.onData = function(event){
   console.log(event.currentTarget.data);
