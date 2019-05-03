@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Wallmart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="js/ozine.js"></script>
+    <script type="text/javascript" src="js/walmart.js"></script>
+    <link rel="stylesheet" href="css/shopping-list.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <script type="text/javascript">
+
+
+
+      //https://cors-anywhere.herokuapp.com/https://developer.walmart.com/proxy/item-api-doc-app/rest/v3/feeds
+      window.onload = function(){
+        document.body.appendChild(new Walmart().holder);
+        //document.body.appendChild(new ShoppingList().holder);
+      }
+    </script>
+  </head>
+  <body>
+
+
+  </body>
+</html>
