@@ -7,6 +7,7 @@ Ozine.Router.start = function(reload) {
   }
   reload && this.onRoute();
 }
+Ozine.Router.Server = 'http://striwensko.github.io/wallmart/';
 Ozine.Router.addRoute = function(route, callback) {
   /*
   "help":                 "help",    // #help
@@ -23,9 +24,14 @@ Ozine.Router.supportSlashHistory = function() {
 }
 Ozine.Router.navigate = function(pathName, makeHistory){
   if (this.supportSlashHistory()){
-    var location = window.location.toString().split('#')[0];
-    location = location.split('?')[0];
-    location = location + '#' + pathName;
+    if (Ozine.Router.Server){
+      var location = Ozine.Router.Server + pathName;
+    } else {
+      var location = window.location.toString().split('#')[0];
+      location = location.split('?')[0];
+      location = location + '#' + pathName;
+    }
+
     this.HISTORY_URL = location;
 		if (makeHistory == false) {
 			window.history.replaceState(null, null, location);
@@ -37,9 +43,14 @@ Ozine.Router.navigate = function(pathName, makeHistory){
 Ozine.Router.onRoute = function(force, event) {
 	var location = document.location.toString();
 	if (this.HISTORY_URL != location || force === true) {
-		this.HISTORY_URL = location;
-		var fragment = location.split('#');
-		fragment = (fragment.length > 1) ? fragment.pop() : '';
+    this.HISTORY_URL = location;
+    if (!Ozine.Router.Server){
+      var fragment = location.split('#');
+      fragment = (fragment.length > 1) ? fragment.pop() : '';
+    } else {
+      var fragment = location.replace(Ozine.Router.Server, '');
+    }
+    console.log(fragment);
 		if (true || (route != "")) {
       for (var iRoute = 0; iRoute < this.routes.length; iRoute++){
         var route = this.routes[iRoute];
