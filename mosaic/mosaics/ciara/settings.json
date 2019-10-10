@@ -1,0 +1,21 @@
+{
+	"cover":"mosaics/ciara/ciaraCover.png",
+	"output":"mosaics/ciara/out.jpg",
+	"watermark":null,
+	"avatarImage":"mosaics/ciara/avatars.jpg",
+	"outputJSON":"mosaics/ciara/data.json",
+	"twitter":
+	{
+		"search":"ciara",
+		"oauth_access_token" : "25337478-iStkZqMcdkIkyHf3sXg7lA4rNAuIitHRvNKcgjViQ",
+		"oauth_access_token_secret" : "3uGPT0U5rExFOboaFZB5oJK23J3IzeS8jIgZGbX0",
+		"consumer_key" : "1THhIhnetP2fUeeepRrrg",
+		"consumer_secret" : "rsNsNPK6f1lZ9CDh5mXIouD3n8DFwUBYXRDTUUFkQ"
+	},
+	"avatars":
+	{
+		"width":20,
+		"height":20
+	},
+	"cell":8
+}

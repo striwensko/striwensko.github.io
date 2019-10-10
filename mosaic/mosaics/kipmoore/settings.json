@@ -1,0 +1,21 @@
+{
+	"cover":"mosaics/kipmoore/cover.png",
+	"output":"mosaics/kipmoore/out.jpg",
+	"watermark":"mosaics/kipmoore/watermark.png",
+	"avatarImage":"mosaics/kipmoore/avatars.jpg",
+	"outputJSON":"mosaics/kipmoore/data.json",
+	"twitter":
+	{
+		"search":"kipmoore",
+		"oauth_access_token" : "25337478-iStkZqMcdkIkyHf3sXg7lA4rNAuIitHRvNKcgjViQ",
+		"oauth_access_token_secret" : "3uGPT0U5rExFOboaFZB5oJK23J3IzeS8jIgZGbX0",
+		"consumer_key" : "1THhIhnetP2fUeeepRrrg",
+		"consumer_secret" : "rsNsNPK6f1lZ9CDh5mXIouD3n8DFwUBYXRDTUUFkQ"
+	},
+	"avatars":
+	{
+		"width":10,
+		"height":10
+	},
+	"cell":8
+}

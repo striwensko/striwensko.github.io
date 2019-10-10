@@ -1,0 +1,20 @@
+{
+	"cover":"mosaics/rihanna/Cover.png",
+	"output":"mosaics/rihanna/out.jpg",
+	"avatarImage":"mosaics/rihanna/avatars.jpg",
+	"outputJSON":"mosaics/rihanna/data.json",
+	"twitter":
+	{
+		"search":"rihanna",
+		"oauth_access_token" : "25337478-iStkZqMcdkIkyHf3sXg7lA4rNAuIitHRvNKcgjViQ",
+		"oauth_access_token_secret" : "3uGPT0U5rExFOboaFZB5oJK23J3IzeS8jIgZGbX0",
+		"consumer_key" : "1THhIhnetP2fUeeepRrrg",
+		"consumer_secret" : "rsNsNPK6f1lZ9CDh5mXIouD3n8DFwUBYXRDTUUFkQ"
+	},
+	"avatars":
+	{
+		"width":20,
+		"height":20
+	},
+	"cell":8
+}
