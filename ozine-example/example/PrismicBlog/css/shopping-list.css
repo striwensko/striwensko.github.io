@@ -1,0 +1,325 @@
+body, html{
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.prismic-blog{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.prismic-blog .header{
+    background-color: #252527;
+    padding: 10px 46px 10px 50px;
+    position: relative;
+}
+.prismic-blog .header .logo{
+    width: 50px;
+    height: 56px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+}
+.prismic-blog .header .logo svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 26px;
+    color: #fff;
+}
+.prismic-blog .header input{
+    line-height: 36px;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-radius: 3px 0 0 3px;
+}
+.prismic-blog .header i{
+    width: 36px;
+    height: 36px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+.prismic-blog .header i svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 16px;
+}
+.prismic-blog .header > i > b{
+    background-color: #fa3e3e;
+    border-radius: 3px;
+    color: #fff;
+    padding: 1px 5px 1px 4px;
+    font-style: normal;
+    position: absolute;
+    top: 7px;
+    left: 27px;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    display: inline-block;
+    -webkit-font-smoothing: subpixel-antialiased;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 13px;
+    font-weight: normal;
+}
+.prismic-blog .header > i > b:empty{
+    display: none;
+}
+.prismic-blog .header > b{
+    width: 36px;
+    height: 36px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 0 3px 3px 0;
+    background-color: #49A9E2;
+    color: #ffF;
+    cursor: pointer;
+}
+.prismic-blog .header > b svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 16px;
+}
+.prismic-blog > .content{
+    display: block;
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    background-color: #f5f5f5;
+    -webkit-overflow-scrolling: touch;
+}
+.prismic-blog .content b.loader{
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 20px auto;
+    position: relative;
+}
+.prismic-blog .content b.loader svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    width: 40px;
+}
+.prismic-blog .catalog > .list{
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+}
+.prismic-blog .content .paging{
+    text-align: center;
+    display: block;
+    font-weight: normal;
+    color: #252527;
+    padding: 10px;
+}
+.prismic-blog .content .paging b{
+    line-height: 30px;
+    display: inline-block;
+    min-width: 30px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 3px;
+    font-weight: normal;
+    font-size: 13px;
+    box-sizing: border-box;
+    padding: 0 5px;
+    transition: background 200ms;
+    background-color: #fff;
+    transition-property: background-color, color;
+}
+.prismic-blog .content .paging b:hover{
+    background-color: #252527;
+    color: #fff;
+}
+.prismic-blog .content .paging b.selected{
+    background-color: #252527;
+    color: #fff;
+
+}
+.prismic-blog .catalog-item{
+    width: 270px;
+    position: relative;
+    background-color: #fff;
+    height: 240px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    margin: 10px;
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    /* padding-left: 110px; */
+    /* padding-right: 10px; */
+    /* float: left; */
+    /* display: inline-block; */
+    transition: background-color 400ms;
+}
+.prismic-blog .catalog-item:hover{
+    background-color: #252527;
+}
+.prismic-blog .catalog-item .date{
+    position: absolute;
+    font-size: 12px;
+    text-decoration: none;
+    bottom: 10px;
+    left: 10px;
+    color: #666;
+}
+.prismic-blog .catalog-item .section{
+    position: absolute;
+    font-size: 12px;
+    text-decoration: none;
+    top: 10px;
+    left: 0px;
+    padding: 0 10px;
+    line-height: 24px;
+    border-radius: 0 5px 5px 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-style: normal;
+}
+.prismic-blog .catalog-item .title{
+    line-height: 17px;
+    font-size: 12px;
+    padding: 5px;
+    color: #212121;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+}
+.prismic-blog .catalog-item:hover .title{
+    color: #017ADB;
+}
+.prismic-blog .catalog-item .msrp{
+    color: #ccc;
+    font-size: 12px;
+    font-style: normal;
+    text-decoration: line-through;
+}
+.prismic-blog .catalog-item .price{
+    color: #FF6600;
+    font-size: 12px;
+    font-style: normal;
+}
+
+.prismic-blog .catalog-item img{
+    width: 270px;
+    height: 140px;
+    /* position: absolute; */
+    /* top: 10px; */
+    /* left: 10px; */
+    border-radius: 7px 7px 0 0;
+    overflow: hidden;
+    object-fit: cover;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+.prismic-blog .catalog-item b{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #017ADB;
+}
+.prismic-blog .catalog-item b svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 24px;
+    width: 24px;
+}
+
+
+
+.prismic-blog .product{
+    padding: 20px;
+}
+.prismic-blog .product b.loader{
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 20px auto;
+    position: relative;
+}
+.prismic-blog .product b.loader svg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    width: 40px;
+}
+.prismic-blog .product .content{
+    margin: 0 auto;
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    box-sizing: border-box;
+}
+.prismic-blog .product h1{
+    color: #017ADB;
+    margin: 0;
+    padding: 10px;
+    font-size: 26px;
+}
+@media only screen and (min-width: 850px) {
+    .prismic-blog .product .details{
+        display: flex;
+        flex-direction: row;
+    }
+    .prismic-blog .product .details .left{
+        width: 480px
+    }
+    .prismic-blog .product .details .right{
+        flex: 1;
+        padding-left: 20px;
+    }
+}
+.prismic-blog .product img{
+    border-radius: 5px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.prismic-blog .product p{
+    color: #484848;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+}
+.prismic-blog .product p ul{
+    margin: 0;
+   padding: 0;
+   padding-left: 30px;
+}
+@media only screen and (max-width: 600px) {
+    .prismic-blog .product h1{
+        font-size: 18px;
+    }
+    .prismic-blog .product img{
+        margin: 20px 0;
+    }
+}

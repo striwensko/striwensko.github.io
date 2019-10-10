@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>New York Times Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script type="text/javascript" src="../../src/ozine.core.js"></script>
+    <script type="text/javascript" src="../../src/ozine.data.js"></script>
+    <script type="text/javascript" src="../../src/ozine.router.js"></script>
+    <script type="text/javascript" src="js/Forex.app.js"></script>
+    <link rel="stylesheet" href="css/shopping-list.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <script type="text/javascript">
+
+
+      //https://cors-anywhere.herokuapp.com/https://developer.walmart.com/proxy/item-api-doc-app/rest/v3/feeds
+      window.onload = function(){
+        new ForexCalculator(document.body);
+        //document.body.appendChild(new ShoppingList().holder);
+      }
+
+
+    </script>
+    <style>
+      .physics{
+        border: 1px solid #000;
+        width: 400px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="physics">
+
+    </div>
+
+
+
+  </body>
+</html>
