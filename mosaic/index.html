@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+	
+	
+	
+	<script type="text/javascript" charset="utf-8" src="js/LIBRARY.js"></script>
+	
+	<script type="text/javascript">
+		//https://dev.twitter.com/rest/public/search
+		var mosaic;
+		var mosaicViewer;
+		function start()
+		{
+			var json = new JSON_Loader();
+			json.addEventListener(Event.COMPLETE, 'onData', this);
+			json.load('mosaics/rihanna/data.json');
+			
+		}
+		function resize(event)
+		{
+			readSize();
+			if (mosaicViewer)
+			{
+				mosaicViewer.resize(DIMS.width, DIMS.height);
+			}
+		}
+		function onData(event)
+		{
+			var data = event.currentTarget.data;
+			console.log(data);
+			readSize();
+			
+			mosaic = new Mosaic(data);
+			document.body.appendChild(mosaic.holder);
+			
+			mosaicViewer = new MosaicViewer({content:mosaic, width:DIMS.width, height:DIMS.height});
+			document.body.appendChild(mosaicViewer.holder);
+		}
+		
+		function MosaicViewer(settings)
+		{
+			var self = this;
+			this.width = settings.width;
+			this.height = settings.height;
+			this.content = settings.content;
+			
+			this.holder = document.createElement('div');
+			this.holder.style.position = 'relative';
+			this.holder.appendChild(this.content.holder);
+			
+			this.content.addEventListener(Event.COMPLETE, 'onReady', this);
+			
+			this.holder.startX = 0;
+			this.holder.startY = 0;
+			this.holder.onmousemove = function(event)
+			{
+				var rect = this.getBoundingClientRect();
+				var x = event.clientX - rect.left;
+				var y = event.clientY - rect.top;
+				//console.log("onmousemove", self.disableMouse)
+				
+				var diffX = x - this.startX;
+				var diffY = y - this.startY;
+				if (diffX * diffX + diffY * diffY > 100)
+				{
+					var rect = this.getBoundingClientRect();
+					self.onmousemove(x, y);		
+				}
+			}
+			this.holder.ontouchstart = function(event)
+			{
+				var clientX = (event.touches) ? ((event.touches[0].clientX) ? event.touches[0].clientX : event.touches[0].pageX) : event.clientX;
+				var clientY = (event.touches) ? ((event.touches[0].clientY) ? event.touches[0].clientY : event.touches[0].pageY) : event.clientY;
+				var rect = this.getBoundingClientRect();
+				var x = clientX - rect.left;
+				var y = clientY - rect.top;
+				console.log("start:", x, y);
+				this.startX = x;
+				this.startY = y;
+			}
+			this.holder.ontouchmove = function(event)
+			{
+				var clientX = (event.touches) ? ((event.touches[0].clientX) ? event.touches[0].clientX : event.touches[0].pageX) : event.clientX;
+				var clientY = (event.touches) ? ((event.touches[0].clientY) ? event.touches[0].clientY : event.touches[0].pageY) : event.clientY;
+				var rect = this.getBoundingClientRect();
+				var x = clientX - rect.left;
+				var y = clientY - rect.top;
+				console.log('ontouchmove');
+				
+				event.preventDefault();
+				
+				self.onmousemove(x, y);
+			}
+			
+			//addEventSimple(document.body, 'touchend', function(event){self.touchEnd();});
+		}
+		MosaicViewer.prototype.touchEnd = function()
+		{
+			//console.log("onTouchEnd")
+			//this.disableMouse = false;
+		}
+		MosaicViewer.prototype.onmousemove = function(x, y)
+		{
+			if (this.content.width > this.width || this.content.height > this.height)
+			{
+				//console.log("move:", x, y);
+			
+				var offsetX = -Math.round(Math.max(this.content.width - this.width, 0) * x / this.width);
+				var offsetY = -Math.round(Math.max(this.content.height - this.height, 0) * y / this.height);
+				
+				this.content.holder.style.left = offsetX + 'px';
+				this.content.holder.style.top = offsetY + 'px';
+			}
+		}
+		MosaicViewer.prototype.onReady = function()
+		{
+			this.resize(this.width, this.height);
+		}
+		MosaicViewer.prototype.resize = function(width, height)
+		{
+			this.width = width;
+			this.height = height;
+			
+			if (this.content.width > width || this.content.height > height)
+			{
+				this.holder.style.overflow = 'hidden';
+				this.holder.style.width = width + 'px';
+				this.holder.style.height = height + 'px';
+				
+				this.content.holder.style.position = 'absolute';
+				
+			}
+			else
+			{
+				this.holder.style.overflow = '';
+				this.holder.style.width = '';
+				this.holder.style.height = '';
+				
+				this.content.holder.style.position = '';
+				this.content.holder.style.left = '';
+				this.content.holder.style.top = '';
+			}
+		}
+		function Mosaic(data)
+		{
+			var self = this;
+			
+			this.data = data;
+			this.holder = document.createElement('div');
+			this.holder.className = 'mosaic';
+			
+			this.image = new Image();
+			this.image.src = data.image.image;
+			this.image.onload = function()
+			{
+				this.ready = true;
+				this.o_w = this.width;
+				this.o_h = this.height;
+				self.width = this.width;
+				self.height = this.height;
+				self.start();
+			}
+			
+			this.avatars = new Image();
+			this.avatars.src = data.avatars.image;
+			this.avatars.onload = function()
+			{
+				this.ready = true;
+				self.start();
+			}
+			
+			this.magnify = new Image();
+			this.magnify.src = 'images/magnify.png';
+			this.magnify.onload = function()
+			{
+				this.ready = true;
+				self.start();
+			}
+			
+			this.zoom = document.createElement('canvas');
+			this.zoom.width  = 180;
+			this.zoom.height = 180;
+			this.zoom.col = -100;
+			this.zoom.row = -100;
+			this.zoom.style.position = 'absolute';
+			this.zoom.style.display = 'none';
+			this.zoomContext = this.zoom.getContext('2d');
+			
+			
+			
+			
+			
+			
+			this.cellSize = data.cellSize;
+			this.zoomCellSize = 24;
+			
+			
+			this.zoomLevel = this.zoomCellSize / this.cellSize;
+			// HOW MANY COLS,ROWS FOR THE PREPORESS ZOOM IMAGE
+			this.zoomGrid = 16;
+			
+			
+			this.bitmap = document.createElement('canvas');
+			this.bitmap.width = this.zoomCellSize * this.zoomGrid;
+			this.bitmap.height = this.zoomCellSize * this.zoomGrid;
+			this.bitmap.style.position = 'absolute';
+			this.bitmap.style.top = '0px';
+			this.bitmap.style.left = '0px';
+			this.bitmap.style.zIndex = '10000';
+			this.bitmapContext = this.bitmap.getContext('2d');
+			//document.body.appendChild(this.bitmap);
+			
+			this.popup = document.createElement('div');
+			this.popup.className = 'popup';
+			this.popup.style.display = 'none';
+			
+			this.avatar = document.createElement('canvas');
+			this.avatar.width = 48;
+			this.avatar.height = 48;
+			this.avatarContext = this.avatar.getContext('2d');
+			this.popup.appendChild(this.avatar);
+			
+			this.username = document.createElement('b');
+			this.popup.appendChild(this.username);
+			
+			this.userText = document.createElement('span');
+			this.popup.appendChild(this.userText);
+			
+			this.popup.arrow = document.createElement('div');
+			this.popup.arrow.className = 'arrow up';
+			this.popup.appendChild(this.popup.arrow);
+			
+			this.popup.closeButton = document.createElement('div');
+			this.popup.closeButton.className = 'icon close';
+			this.popup.closeButton.onmousedown = function(event)
+			{
+				event.stopPropagation();
+				self.popup.style.display = 'none';
+				self.avatarZoom.style.display = 'none';
+			}
+			this.popup.appendChild(this.popup.closeButton);
+			
+			this.popup.fbButton = document.createElement('div');
+			this.popup.fbButton.className = 'icon facebook';
+			this.popup.fbButton.onmousedown = function()
+			{
+				
+			}
+			this.popup.appendChild(this.popup.fbButton);
+			
+			this.popup.twitterButton = document.createElement('div');
+			this.popup.twitterButton.className = 'icon twitter';
+			this.popup.twitterButton.onmousedown = function()
+			{
+				
+			}
+			this.popup.appendChild(this.popup.twitterButton);
+			
+			this.popup.pinterestButton = document.createElement('div');
+			this.popup.pinterestButton.className = 'icon pinterest';
+			this.popup.pinterestButton.onmousedown = function()
+			{
+				
+			}
+			this.popup.appendChild(this.popup.pinterestButton);
+			
+			
+			
+			this.holder.appendChild(this.popup);
+			
+			this.avatarZoom = document.createElement('canvas');
+			this.avatarZoom.width = 24;
+			this.avatarZoom.height = 24;
+			this.avatarZoom.style.display = 'none';
+			this.avatarZoom.className = 'avatar';
+			this.avatarContextZoom = this.avatarZoom.getContext('2d');
+			this.holder.appendChild(this.avatarZoom);
+			
+			ADD_EVENT_DISPACTHER(this);
+		}
+		Mosaic.prototype.start = function()
+		{
+			var self = this;
+			if (!this.avatars.ready || !this.image.ready || !this.magnify.ready)
+			{
+				return false;	
+			}
+			
+			
+			
+			this.holder.style.width = this.image.width + 'px';
+			this.holder.style.height = this.image.height + 'px';
+			this.holder.style.position = 'relative';
+			this.holder.style.overflow = 'hidden';
+			this.holder.style.backgroundImage = 'url(' + this.image.src + ')';
+			//this.holder.appendChild(this.image);
+			this.holder.appendChild(this.zoom);
+			this.holder.onmousedown = function(event)
+			{
+				var rect = this.getBoundingClientRect();
+				var x = event.clientX - rect.left;
+				var y = event.clientY - rect.top;
+				self.click(x, y);
+			}
+			this.holder.onmousemove = function(event)
+			{
+				//console.log("onmousemove", event.target);
+				var rect = this.getBoundingClientRect();
+				var x = event.clientX - rect.left;
+				var y = event.clientY - rect.top;
+				self.renderZoom(x, y);
+			}
+			this.holder.onmouseover = function(event)
+			{
+				//console.log("onmouseover");
+				self.zoom.style.display = '';
+			}
+			this.holder.onmouseout = function(event)
+			{
+				//console.log("mouseout");
+				self.zoom.style.display = 'none';
+			}
+			this.holder.ontouchstart = function(event)
+			{
+				//console.log("ontouchstart");
+				self.zoom.style.display = '';
+				
+				var clientX = (event.touches) ? ((event.touches[0].clientX) ? event.touches[0].clientX : event.touches[0].pageX) : event.clientX;
+				var clientY = (event.touches) ? ((event.touches[0].clientY) ? event.touches[0].clientY : event.touches[0].pageY) : event.clientY;
+				
+				var rect = this.getBoundingClientRect();
+				var x = clientX - rect.left;
+				var y = clientY - rect.top;
+				console.log(clientY, rect.top)
+				self.renderZoom(x, y);
+			}
+			this.holder.ontouchmove = function(event)
+			{
+				event.preventDefault();
+				//console.log("ontouchmove");
+				var clientX = (event.touches) ? ((event.touches[0].clientX) ? event.touches[0].clientX : event.touches[0].pageX) : event.clientX;
+				var clientY = (event.touches) ? ((event.touches[0].clientY) ? event.touches[0].clientY : event.touches[0].pageY) : event.clientY;
+				//console.log(clientX, clientY);
+				var rect = this.getBoundingClientRect();
+				var x = clientX - rect.left;
+				var y = clientY - rect.top;
+				self.renderZoom(x, y);
+			}
+			this.holder.ontouchend = function()
+			{
+				//console.log("ontouchend()")
+				self.zoom.style.display = 'none';
+			}
+			//this.data
+			this.renderZoom(0, 0);
+			
+			console.log(Event.COMPLETE, 'complete');
+			this.dispatchEvent(Event.COMPLETE);
+		}
+		Mosaic.prototype.click = function(x, y)
+		{
+			var col = Math.floor(x / this.cellSize);
+			var row = Math.floor(y / this.cellSize);
+			
+			var index = (col) + (row) * this.data.image.cols;
+			
+			var cell = this.data.mosaic[index];
+			var tweet = this.data.tweets[this.data.mosaic[index].index];
+			if (cell.index !== false)
+			{
+				var srcX = 48 * (cell.index % this.data.avatars.cols);
+				var srcY = 48 * Math.floor(cell.index / this.data.avatars.cols);
+				this.avatarContext.drawImage(this.avatars, srcX, srcY ,48, 48, 0, 0, 48, 48);
+				this.userText.innerHTML = tweet.text;
+				this.username.innerHTML = tweet.username;
+				
+				this.avatarContextZoom.drawImage(this.avatars, srcX, srcY ,48, 48, 0, 0, 24, 24);
+				
+				this.avatarZoom.style.display = '';
+				this.popup.style.display = '';
+				
+				x = Math.floor(x / this.cellSize) * this.cellSize + Math.floor(this.cellSize / 2);
+				y = Math.floor(y / this.cellSize) * this.cellSize + Math.floor(this.cellSize / 2);
+				
+				this.avatarZoom.style.left = (x - 13) + 'px';
+				this.avatarZoom.style.top = (y - 13) + 'px';
+
+				var rect = this.holder.getBoundingClientRect();
+				var parentRect = this.holder.parentNode.getBoundingClientRect();
+				
+				var left = parentRect.left - rect.left;
+				var right = Math.min(this.width, parentRect.right - parentRect.left) + left;
+				var top = parentRect.top - rect.top;
+				var bottom = parentRect.bottom - rect.bottom;
+				var renderBelow = (y < (top + (top - bottom) / 2));
+				
+				console.log("left", left, right)
+				
+				var tmpX = Math.min(Math.max(left + 5, (x - (this.popup.offsetWidth / 2) | 0)), right - this.popup.offsetWidth - 5);
+				console.log(tmpX)
+				//var tmpX = Math.min(Math.max(left, (x - (this.popup.offsetWidth / 2) | 0)), this.width - this.popup.offsetWidth - 5);
+				console.log(tmpX)
+				this.popup.style.left = tmpX + 'px';
+				this.popup.style.top = (y + ((renderBelow) ? 17 : (-this.popup.offsetHeight - 17))) + 'px'
+
+				this.popup.arrow.style.left = (x - tmpX - 5) + 'px';
+				this.popup.arrow.className = 'arrow ' + ((renderBelow) ? 'up' : 'down');
+				
+				
+			}
+			else
+			{
+				this.avatarZoom.style.display = 'none';
+				this.popup.style.display = 'none';
+			}
+			
+			
+		}
+		Mosaic.prototype.renderZoom = function(x, y)
+		{
+			var col = Math.floor(x / this.cellSize) - this.zoomGrid / 2;
+			var row = Math.floor(y / this.cellSize) - this.zoomGrid / 2;
+			
+			col = Math.max(0, Math.min(col, this.data.image.cols - this.zoomGrid));
+			row = Math.max(0, Math.min(row, this.data.image.rows - this.zoomGrid));
+			
+			var zoomCol = Math.floor(x / this.cellSize) - 4;
+			var zoomRow = Math.floor(y / this.cellSize) - 4;
+			
+			var zoomCol_Normal = Math.max(0, Math.min(zoomCol, this.data.image.cols - this.zoomGrid));
+			var zoomRow_Normal = Math.max(0, Math.min(zoomRow, this.data.image.rows - this.zoomGrid));
+			
+			
+			
+			if ((zoomCol_Normal < this.zoom.col) || (zoomRow_Normal < this.zoom.row) || (Math.min(zoomCol + 8, this.data.image.cols) > this.zoom.col + this.zoomGrid) || (Math.min(zoomRow + 8, this.data.image.rows) > this.zoom.row + this.zoomGrid))
+			{
+				var oldStartX = this.zoom.col;
+				var oldStartY = this.zoom.row;
+				//console.log(col, row, zoomCol, zoomRow, "Y", y);
+				//this.bitmapContext.clearRect(0, 0, this.bitmap.width, this.bitmap.height);
+				var tmpX = (oldStartX - col) * this.zoomCellSize;
+				var tmpY = (oldStartY - row) * this.zoomCellSize;
+				this.bitmapContext.drawImage(this.bitmap, 0, 0, this.bitmap.width, this.bitmap.height, tmpX, tmpY, this.bitmap.width, this.bitmap.height);
+
+				this.zoom.col = col;
+				this.zoom.row = row;
+				
+				var drawCells = 0;
+				if (!this.cellsArray)
+				{
+					this.cellsArray = new Array(this.zoomGrid * this.zoomGrid);
+				}
+				for (var iCell = 0; iCell < this.cellsArray.length; iCell++)
+				{
+					this.cellsArray[iCell] = false;
+				}
+				for (var iRow = 0; iRow < this.zoomGrid; iRow++)
+				{
+					for (var iCol = 0; iCol < this.zoomGrid; iCol++)
+					{
+						if ((col + iCol >= 0) && (row + iRow >= 0) && (col + iCol < this.data.image.cols) && (row + iRow < this.data.image.rows))
+						{
+							if ((col + iCol >= oldStartX) && (col + iCol < oldStartX + this.zoomGrid) &&
+							    (row + iRow >= oldStartY) && (row + iRow < oldStartY + this.zoomGrid))
+							{
+								this.cellsArray[iCol + iRow * this.zoomGrid] = true;
+								//console.log(iCol, iRow, col, row, "start:", oldStartX, oldStartY);
+								continue;
+							}
+							/**/
+							var index = (col + iCol) + (row + iRow) * this.data.image.cols;
+							var cell = this.data.mosaic[index];
+							
+							
+
+							if (cell.index === false)
+							{
+								this.bitmapContext.fillStyle = 'rgba(' + (cell.r << 5 ) + ', ' + (cell.g << 5 ) + ', ' + (cell.b << 5 ) + ',255)';
+								this.bitmapContext.fillRect(iCol * 24, iRow * 24, 24, 24);
+							}
+							else
+							{
+								var srcX = 48 * (cell.index % this.data.avatars.cols);
+								var srcY = 48 * Math.floor(cell.index / this.data.avatars.cols);
+								this.bitmapContext.drawImage(this.avatars, srcX, srcY ,48, 48, iCol * 24, iRow * 24, 24, 24);
+							}
+							drawCells++;
+						}
+					}
+				}
+				//console.log("drawCells:", drawCells);
+				
+				if (DIMS.width > 800)
+				{
+					var ratio = 0.3;
+					var multiplier = 1 - ratio;
+
+					var size = 24 * 24;
+					var pixels = this.bitmapContext.getImageData(0, 0, this.bitmap.width, this.bitmap.height);
+
+
+					for (var iRow = 0; iRow < this.zoomGrid; iRow++)
+					{
+						for (var iCol = 0; iCol < this.zoomGrid; iCol++)
+						{
+							if ((col + iCol >= 0) && (row + iRow >= 0) && (col + iCol < this.data.image.cols) && (row + iRow < this.data.image.rows))
+							{
+								var index = (col + iCol) + (row + iRow) * this.data.image.cols;
+								var cell = this.data.mosaic[index];
+								if (cell.index !== false && this.cellsArray[iCol + iRow * this.zoomGrid] === false)
+								{
+									var r = cell.r << 5;
+									var g = cell.g << 5;
+									var b = cell.b << 5;
+									var startPx = 24 * iCol + 24 * iRow * this.bitmap.width;
+									for (var iPixel = 0; iPixel < size; iPixel++)
+									{
+										//console.log(iCol, iRow, px)
+										px = startPx + (iPixel % 24)  + Math.floor(iPixel / 24) * this.bitmap.width;
+										px = px * 4;
+										pixels.data[px    ] = (pixels.data[px]     * multiplier) + r * ratio;
+										pixels.data[px + 1] = (pixels.data[px + 1] * multiplier) + g * ratio;
+										pixels.data[px + 2] = (pixels.data[px + 2] * multiplier) + b * ratio;
+									}
+								}
+							}
+						}
+					}
+				
+					this.bitmapContext.putImageData(pixels, 0, 0);
+				}
+				//document.getElementById('msg').innerHTML = 'refresh:' + new Date().getTime();
+				
+			}
+			//console.log(this.data.image.rows, zoomRow, this.zoom.row, Math.min(zoomRow + 8, this.data.image.rows - 8), this.zoom.row + 16 )
+			
+			
+			this.zoom.style.left = (x - 90) + 'px';
+			this.zoom.style.top  = (y - 90) + 'px';
+			var x = (zoomCol - this.zoom.col) * 24 + this.zoomLevel * (x % this.cellSize) + 6;
+			var y = (zoomRow - this.zoom.row) * 24 + this.zoomLevel * (y % this.cellSize) + 6;
+			
+			
+			this.zoomContext.clearRect(0, 0, 180, 180);
+			this.zoomContext.drawImage(this.bitmap, x, y, 24 * 8, 24 * 8, 0, 0, 24 * 8, 24 * 8);
+			
+			var pixels = this.zoomContext.getImageData(0, 0, 180, 180);
+			for (var iPixel = 0; iPixel < pixels.data.length; iPixel+= 4)
+			{
+				var x = Math.floor(iPixel / 4) % 180 - 90;
+				var y = Math.floor(Math.floor(iPixel / 4) / 180) - 90
+				var distaceSq = x * x  + y * y;
+				if (distaceSq > 5625)
+				{
+					pixels.data[iPixel + 3] = 0;
+				}
+			}
+			this.zoomContext.putImageData(pixels, 0, 0);
+			this.zoomContext.drawImage(this.magnify, 0, 0);
+			
+			
+		}
+		window.onload = start;
+		window.onresize = resize;
+	</script>
+	
+	<style type="text/css">
+		html
+		{
+			font-family:Arial, Helvetica, sans-serif;
+		}
+		html, body
+		{
+			width:100%;
+			overflow-X:hidden;
+			min-height:100%;
+			min-width:100%;
+		}
+		.mosaic
+		{
+			position: relative;
+		}
+		.mosaic canvas.avatar
+		{
+			position: absolute;
+			border: 1px solid #FFF;
+			outline: 1px solid #000;
+			z-index: 99;
+		}
+		.popup
+		{
+			position: absolute;
+			background-color: #ffffff;
+			padding: 7px;
+			min-height: 48px;
+			width: 220px;
+			padding-left: 64px;
+			border-radius: 5px;
+			z-index: 100;
+			font-family: Lucida Sans Unicode, Arial;
+			-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.5);
+-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.5);
+box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.5);
+		}
+		.popup b
+		{
+			line-height: 16px;
+			padding-bottom: 2px;
+		}
+		.popup b, .popup span
+		{
+			font-size: 12px;
+			display: block;
+			line-height: 13px;
+		}
+		.popup canvas
+		{
+			position: absolute;
+			top : 6px;
+			left: 6px;
+			border:1px solid #ccc;
+		}
+		.popup .arrow.up
+		{
+			position: absolute;
+			width: 0; 
+			height: 0; 
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-bottom: 10px solid #ffffff;
+			top:-10px;
+		}
+		.popup .arrow.down
+		{
+			position: absolute;
+			width: 0; 
+			height: 0; 
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-top: 10px solid #ffffff;
+			bottom: -10px;
+		}
+		.popup div.icon
+		{
+			width: 16px;
+			height: 16px;
+			cursor: pointer;
+			display: block;
+			position: absolute;
+			background-image: url(images/icons.png);
+			background-position: 0 0;
+		}
+		.popup div.icon.close
+		{
+			top: 5px;
+			right: 5px;
+		}
+		.popup div.icon.facebook
+		{
+			background-position: -16px 0;
+			bottom: 5px;
+			right: 5px;
+		}
+		.popup div.icon.twitter
+		{
+			background-position: -32px 0;
+			bottom: 5px;
+			right: 26px;
+		}
+		.popup div.icon.pinterest
+		{
+			background-position: -48px 0;
+			bottom: 5px;
+			right: 47px;
+		}
+	</style>
+</head>
+
+<body style="margin:0; background-color:#666;" class="desktop">
+
+	<!--<div id="msg" style="background-color:#000; color:#fff; font-size:12px; line-height:15px; position:fixed; bottom:0; right:0; padding:10px; z-index:999; display:block;">MESSAGE</div>-->
+</body>
+</html>
